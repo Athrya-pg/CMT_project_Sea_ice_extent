@@ -16,46 +16,51 @@ void Linear_Regression(double x*, double y*, int n, double *m, double *b){
     *m = (n * sum_xy - sum_x * sum_y) / (n * sum_x2 - sum_x * sum_x);
     *b = (sum_y - *m * sum_x) / n;
 }
-// Fonction pour lire les données depuis un fichier
-int read_data(const char *filename, double *x, double *y, int max_size) {
+// Function pour read the data from the file
+int read_data(const char *filename, double *values, int max_size) {
     FILE *file = fopen(filename, "r");
     if (file == NULL) {
         perror("Erreur lors de l'ouverture du fichier");
         return -1;
     }
-    int i = 0;
-    while(fscanf(file, "%lf %lf", &x[i], &y[i]) != EOF){
-        i++;
+    int count = 0;
+    while (fscanf(file, "%lf", &values[count]) == 1 && count < max_size) {
+        count++;
     }
     fclose(file);
-    return i;
-}
+    return count;
 
 int main(){
-    // x are CO2 emmisions
+    // x are green gas emmisions
     // y are sea ice extent
     const int max_data_size = 1000;
     double x[max_data_size], y[max_data_size];
     int n_x, n_y;
 
-    // Lire les données sur la banquise
-    n_y = read_data("banquise.csv", y, max_data_size);
+    // Read data from sea ice
+    n_y = read_data("sea_ice.csv", y, max_data_size);
     if (n_y <= 0) {
-        printf("Erreur : pas de données dans banquise.csv\n");
+        printf("Error: no data in sea_ice.csv\n");
         return 1;
     }
 
-    // Lire les données sur les émissions de GES
-    n_x = read_data("GES.csv", x, max_data_size);
+    // Read data from GHG
+    n_x = read_data("GHG.csv", x, max_data_size);
     if (n_x <= 0) {
-        printf("Erreur : pas de données dans GES.csv\n");
+        printf("Error : no data in GHG.csv\n");
         return 1;
 
-    // Calculer la régression linéaire
+    // Check if the number of data is the same
+    if (n_x != n_y) {
+        printf("Error : files don't have the same number of data points (%d vs %d).\n", n_x, n_y);
+        return 1;
+    }
+
+    // calulate the linear regression
     double m, b;
     linear_regression(x, y, n_x, &m, &b);
 
-    // Afficher les résultats
+    // Print the result
     printf("Équation de la régression linéaire : y = %.2fx + %.2f\n", m, b);
-
+    return 0;
 }
