@@ -31,7 +31,22 @@ int read_data(const char *filename, double *values, int max_size) {
     return count;
 
 // Function to calculate polynomial regression
-void polyregression(){
+void polynomial_regression(double *x, double *y, int n, double *coefficients, int degree){
+    int i, j, k;
+    int size = degree + 1;
+
+    // Create a matrix to store the sums of powers of x
+    double **X = malloc(size * sizeof(double *));
+    for (i = 0; i < size; i++) {
+        X[i] = malloc(size * sizeof(double));
+        for (j = 0; j < size; j++) {
+            X[i][j] = 0.0;
+            for (k = 0; k < n; k++) {
+                X[i][j] += pow(x[k], i + j);
+            }
+        }
+    }
+
 }
 
 int main(){
@@ -50,9 +65,9 @@ int main(){
     }
 
     // Read data from GHG
-    n_x = read_data("GHG.csv", x, max_data_size);
+    n_x = read_data("summed_co2.csv", x, max_data_size);
     if (n_x <= 0) {
-        printf("Error : no data in GHG.csv\n");
+        printf("Error : no data in summed_co2.csv\n");
         return 1;
 
     // Check if the number of data is the same
