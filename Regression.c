@@ -33,8 +33,9 @@ int read_data(const char *filename, double *values, int max_size) {
 int main(){
     // x are green gas emmisions
     // y are sea ice extent
-    const int max_data_size = 1000;
-    double x[max_data_size], y[max_data_size];
+    const int max_data_size = 2000;
+    double x[max_data_size]; 
+    double y[max_data_size];
     int n_x, n_y;
 
     // Read data from sea ice
