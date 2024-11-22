@@ -14,13 +14,13 @@ df_co2 = pd.read_excel('IEA_EDGAR_CO2_1970_2023.xlsx', sheet_name='IPCC 2006')
 # print(df_co2.head())
 
 # Define the columns and rows we want
-df_nhcut= df_nh.iloc[2:48,15:16]
-df_shcut= df_sh.iloc[2:48,15:16]
-df_co2cut= df_co2.iloc[9:3539, 17:63]
+df_nhcut= df_nh.iloc[1:46,14:16]
+df_shcut= df_sh.iloc[1:46,14:16]
+df_co2cut= df_co2.iloc[9:3539, 17:62]
 
 print('new dataframe')
-print(df_nhcut.head())
-# print(df_co2cut.head())
+# print(df_nhcut.head(45))
+print(df_co2cut.head())
 
 sum_co2 = df_co2cut.sum()
 
@@ -28,7 +28,7 @@ print('sum df table')
 print(sum_co2)
 
 print('creating csv file')
-# sum_co2.to_csv('summed_co2.csv', index=False)
+sum_co2.to_csv('summed_co2.csv', index=False)
 
 
 
