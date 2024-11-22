@@ -29,6 +29,14 @@ int read_data(const char *filename, double *values, int max_size) {
     }
     fclose(file);
     return count;
+// Function to calculate the MSE
+double calculate_mse(double *y_true, double *y_pred, int n){
+    double MSE = 0.0;
+    for(int i = 0; i<n; i++){
+        MSE += pow(y_true[i] - y_pred[i], 2);
+    }
+    return MSE / n;
+}
 
 // Function to calculate polynomial regression
 void polynomial_regression(double *x, double *y, int n, double *coefficients, int degree){
@@ -52,13 +60,13 @@ void polynomial_regression(double *x, double *y, int n, double *coefficients, in
 int main(){
     // x are green gas emmisions
     // y are sea ice extent
-    const int max_data_size = 2000;
+    const int max_data_size = 100;
     double x[max_data_size]; 
     double y[max_data_size];
     int n_x, n_y;
 
     // Read data from sea ice
-    n_y = read_data("sea_ice.csv", y, max_data_size);
+    n_y = read_data("sea_ice_sh.csv", y, max_data_size);
     if (n_y <= 0) {
         printf("Error: no data in sea_ice.csv\n");
         return 1;
@@ -82,6 +90,11 @@ int main(){
 
     // Print the result
     printf("Équation de la régression linéaire : y = %.2fx + %.2f\n", m, b);
+
+    // calculate the mean squared error
+    double MSE = calculate_mse(y_true, y_pred, n);
+    printf("Mean Squared Error (MSE): %f\n", MSE);
+
     return 0;
 }
 
