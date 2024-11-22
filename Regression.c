@@ -30,6 +30,10 @@ int read_data(const char *filename, double *values, int max_size) {
     fclose(file);
     return count;
 
+// Function to calculate polynomial regression
+void polyregression(){
+}
+
 int main(){
     // x are green gas emmisions
     // y are sea ice extent
@@ -65,3 +69,5 @@ int main(){
     printf("Équation de la régression linéaire : y = %.2fx + %.2f\n", m, b);
     return 0;
 }
+
+// modifier
