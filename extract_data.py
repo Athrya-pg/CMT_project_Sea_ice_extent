@@ -29,9 +29,16 @@ sum_co2_df = pd.DataFrame(sum_co2, columns=['CO2_Mass'])
 # index_range = [x +1979 for x in index_range]
 years = list(range(1979, 2024))
 sum_co2_df['Year'] = years
+df_nhcut['Year'] = years
+df_shcut['Year'] = years
 
 print('sum df table')
 print(sum_co2_df)
+
+#sum_co2 = sum_co2_df.groupby('Year').sum()
+#print(sum_co2.head())
+
+#mmmm
 
 print('creating csv file')
 df_nhcut.to_csv('sea_ice_nh.csv', index=False)
@@ -42,28 +49,28 @@ sum_co2_df.to_csv('summed_co2.csv', index=False)
 # Plot les correlation 
 # Plot sea ice nh x co2
 
-
 '''
 # Plot sea ice sh x co2
 sum_co2 = df_co2cut.groupby('Year').sum()
 print(sum_co2.head())
+
 
 # Add a 'Year' column
 years = list(range(1979, 2024))
 df_nhcut['Year'] = years
 df_shcut['Year'] = years
 sum_co2['Year'] = years
+'''
 
 # Rename columns for clarity
 df_nhcut.columns = ['NH_Extent', 'Year']
 df_shcut.columns = ['SH_Extent', 'Year']
-sum_co2.columns = ['CO2_Mass', 'Year']
-
+sum_co2_df.columns = ['CO2_Mass', 'Year']
 
 
 # Merge the DataFrames on the 'Year' column
-merged_nh = pd.merge(df_nhcut, sum_co2, on='Year')
-merged_sh = pd.merge(df_shcut, sum_co2, on='Year')
+merged_nh = pd.merge(df_nhcut, sum_co2_df, on='Year')
+merged_sh = pd.merge(df_shcut, sum_co2_df, on='Year')
 
 # Plot the data
 fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(10, 12))
@@ -102,7 +109,7 @@ ax2_twin.legend(loc='upper right')
 plt.tight_layout()
 plt.show()
 
-'''
+
 
 
 
