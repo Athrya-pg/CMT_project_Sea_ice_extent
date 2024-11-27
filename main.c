@@ -7,19 +7,28 @@
 #include "calculate_R2.c"
 
 // Function pour read the data from the file
-int read_data(const char *filename, double *values, double *time, int max_size) {
+int read_data(const char *filename, double *values, double *time, int max_size){
     FILE *file = fopen(filename, "r");
     if (file == NULL) {
         perror("Error opening the file");
         return -1;
     }
-     int count = 0;
-    while (count < max_size) {
-        if (fscanf(file, "%lf,%lf", &values[count], &time[count]) != 2) {
+    // Ignore the first line (header)
+    char buffer[256];
+    if (fgets(buffer, sizeof(buffer), file) == NULL) {
+        fprintf(stderr, "Error reading header from %s\n", filename);
+        fclose(file);
+        return -1;
+    }
+    int count = 0;
+    while (count < max_size && fgets(buffer, sizeof(buffer), file) != NULL) {
+        if (sscanf(buffer, "%lf,%lf", &values[count], &time[count]) != 2) {
+            fprintf(stderr, "Invalid data format at line %d in file %s\n", count + 2, filename);
             break;
         }
         count++;
     }
+
     fclose(file);
     return count;
 }
