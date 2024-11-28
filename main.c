@@ -81,6 +81,7 @@ int main(){
     double mS, bS;
     Linear_Regression(x, yS, n, &mS, &bS);
 
+
     // Output the results
     printf("Northern Hemisphere: y = %lf * x + %lf\n", mN, bN);
     printf("Southern Hemisphere: y = %lf * x + %lf\n", mS, bS);
