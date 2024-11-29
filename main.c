@@ -6,7 +6,7 @@
 #include "calculate_RMSE.c"
 #include "calculate_R2.c"
 
-// Function pour read the data from the file
+// Function to read the data from the file
 int read_data(const char *filename, double *values, double *time, int max_size){
     FILE *file = fopen(filename, "r");
     if (file == NULL) {
@@ -14,7 +14,7 @@ int read_data(const char *filename, double *values, double *time, int max_size){
         return -1;
     }
     // Ignore the first line (header)
-    char buffer[256];
+    char buffer[256];  // sert a stocker temporairement les lignes du fichier csv (256 caractères max)
     if (fgets(buffer, sizeof(buffer), file) == NULL) {
         fprintf(stderr, "Error reading header from %s\n", filename);
         fclose(file);
@@ -28,23 +28,22 @@ int read_data(const char *filename, double *values, double *time, int max_size){
         }
         count++;
     }
-
     fclose(file);
     return count;
 }
 
 int main(){
     // x are green gas emmisions
-    // yN and yS are sea ice extent
+    // yN and yS are sea ice extent for North and South hemisphere
     const int max_data_size = 1000;
     double t[max_data_size];
     double x[max_data_size]; 
     double yN[max_data_size];
     double yS[max_data_size];
-    int n_x, n_yN;
+    int n_x, n_yN, n_yS;
 
     // Read data from sea ice
-    int n_yS = read_data("sea_ice_sh.csv", yS, t, max_data_size);
+    n_yS = read_data("sea_ice_sh.csv", yS, t, max_data_size);
     printf("n_yS = %d\n", n_yS);
     if (n_yS <= 0) {
         printf("Error: no data in sea_ice_sh.csv\n");
@@ -101,19 +100,12 @@ int main(){
     for (int i = 0; i < n; i++) {
         yS_pred[i] = mS * x[i] + bS;
     }
+    // Calculate the RMSE and R2
     double RMSE_S = calculate_rmse(yS, yS_pred, n);
     double R2_S = calculate_r2(yS, yS_pred, n);
     printf("Southern Hemisphere RMSE: %f\n", RMSE_S);
     printf("Southern Hemisphere R2: %f\n", R2_S);
     
-    // // // calculate the mean squared error
-    // double MSE = calculate_mse(y, y_pred, n);
-    // printf("Mean Squared Error (MSE): %f\n", MSE);
-
-    // // calculate the coefficient of determination
-    // double R2 = calculate_r2(y, y_pred, n);
-    // printf("Coefficient of determination (R2): %f\n", R2);
-
     return 0;
 }
 
