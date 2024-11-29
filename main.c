@@ -82,30 +82,45 @@ int main(){
 
 
     // Output the results
-    printf("Northern Hemisphere: y = %lf * x + %lf\n", mN, bN);
+    printf("Northern Hemisphere: y = %e * x + %lf\n", mN, bN);
     printf("Southern Hemisphere: y = %lf * x + %lf\n", mS, bS);
 
     // Calculate the predictions and errors for northern hemisphere
-    double yN_pred[max_data_size];
+    double yN_estim[max_data_size];
     for (int i = 0; i < n; i++) {
-        yN_pred[i] = mN * x[i] + bN;
+        yN_estim[i] = mN * x[i] + bN;
     }
-    double RMSE_N = calculate_rmse(yN, yN_pred, n);
-    double R2_N = calculate_r2(yN, yN_pred, n);
+    double RMSE_N = calculate_rmse(yN, yN_estim, n);
+    double R2_N = calculate_r2(yN, yN_estim, n);
     printf("Northern Hemisphere RMSE: %f\n", RMSE_N);
     printf("Northern Hemisphere R2: %f\n", R2_N);
 
     // Calculate the predictions and errors for southern hemisphere
-    double yS_pred[max_data_size];
+    double yS_estim[max_data_size];
     for (int i = 0; i < n; i++) {
-        yS_pred[i] = mS * x[i] + bS;
+        yS_estim[i] = mS * x[i] + bS;
     }
     // Calculate the RMSE and R2
-    double RMSE_S = calculate_rmse(yS, yS_pred, n);
-    double R2_S = calculate_r2(yS, yS_pred, n);
+    double RMSE_S = calculate_rmse(yS, yS_estim, n);
+    double R2_S = calculate_r2(yS, yS_estim, n);
     printf("Southern Hemisphere RMSE: %f\n", RMSE_S);
     printf("Southern Hemisphere R2: %f\n", R2_S);
-    
+
+    // Create a file to store the predictions/estimations
+    FILE *file = fopen("LinearReg.csv", "w");
+    if (file == NULL) {
+        printf("Error opening the file\n");
+        return 1;
+    }
+
+    fprintf(file, "Year,Pred_North,Pred_South\n");
+    for (int i = 0; i < n; i++) {
+        fprintf(file, "%.0f,%.3f,%.3f\n", t[i], yN_estim[i], yS_estim[i]);
+    }
+
+    fclose(file);
+    printf("Prédictions enregistrées dans LinearReg.csv\n");
+
     return 0;
 }
 
