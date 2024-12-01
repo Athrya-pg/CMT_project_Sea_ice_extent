@@ -106,7 +106,7 @@ int main(){
     printf("Northern Hemisphere RMSE: %f\n", RMSE_N);
     printf("Northern Hemisphere R2: %f\n", R2_N);
 
-    // Calculate the predictions and errors for southern hemisphere
+    // Calculate the estimation and errors for southern hemisphere
     double yS_estim[max_data_size];
     for (int i = 0; i < n; i++) {
         yS_estim[i] = mS * x[i] + bS;
@@ -117,7 +117,7 @@ int main(){
     printf("Southern Hemisphere RMSE: %f\n", RMSE_S);
     printf("Southern Hemisphere R2: %f\n", R2_S);
 
-    // Create a file to store the predictions/estimations
+    // Create a file to store the estimations
     FILE *file = fopen("LinearReg.csv", "w");
     if (file == NULL) {
         printf("Error opening the file\n");
@@ -130,7 +130,7 @@ int main(){
     }
 
     fclose(file);
-    printf("Prédictions enregistrées dans LinearReg.csv\n");
+    printf("Estimations enregistrées dans LinearReg.csv\n");
 
     return 0;
 }
