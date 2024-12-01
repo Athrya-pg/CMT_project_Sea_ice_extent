@@ -17,8 +17,8 @@ y_pred_nh = predictions_nh["Estim_North"]  # Prédictions de l'Hémisphère Nord
 y_pred_sh = predictions_sh['Estim_South']  # Prédictions de l'Hémisphère Nord
 
 
-plt.scatter(x, y_obs_nh, label='Observations', color='blue')  # Afficher les observations
-plt.plot(x, y_pred_nh, label='Linear Regression Model', color='red')  # Afficher les prédictions
+plt.scatter(x, y_obs_sh, label='Observations', color='blue')  # Afficher les observations
+plt.plot(x, y_pred_sh, label='Linear Regression Model', color='red')  # Afficher les prédictions
 
 plt.xlabel('Carbon Dioxide (Gt)', fontsize=12)
 plt.ylabel('Ice Surface (million km²)', fontsize=12)
