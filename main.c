@@ -124,13 +124,13 @@ int main(){
         return 1;
     }
 
-    fprintf(file, "Year,Pred_North,Pred_South\n");
+    fprintf(file, "Year,Estim_North,Estim_South\n");
     for (int i = 0; i < n; i++) {
         fprintf(file, "%.0f,%.3f,%.3f\n", t[i], yN_estim[i], yS_estim[i]);
     }
 
     fclose(file);
-    printf("Estimations enregistrées dans LinearReg.csv\n");
+    printf("Estimations save in LinearReg.csv\n");
 
     return 0;
 }
