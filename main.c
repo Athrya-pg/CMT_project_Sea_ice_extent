@@ -1,3 +1,11 @@
+// Sea Ice project : 
+//  ===================================================================================================================
+// Objective = explain sea ice extent depending on explanatory variables such as greenhouse gas emissions, temperature
+// Last update : Chloe Prats Genre (EPFL)
+// date : 01/12/2024
+
+
+// Loading libraries and packages
 #include <stdio.h>
 #include <math.h>
 #include <string.h>
@@ -6,7 +14,7 @@
 #include "calculate_RMSE.c"
 #include "calculate_R2.c"
 
-// Function to read the data from the file
+// Define data read function
 int read_data(const char *filename, double *values, double *time, int max_size){
     FILE *file = fopen(filename, "r");
     if (file == NULL) {
@@ -32,6 +40,7 @@ int read_data(const char *filename, double *values, double *time, int max_size){
     return count;
 }
 
+// Define Main function
 int main(){
     // x are green gas emmisions
     // yN and yS are sea ice extent for North and South hemisphere
@@ -71,6 +80,8 @@ int main(){
 
     // Number of data points
     int n = n_x;
+
+    // Estimations
 
     // Calculate the linear regression for northern hemisphere
     double mN, bN;
