@@ -130,7 +130,7 @@ int main(){
     printf("Southern Hemisphere R2: %f\n", R2_S);
 
     // Create a file to store the estimations
-    FILE *file = fopen("yestimation.csv", "w");
+    FILE *file = fopen("outputs/yestimation.csv", "w");
     if (file == NULL) {
         printf("Error opening the file\n");
         return 1;

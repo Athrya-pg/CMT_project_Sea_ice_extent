@@ -21,24 +21,44 @@ void Quadratic_Regression(double *x, double *y, int n,double *a, double *b, doub
         sum_xy += x[i] * y[i];
         sum_x2y += x[i] * x[i] * y[i];
     }
-
-    // Solve the system of equations
+     // Solve the system of equations
     double det = n * (sum_x2 * sum_x4 - sum_x3 * sum_x3)
-                       - sum_x * (sum_x * sum_x4 - sum_x2 * sum_x3)
-                       + sum_x2 * (sum_x * sum_x3 - sum_x2 * sum_x2);
+               - sum_x * (sum_x * sum_x4 - sum_x2 * sum_x3)
+               + sum_x2 * (sum_x * sum_x3 - sum_x2 * sum_x2);
 
-    *a = (n * (sum_x2 * sum_x2y - sum_x3 * sum_xy)
-        - sum_x * (sum_x * sum_x2y - sum_x2 * sum_xy)
-        + sum_x2 * (sum_x * sum_xy - sum_x2 * sum_y)) / det;
+    double det_a = sum_y * (sum_x2 * sum_x4 - sum_x3 * sum_x3)
+                 - sum_x * (sum_xy * sum_x4 - sum_x2y * sum_x3)
+                 + sum_x2 * (sum_xy * sum_x3 - sum_x2y * sum_x2);
 
-    *b = (n * (sum_xy * sum_x4 - sum_x3 * sum_x2y)
-        - sum_x2 * (sum_x * sum_x4 - sum_x3 * sum_x3)
-        + sum_x2 * (sum_x * sum_x2y - sum_x2 * sum_y)) / det;
+    double det_b = n * (sum_xy * sum_x4 - sum_x2y * sum_x3)
+                 - sum_y * (sum_x * sum_x4 - sum_x2 * sum_x3)
+                 + sum_x2 * (sum_x * sum_x2y - sum_xy * sum_x2);
 
-    *c = (sum_y * (sum_x2 * sum_x4 - sum_x3 * sum_x3)
-        - sum_x * (sum_xy * sum_x4 - sum_x3 * sum_x2y)
-        + sum_x2 * (sum_xy * sum_x3 - sum_x2y * sum_x2)) / det;
+    double det_c = n * (sum_x2 * sum_x2y - sum_x3 * sum_xy)
+                 - sum_x * (sum_x * sum_x2y - sum_x2 * sum_xy)
+                 + sum_y * (sum_x * sum_x3 - sum_x2 * sum_x2);
+
+    *a = det_a / det;
+    *b = det_b / det;
+    *c = det_c / det;
 }
+
+    // // Solve the system of equations
+    // double det = n * (sum_x2 * sum_x4 - sum_x3 * sum_x3)
+    //                    - sum_x * (sum_x * sum_x4 - sum_x2 * sum_x3)
+    //                    + sum_x2 * (sum_x * sum_x3 - sum_x2 * sum_x2);
+
+    // *a = (n * (sum_x2 * sum_x2y - sum_x3 * sum_xy)
+    //     - sum_x * (sum_x * sum_x2y - sum_x2 * sum_xy)
+    //     + sum_x2 * (sum_x * sum_xy - sum_x2 * sum_y)) / det;
+
+    // *b = (n * (sum_xy * sum_x4 - sum_x3 * sum_x2y)
+    //     - sum_x2 * (sum_x * sum_x4 - sum_x3 * sum_x3)
+    //     + sum_x2 * (sum_x * sum_x2y - sum_x2 * sum_y)) / det;
+
+    // *c = (sum_y * (sum_x2 * sum_x4 - sum_x3 * sum_x3)
+    //     - sum_x * (sum_xy * sum_x4 - sum_x3 * sum_x2y)
+    //     + sum_x2 * (sum_xy * sum_x3 - sum_x2y * sum_x2)) / det;
 
 
 
