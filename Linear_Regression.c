@@ -2,7 +2,8 @@
 #include <math.h>
 
 // Function to calulate the linear regression
-// y = b0x0 + b1x1 + c
+// y = mx + b
+// y = b0x0 + b1x1 + c  avec par exemple x0 = CH4 et x1 = CO2
 // y is the sea ice extent
 // x is the green gas emmisions
 
