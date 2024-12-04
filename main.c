@@ -13,6 +13,7 @@
 #include "Linear_Regression.c"
 #include "calculate_RMSE.c"
 #include "calculate_R2.c"
+#include "Quadratic_Regression.c"
 
 // Define data read function
 int read_data(const char *filename, double *values, double *time, int max_size){
@@ -52,21 +53,21 @@ int main(){
     int n_x, n_yN, n_yS;
 
     // Read data from sea ice
-    n_yS = read_data("sea_ice_sh.csv", yS, t, max_data_size);
+    n_yS = read_data("outputs/sea_ice_sh.csv", yS, t, max_data_size);
     printf("n_yS = %d\n", n_yS);
     if (n_yS <= 0) {
         printf("Error: no data in sea_ice_sh.csv\n");
         return 1;
     }
 
-    n_yN = read_data("sea_ice_nh.csv", yN, t, max_data_size);
+    n_yN = read_data("outputs/sea_ice_nh.csv", yN, t, max_data_size);
     if (n_yN <= 0) {
         printf("Error: no data in sea_ice_nh.csv\n");
         return 1;
     }
 
     // Read data from GHG
-    n_x = read_data("summed_co2.csv", x, t, max_data_size);
+    n_x = read_data("outputs/summed_co2.csv", x, t, max_data_size);
     if (n_x <= 0) {
         printf("Error : no data in summed_co2.csv\n");
         return 1;
@@ -91,10 +92,15 @@ int main(){
     double mS, bS;
     Linear_Regression(x, yS, n, &mS, &bS);
 
+    //Calulate the quadratic regression for southern hemisphere
+    double aS, cS, dS;
+    Quadratic_Regression(x, yS, n, &aS, &cS, &dS);
+
 
     // Output the results
     printf("Northern Hemisphere: y = %e * x + %lf\n", mN, bN);
-    printf("Southern Hemisphere: y = %lf * x + %lf\n", mS, bS);
+    printf("Southern Hemisphere: y = %e * x + %lf\n", mS, bS);
+    printf("Southern Hemisphere, quadratic regression model: y = %e * x^2 + %lf * x + %lf\n", aS, cS, dS);
 
     // Calculate the predictions and errors for northern hemisphere
     double yN_estim[max_data_size];
@@ -107,30 +113,36 @@ int main(){
     printf("Northern Hemisphere R2: %f\n", R2_N);
 
     // Calculate the estimation and errors for southern hemisphere
-    double yS_estim[max_data_size];
+    double yS_estim_lin[max_data_size];
     for (int i = 0; i < n; i++) {
-        yS_estim[i] = mS * x[i] + bS;
+        yS_estim_lin[i] = mS * x[i] + bS;
     }
+
+    double yS_estim_poly[max_data_size];
+    for (int i = 0; i < n; i++) {
+        yS_estim_poly[i] = aS * x[i] * x[i] + cS * x[i] + dS;
+    }
+
     // Calculate the RMSE and R2
-    double RMSE_S = calculate_rmse(yS, yS_estim, n);
-    double R2_S = calculate_r2(yS, yS_estim, n);
+    double RMSE_S = calculate_rmse(yS, yS_estim_lin, n);
+    double R2_S = calculate_r2(yS, yS_estim_lin, n);
     printf("Southern Hemisphere RMSE: %f\n", RMSE_S);
     printf("Southern Hemisphere R2: %f\n", R2_S);
 
     // Create a file to store the estimations
-    FILE *file = fopen("LinearReg.csv", "w");
+    FILE *file = fopen("yestimation.csv", "w");
     if (file == NULL) {
         printf("Error opening the file\n");
         return 1;
     }
 
-    fprintf(file, "Year,Estim_North,Estim_South\n");
+    fprintf(file, "Year,Estim_North_linReg,Estim_South_LinReg,Estim_South_polyReg\n");
     for (int i = 0; i < n; i++) {
-        fprintf(file, "%.0f,%.3f,%.3f\n", t[i], yN_estim[i], yS_estim[i]);
+        fprintf(file, "%.0f,%.3f,%.3f,%.3f\n", t[i], yN_estim[i], yS_estim_lin[i], yS_estim_poly[i]);
     }
 
     fclose(file);
-    printf("Estimations save in LinearReg.csv\n");
+    printf("Estimations save in yestimations.csv\n");
 
     return 0;
 }
