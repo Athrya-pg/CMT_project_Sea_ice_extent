@@ -25,7 +25,7 @@ shcut= df_sh.iloc[1:46,14:15].reset_index(drop=True)
 df_co2cut= df_co2.iloc[9:3539, 17:62].reset_index(drop=True)
 print('Dataframe cut.')
 
-PROUTITO
+
 #print(nhcut.head())
 #print(shcut.head())
 #print(df_co2cut.head())
