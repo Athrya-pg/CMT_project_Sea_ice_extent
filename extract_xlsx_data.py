@@ -14,7 +14,6 @@ df_sh = pd.read_excel(data_folder + 'Sea_Ice_Index_Monthly_Data_by_Year_G02135_v
 df_co2 = pd.read_excel(data_folder + 'IEA_EDGAR_CO2_1970_2023.xlsx', sheet_name='IPCC 2006')
 print('Excel read.')
 
-
 # Display the DataFrame
 # print(df_nh.head())
 #print(df_sh.head())
@@ -26,7 +25,7 @@ shcut= df_sh.iloc[1:46,14:15].reset_index(drop=True)
 df_co2cut= df_co2.iloc[9:3539, 17:62].reset_index(drop=True)
 print('Dataframe cut.')
 
-
+PROUTITO
 #print(nhcut.head())
 #print(shcut.head())
 #print(df_co2cut.head())
