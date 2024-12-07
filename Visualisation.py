@@ -55,7 +55,7 @@ plt.ylabel('Ice Surface (million km²)', fontsize=12)
 plt.title(' Global CO2 emissions vs Arctic Sea Ice Extent (Northern Hemisphere)')
 plt.legend(loc ='upper right')
 plt.grid(True)
-plt.savefig('outputs/LinearReg_CO2_vs_ICE_NH_year.png')
+plt.savefig('outputs/CO2_vs_ICENH_year_LinearReg.png')
 
 #Plot yS vs CO2 with y_estim_sh
 plt.figure(figsize=(10, 6))
@@ -66,7 +66,7 @@ plt.ylabel('Ice Surface (million km²)', fontsize=12)
 plt.title(' Global CO2 emissions vs Arctic Sea Ice Extent (Southern Hemisphere)')
 plt.legend(loc ='upper right')
 plt.grid(True)
-plt.savefig('outputs/LinearReg_CO2_vs_ICE_SH_year.png')
+plt.savefig('outputs/CO2_vs_ICESH_year_LinearReg.png')
 
 #Plot yN vs t with y_estim_nh
 plt.figure(figsize=(10, 6))
@@ -88,7 +88,7 @@ plt.ylabel('Ice Surface (million km²)', fontsize=12)
 plt.title('Year vs Sea Ice Extent (Southern Hemisphere)')
 plt.legend(loc='upper right')
 plt.grid(True)
-plt.savefig('outputs/Year_vs_IceExtent_SH.png')
+plt.savefig('outputs/Year_vs_IceExtent_SH_LinearReg.png')
 
 #Plot ySpoly vs CO2 with y_estim_sh
 plt.figure(figsize=(10, 6))
@@ -99,7 +99,7 @@ plt.ylabel('Ice Surface (million km²)', fontsize=12)
 plt.title('CO2 Emissions vs Sea Ice Extent (Southern Hemisphere) - Polynomial Regression')
 plt.legend(loc='upper right')
 plt.grid(True)
-plt.savefig('outputs/CO2_vs_IceExtent_SH_Poly.png')
+plt.savefig('outputs/CO2_vs_IceExtentSH_PolyReg.png')
 
 # Plot ySpoly vs t
 plt.figure(figsize=(10, 6))
@@ -110,7 +110,7 @@ plt.ylabel('Ice Surface (million km²)', fontsize=12)
 plt.title('Year vs Sea Ice Extent (Southern Hemisphere) - Polynomial Regression')
 plt.legend(loc='upper right')
 plt.grid(True)
-plt.savefig('outputs/Year_vs_IceExtent_SH_Poly.png')
+plt.savefig('outputs/Year_vs_IceExtent_SH_PolyReg.png')
 
 print("Plot saved in outputs folder")
 
