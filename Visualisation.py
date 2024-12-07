@@ -37,13 +37,14 @@ else:
     print("Les colonnes d'estimations sont manquantes dans le fichier CSV.")
     exit(1)
 # Extraire les colonnes nécessaires pour les observations
-if 'Year' in observations_nh.columns and 'Year' in observations_sh.columns:
-    y_obs_nh = observations_nh['Year']  # Observations de l'Hémisphère Nord
-    y_obs_sh = observations_sh['Year']  # Observations de l'Hémisphère Sud
+if 'NH_Extent' in observations_nh.columns and 'SH_Extent' in observations_sh.columns:
+    y_obs_nh = observations_nh['NH_Extent']  # Observations de l'Hémisphère Nord
+    y_obs_sh = observations_sh['SH_Extent']  # Observations de l'Hémisphère Sud
     print("Colonnes 'Year' trouvées et extraites pour les observations.")
 else:
     print("Les colonnes 'Year' sont manquantes dans les fichiers d'observations.")
     exit(1)
+
 
 #Plot yN vs CO2 with y_estim_nh
 plt.figure(figsize=(10, 6))

@@ -35,6 +35,10 @@ int read_data(const char *filename, double *values, double *time, int max_size){
             fprintf(stderr, "Invalid data format at line %d in file %s\n", count + 2, filename);
             break;
         }
+        // Print the first few values for verification
+        if (count < 5) {
+            printf("Read from %s: value = %lf, time = %lf\n", filename, values[count], time[count]);
+        }
         count++;
     }
     fclose(file);
@@ -100,7 +104,7 @@ int main(){
     // Output the results
     printf("Northern Hemisphere: y = %e * x + %lf\n", mN, bN);
     printf("Southern Hemisphere: y = %e * x + %lf\n", mS, bS);
-    printf("Southern Hemisphere, quadratic regression model: y = %e * x^2 + %lf * x + %lf\n", aS, cS, dS);
+    printf("Southern Hemisphere, quadratic regression model: y = %e * x^2 + %e * x + %e\n", aS, cS, dS);
 
     // Calculate the predictions and errors for northern hemisphere
     double yN_estim[max_data_size];
@@ -143,6 +147,15 @@ int main(){
 
     fclose(file);
     printf("Estimations save in yestimations.csv\n");
+
+    // Écrire les coefficients dans un fichier texte
+    FILE *coeff_file = fopen("outputs/coefficients.txt", "w");
+    if (coeff_file == NULL) {
+        printf("Error opening the coefficients file\n");
+        return 1;
+    }
+    fprintf(coeff_file, "mN=%e\nbN=%lf\n", mN, bN);
+    fclose(coeff_file);
 
     return 0;
 }
