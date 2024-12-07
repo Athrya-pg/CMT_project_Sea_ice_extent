@@ -1,9 +1,5 @@
 ## Extract Data from Text File
 import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-from matplotlib.ticker import MaxNLocator
-from sklearn.preprocessing import StandardScaler
 
 data_folder = 'data/'
 output_folder = 'outputs/'
