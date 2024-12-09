@@ -15,7 +15,8 @@
 #include "Quadratic_Regression.c"
 #include "calculate_RMSE.c"
 #include "calculate_R2.c"
-#include "significance_tests.c"
+#include "multiple_regression.c"
+// #include "significance_tests.c"
 
 // Define data read function
 int read_data(const char *filename, double *values, double *time, int max_size){
@@ -52,8 +53,23 @@ int main(){
     // x are greenhouse gas emissions
     // yN and yS are sea ice extent for North and South hemisphere
     const int max_data_size = 1000;
+    const int p = 4; // Number of predictors (including the intercept)
+
+    double *X[max_data_size];
+    for (int i = 0; i < max_data_size; i++) {
+        X[i] = (double *)malloc(p * sizeof(double));
+        X[i][0] = 1.0; // Intercept term
+    }
+
+    // double **X = (double **)malloc(max_data_size * sizeof(double *));
+    // for (int i = 0; i < max_data_size; i++) {
+    //     X[i] = (double *)malloc(p * sizeof(double));
+    //     X[i][0] = 1.0; // Intercept term
+    // }
+
     double t[max_data_size];
     double x[max_data_size]; 
+    
     double yN[max_data_size];
     double yS[max_data_size];
     int n_x, n_yN, n_yS;
@@ -102,6 +118,21 @@ int main(){
     //Calculate the quadratic regression for southern hemisphere
     double aS, cS, dS;
     Quadratic_Regression(x, yS, n, &aS, &cS, &dS);
+
+    //Perform multiple regression for Southern Hemisphere
+    double coefficients[p];
+    multiple_regression(X, yS, n, p, coefficients);
+    // Print coefficients
+    printf("Coefficients:\n");
+    for (int i = 0; i < p; i++) {
+        printf("b%d = %lf\n", i, coefficients[i]);
+    }
+
+    for (int i = 0; i < max_data_size; i++) {
+        free(X[i]);
+    }
+    // free(X);
+    //********************************************************************************************************************
 
     // Output the results
     printf("Northern Hemisphere: y = %e * x + %lf\n", mN, bN);
@@ -178,40 +209,64 @@ int main(){
     }
     printf("********************************************************************************************************************\n");
     printf("Residuals calculated\n");
-    
+    // Write residuals to a file
+    FILE *residuals_file = fopen("outputs/residuals.csv", "w");
+    if (residuals_file == NULL) {
+        printf("Error opening the residuals file\n");
+        return 1;
+    }
+    fprintf(residuals_file, "Year,Residual_North,Residual_South\n");
+    for (int i = 0; i < n; i++) {
+        fprintf(residuals_file, "%.0f,%.3f,%.3f\n", t[i], residuals_N[i], residuals_S[i]);
+    }
+    printf("Residuals saved in residuals.csv\n");  
 // ********************************************************************************************************************
-    // Calculate standard errors and p-values
-    double se_mN, se_bN;
-    double se_mS, se_bS;
-    calculate_standard_errors(x, yN, n, mN, bN, &se_mN, &se_bN);
-    calculate_standard_errors(x, yS, n, mS, bS, &se_mS, &se_bS);
-    //North
-    double t_value_mN = mN / se_mN;
-    double t_value_bN = bN / se_bN;
-    double p_value_mN = calculate_p_value(t_value_mN, n - 2);
-    double p_value_bN = calculate_p_value(t_value_bN, n - 2);
-    printf("Northern Hemisphere: Coefficient m: %lf, Standard Error: %lf, t-value: %lf, p-value: %lf\n", mN, se_mN, t_value_mN, p_value_mN);
-    printf("Northern Hemisphere: Coefficient b: %lf, Standard Error: %lf, t-value: %lf, p-value: %lf\n", bN, se_bN, t_value_bN, p_value_mN);
-    // South
-    double t_value_mS = mS / se_mS;
-    double t_value_bS = bS / se_bS;
-    double p_value_mS = calculate_p_value(t_value_mS, n - 2);
-    double p_value_bS = calculate_p_value(t_value_bS, n - 2);
-    printf("Southern Hemisphere: Coefficient m: %lf, Standard Error: %lf, t-value: %lf, p-value: %lf\n", mS, se_mS, t_value_mS, p_value_mS);
-    printf("Southern Hemisphere: Coefficient b: %lf, Standard Error: %lf, t-value: %lf, p-value: %lf\n", bS, se_bS, t_value_bS, p_value_mS);
+    // // Calculate standard errors and p-values
+    // double se_mN, se_bN;
+    // double se_mS, se_bS;
+    // calculate_standard_errors(x, yN, n, mN, bN, &se_mN, &se_bN);
+    // calculate_standard_errors(x, yS, n, mS, bS, &se_mS, &se_bS);
+    // //North
+    // double t_value_mN = mN / se_mN;
+    // double t_value_bN = bN / se_bN;
+    // double p_value_mN = calculate_p_value(t_value_mN, n - 2);
+    // double p_value_bN = calculate_p_value(t_value_bN, n - 2);
+    // printf("Northern Hemisphere: Coefficient m: %lf, Standard Error: %lf, t-value: %lf, p-value: %lf\n", mN, se_mN, t_value_mN, p_value_mN);
+    // printf("Northern Hemisphere: Coefficient b: %lf, Standard Error: %lf, t-value: %lf, p-value: %lf\n", bN, se_bN, t_value_bN, p_value_mN);
+    // // South
+    // double t_value_mS = mS / se_mS;
+    // double t_value_bS = bS / se_bS;
+    // double p_value_mS = calculate_p_value(t_value_mS, n - 2);
+    // double p_value_bS = calculate_p_value(t_value_bS, n - 2);
+    // printf("Southern Hemisphere: Coefficient m: %lf, Standard Error: %lf, t-value: %lf, p-value: %lf\n", mS, se_mS, t_value_mS, p_value_mS);
+    // printf("Southern Hemisphere: Coefficient b: %lf, Standard Error: %lf, t-value: %lf, p-value: %lf\n", bS, se_bS, t_value_bS, p_value_mS);
 
-    // Calculate the F-statistic and p-value for the regression model
-    double f_statistic_N = calculate_f_statistic(R2_N, n, 2);
-    double p_value_N = calculate_p_value(f_statistic_N, n - 2);
-    printf("Northern Hemisphere: F-statistic: %lf, p-value: %lf\n", f_statistic_N, p_value_N);
+    // // Calculate the F-statistic and p-value for the regression model
+    // double f_statistic_N = calculate_f_statistic(R2_N, n, 2);
+    // double p_value_N = calculate_p_value(f_statistic_N, n - 2);
+    // printf("Northern Hemisphere: F-statistic: %lf, p-value: %lf\n", f_statistic_N, p_value_N);
 
-    double f_statistic_S = calculate_f_statistic(R2_S, n, 2);
-    double p_value_S = calculate_p_value(f_statistic_S, n - 2);
-    printf("Southern Hemisphere: F-statistic: %lf, p-value: %lf\n", f_statistic_S, p_value_S);
+    // double f_statistic_S = calculate_f_statistic(R2_S, n, 2);
+    // double p_value_S = calculate_p_value(f_statistic_S, n - 2);
+    // printf("Southern Hemisphere: F-statistic: %lf, p-value: %lf\n", f_statistic_S, p_value_S);
 
-    // Test the significance of the coefficients
-    t_test_significance(x, yN, n, mN, bN);
-    t_test_significance(x, yS, n, mS, bS);
+    // // Test the significance of the coefficients
+    // t_test_significance(x, yN, n, mN, bN);
+    // t_test_significance(x, yS, n, mS, bS);
+    
+//********************************************************************************************************************
+    // Calculate F-statistic and p-value for the overall model for Northern Hemisphere
+    // double f_stat_N = calculate_f_statistic(yN, yN_pred, n, 2);
+    // double f_p_value_N = calculate_f_p_value(f_stat_N, 1, n - 2);
+
+    // printf("Northern Hemisphere: F-statistic: %lf, p-value: %lf\n", f_stat_N, f_p_value_N);
+
+    // // Calculate F-statistic and p-value for the overall model for Southern Hemisphere
+    // double f_stat_S = calculate_f_statistic(yS, yS_pred, n, 2);
+    // double f_p_value_S = calculate_f_p_value(f_stat_S, 1, n - 2);
+
+    // printf("Southern Hemisphere: F-statistic: %lf, p-value: %lf\n", f_stat_S, f_p_value_S);
+
 
     return 0;
 }
