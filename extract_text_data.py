@@ -26,9 +26,9 @@ for row in list_entries:
     for i,value in enumerate(values[1:]):
         split_data.append([f'{years}',value])
 
-temp_df = pd.DataFrame(split_data, columns=['Year','Value_T'])
+temp_df = pd.DataFrame(split_data, columns=['Year','Temperature'])
 #if temp_df['Value'] == '-999.000000':
-temp_df = temp_df[temp_df['Value_T'] != '-999.000000']
+temp_df = temp_df[temp_df['Temperature'] != '-999.000000']
 temp_df.reset_index(drop=True, inplace=True)
 
 #print(temp_df[120:130])

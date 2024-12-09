@@ -44,7 +44,7 @@ print('Is a Dataframe. Column renamed.')
 
 
 sum_co2 = df_co2cut.sum()
-sum_co2_df = pd.DataFrame(sum_co2, columns=['CO2_Mass'])
+sum_co2_df = pd.DataFrame(sum_co2, columns=['CO2'])
 sum_co2_df.reset_index(drop=True, inplace=True)
 #print(sum_co2_df.head())
 
@@ -61,7 +61,7 @@ print('Years column added.')
 # Ensure the data is numeric and handle missing values
 df_nhcut['NH_Extent'] = pd.to_numeric(df_nhcut['NH_Extent'], errors='coerce')
 df_shcut['SH_Extent'] = pd.to_numeric(df_shcut['SH_Extent'], errors='coerce')
-sum_co2_df['CO2_Mass'] = pd.to_numeric(sum_co2_df['CO2_Mass'], errors='coerce')
+sum_co2_df['CO2'] = pd.to_numeric(sum_co2_df['CO2'], errors='coerce')
 print('To numeric.')
 
 '''
