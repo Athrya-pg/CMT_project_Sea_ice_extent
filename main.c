@@ -10,10 +10,11 @@
 #include <math.h>
 #include <string.h>
 #include <stdlib.h>
+
 #include "Linear_Regression.c"
+#include "Quadratic_Regression.c"
 #include "calculate_RMSE.c"
 #include "calculate_R2.c"
-#include "Quadratic_Regression.c"
 #include "significance_tests.c"
 
 // Define data read function
@@ -163,6 +164,7 @@ int main(){
     fprintf(coeff_file, "mN=%e\nbN=%lf\n", mN, bN);
     fclose(coeff_file);
     printf("Coefficients saved in coefficients.txt\n");
+
     // ********************************************************************************************************************
     // Calculate the residuals
     // Residuals are the differences between observed and estimated values, used to assess the accuracy of the model
@@ -176,6 +178,7 @@ int main(){
     }
     printf("********************************************************************************************************************\n");
     printf("Residuals calculated\n");
+    
 // ********************************************************************************************************************
     // Calculate standard errors and p-values
     double se_mN, se_bN;
