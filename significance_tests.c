@@ -1,11 +1,28 @@
 #include <stdio.h>
 #include <math.h>
+#include <gsl/gsl_cdf.h>
 
-// Function to approximate p-values with a normal distribution
+// Function to calculate the p-value for a T-test using GSL
 double calculate_p_value(double t, int degrees_of_freedom) {
-    // Uses an approximation (if necessary, replace with a library like GSL for more precision)
-    return 2 * (1.0 - 0.5 * (1 + erf(fabs(t) / sqrt(2))));
+    return 2.0 * gsl_cdf_tdist_Q(fabs(t), degrees_of_freedom);
 }
+
+// Function to calculate the p-value for the F-statistic using GSL
+double calculate_f_p_value(double f_stat, int df1, int df2) {
+    return gsl_cdf_fdist_Q(f_stat, df1, df2);
+}
+
+
+
+// // Fonction pour calculer la valeur p pour un test t à partir de la loi de Student
+// // Utilise une approximation de la fonction cumulative
+// double calculate_p_value_t(double t, int degrees_of_freedom) {
+//     double x = fabs(t) / sqrt(degrees_of_freedom);
+//     double p = 1.0 - (1.0 / (1.0 + 0.2316419 * x)) * 
+//                       (0.3989422804 * exp(-x * x / 2.0) * 
+//                       (0.31938153 + -0.356563782 * x + 1.781477937 * pow(x, 2) + -1.821255978 * pow(x, 3) + 1.330274429 * pow(x, 4)));
+//     return 2.0 * (1.0 - p); // Bilatéral
+// }
 
 // Function to calculate the standard errors of the regression coefficients
 void calculate_standard_errors(double *x, double *y, int n, double m, double b, double *se_m, double *se_b) {
@@ -54,4 +71,24 @@ void t_test_significance(double x[], double y[], int n, double m, double b) {
 
     printf("Slope (m) p-value: %.6f\n", p_value_m);
     printf("Intercept (b) p-value: %.6f\n", p_value_b);
+}
+
+// Function to perform regression analysis and print results
+void regression_analysis(double* beta, double* se, int n, int k, double alpha) {
+    int df = n - k - 1; // Degrees of freedom
+    for (int i = 0; i < k; i++) {
+        double t_stat = beta[i] / se[i]; // t-statistic
+        double p_value = 2 * (1 - gsl_cdf_tdist_Q(fabs(t_stat), df)); // Two-tailed p-value
+
+        printf("Coefficient %d:\n", i);
+        printf("  SE: %.5f\n", se[i]);
+        printf("  t-stat: %.5f\n", t_stat);
+        printf("  p-value: %.5f\n", p_value);
+
+        if (p_value < alpha) {
+            printf("  Significant at level %.2f\n", alpha);
+        } else {
+            printf("  Not significant at level %.2f\n", alpha);
+        }
+    }
 }
