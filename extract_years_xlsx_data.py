@@ -46,8 +46,8 @@ print('Is a Dataframe. Column renamed.')
 sum_co2 = df_co2cut.sum()
 sum_co2_df = pd.DataFrame(sum_co2, columns=['CO2'])
 sum_co2_df.reset_index(drop=True, inplace=True)
-#print(sum_co2_df.head())
-
+sum_co2_df['CO2'] = sum_co2_df['CO2'] * 0.000001
+# print(sum_co2_df.head())
 
 # index_range = [x +1979 for x in index_range]
 years = list(range(1979, 2024))
