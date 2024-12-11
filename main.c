@@ -192,9 +192,6 @@ int main(){
         yS_estim_poly[i] = aS * x[i] * x[i] + cS * x[i] + dS;
         yS_estim_multi[i] = coefficients[0] + coefficients[1] * x[i] + coefficients[2] * temp[i] + coefficients[3] * precipitation[i];
     }
-    for (int i = 0; i < n; i++) {
-        yS_estim_poly[i] = aS * x[i] * x[i] + cS * x[i] + dS;
-    }
     // Calculate the RMSE and R2
     double RMSE_S = calculate_rmse(yS, yS_estim_lin, n);
     double R2_S = calculate_R2(yS, yS_estim_lin, n);
@@ -219,11 +216,12 @@ int main(){
         return 1;
     }
 
-    fprintf(file, "Year,Estim_North_linReg,Estim_South_LinReg,Estim_South_multiReg\n");
+    fprintf(file, "Year,Estim_North_linReg,Estim_South_LinReg,Estim_South_multiReg,Estim_South_polyReg\n");
     for (int i = 0; i < n; i++) {
-        fprintf(file, "%.0f,%.3f,%.3f,%.3f\n", t[i], yN_estim[i], yS_estim_lin[i], yS_estim_multi[i]);
+        fprintf(file, "%.0f,%.3f,%.3f,%.3f,%.3f\n", t[i], yN_estim[i], yS_estim_lin[i], yS_estim_multi[i], yS_estim_poly[i]);
     }
     printf("Estimations saved in yestimations.csv\n");
+    fclose(file);
 
     // Write the coefficients to the file
     FILE *coeff_file = fopen("outputs/coefficients.txt", "w");
