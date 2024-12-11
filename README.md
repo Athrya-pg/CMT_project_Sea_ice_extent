@@ -1,11 +1,3 @@
-# Computational Methods and Tools - Project 
-
-## Project description
-
-## Project structure
-
-### Inputs and Outputs
-
 # COMPUTATIONAL METHODS AND TOOLS - PROJECT 
 
 ## Project Description

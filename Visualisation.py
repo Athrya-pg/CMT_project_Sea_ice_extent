@@ -1,116 +1,134 @@
+# Description: This script is used to visualize the data and the results of the linear regression model.
+#
+
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
+import os
 
-# Load data (observations and estimation)
-observations_nh = pd.read_csv('outputs/sea_ice_nh.csv')  # Observation of Northern Hemisphere
-observations_sh = pd.read_csv('outputs/sea_ice_sh.csv')  # Observation of Southern Hemisphere
-co2_data = pd.read_csv('outputs/summed_co2.csv')  # Emissions de CO2
-estimations = pd.read_csv('outputs/yestimation.csv')  # Estimations of Northern Hemisphere
+data_folder = 'outputs/'
+output_folder = 'outputs/'
 
-# CO2 = co2_data['CO2_Mass']
-# t = co2_data['Year']
+# ------------------------ Load data (observations and estimation) ------------------------
+observations_nh = pd.read_csv(os.path.join(data_folder, 'NH_Data.csv'), usecols=['Sea_Ice_Extent'])  # Observation of Northern Hemisphere
+observations_sh = pd.read_csv(os.path.join(data_folder, 'SH_Data.csv'), usecols=['Sea_Ice_Extent'])  # Observation of Southern Hemisphere
+co2 = pd.read_csv(os.path.join(data_folder, 'NH_Data.csv'), usecols=['CO2'])  # CO2 emissions
+year = pd.read_csv(os.path.join(data_folder, 'NH_Data.csv'), usecols=['Year'])  # Year
+estimations = pd.read_csv(os.path.join(data_folder, 'yestimations.csv'))  # Estimations of Northern Hemisphere
+estimations = pd.read_csv(os.path.join(data_folder, 'yestimations.csv'))  # Estimations of Northern Hemisphere
 
-# y_obs_nh = observations_nh['Annual']  # Observations de l'Hémisphère Nord
-# y_obs_sh = observations_sh['Annual']  # Observations de l'Hémisphère Nord
-# y_estim_nh = estimations["Estim_North_linReg"]  # Estimations of Northern Hemisphere
-# y_estim_sh = estimations['Estim_South_LinReg']  # Estimations of Southern Hemisphere
-# y_estim_sh_poly = estimations['Estim_South_polyReg']  # Estimations
-
-
-# Assure-toi que les colonnes existent et contiennent des valeurs valides
-if 'Year' in co2_data.columns and 'CO2_Mass' in co2_data.columns:
-    t = co2_data['Year']
-    CO2 = co2_data['CO2_Mass']
-    print("Colonnes 'Year' et 'CO2_Mass' trouvées et extraites.")
-else:
-    print("Les colonnes 'Year' ou 'CO2_Mass' sont manquantes dans le fichier CSV.")
-    exit(1)
-
-# Assurez-vous que les colonnes existent dans le fichier d'estimations
-if 'Estim_North_linReg' in estimations.columns and 'Estim_South_LinReg' in estimations.columns and 'Estim_South_polyReg' in estimations.columns:
+# Ensure that the columns exist in the estimation file
+if 'Estim_North_linReg' in estimations.columns and 'Estim_South_LinReg' in estimations.columns and 'Estim_South_polyReg' in estimations.columns and 'Estim_South_multiReg':
     y_estim_nh = estimations['Estim_North_linReg']
     y_estim_sh = estimations['Estim_South_LinReg']
     y_estim_sh_poly = estimations['Estim_South_polyReg']
-    print("Colonnes d'estimations trouvées et extraites.")
+    y_estim_sh_multi = estimations['Estim_South_multiReg']
+    print("Estimation columns found and extracted.")
 else:
-    print("Les colonnes d'estimations sont manquantes dans le fichier CSV.")
-    exit(1)
-# Extraire les colonnes nécessaires pour les observations
-if 'NH_Extent' in observations_nh.columns and 'SH_Extent' in observations_sh.columns:
-    y_obs_nh = observations_nh['NH_Extent']  # Observations de l'Hémisphère Nord
-    y_obs_sh = observations_sh['SH_Extent']  # Observations de l'Hémisphère Sud
-    print("Colonnes 'Year' trouvées et extraites pour les observations.")
-else:
-    print("Les colonnes 'Year' sont manquantes dans les fichiers d'observations.")
+    print("Estimation columns are missing in the CSV file.")
     exit(1)
 
+# # Extraire les colonnes nécessaires pour les observations
+# if 'NH_Extent' in observations_nh.columns and 'SH_Extent' in observations_sh.columns:
+#     y_obs_nh = observations_nh['NH_Extent']  # Observations de l'Hémisphère Nord
+#     y_obs_sh = observations_sh['SH_Extent']  # Observations de l'Hémisphère Sud
+#     print("Colonnes 'Year' trouvées et extraites pour les observations.")
+# else:
+#     print("Les colonnes 'Year' sont manquantes dans les fichiers d'observations.")
+#     exit(1)
 
-#Plot yN vs CO2 with y_estim_nh
-plt.figure(figsize=(10, 6))
-plt.scatter(CO2, y_obs_nh, label='Observations NH', color='blue') 
-plt.plot(CO2, y_estim_nh, label='Linear Regression Model', color='red')  
-plt.xlabel('Carbon Dioxide (Gt)', fontsize=12)
-plt.ylabel('Ice Surface (million km²)', fontsize=12)
-plt.title(' Global CO2 emissions vs Arctic Sea Ice Extent (Northern Hemisphere)')
-plt.legend(loc ='upper right')
-plt.grid(True)
-plt.savefig('outputs/CO2_vs_ICENH_year_LinearReg.png')
+#----------------------- Plot for Northern Hemisphere ------------------------
 
-#Plot yS vs CO2 with y_estim_sh
-plt.figure(figsize=(10, 6))
-plt.scatter(CO2, y_obs_sh, label='Observations SH', color='blue') 
-plt.plot(CO2, y_estim_sh, label='Linear Regression Model', color='red')  
-plt.xlabel('Carbon Dioxide (Gt)', fontsize=12)
-plt.ylabel('Ice Surface (million km²)', fontsize=12)
-plt.title(' Global CO2 emissions vs Arctic Sea Ice Extent (Southern Hemisphere)')
-plt.legend(loc ='upper right')
-plt.grid(True)
-plt.savefig('outputs/CO2_vs_ICESH_year_LinearReg.png')
+# Créer une figure avec deux sous-graphiques côte à côte
+fig1, (ax1, ax2) = plt.subplots(1, 2, figsize=(20, 6))
 
-#Plot yN vs t with y_estim_nh
-plt.figure(figsize=(10, 6))
-plt.scatter(t, y_obs_nh, label='Observations NH', color='blue')
-plt.plot(t, y_estim_nh, label='Estimations NH', color='red')
-plt.xlabel('Year', fontsize=12)
-plt.ylabel('Ice Surface (million km²)', fontsize=12)
-plt.title('Year vs Sea Ice Extent (Northern Hemisphere)')
-plt.legend(loc='upper right')
-plt.grid(True)
+# Plot yN vs co2
+ax1.scatter(co2, observations_nh, label='Observations NH', color='blue')
+ax1.plot(co2, y_estim_nh, label='Linear Regression Model', color='red')
+ax1.set_xlabel('Carbon Dioxide (Gt)', fontsize=12)
+ax1.set_ylabel('Ice Surface North (million km²)', fontsize=12)
+ax1.set_title('Global CO2 emissions vs Sea Ice Extent (Northern Hemisphere)')
+ax1.legend(loc='lower left')
+ax1.grid(True)
+
+# Plot yN vs year
+ax2.scatter(year, observations_nh, label='Observations NH', color='blue')
+ax2.plot(year, y_estim_nh, label='Estimations NH', color='red')
+ax2.set_xlabel('Year', fontsize=12)
+ax2.set_ylabel('Ice Surface North (million km²)', fontsize=12)
+ax2.set_title('Year vs Sea Ice Extent (Northern Hemisphere)')
+ax2.legend(loc='lower left')
+ax2.grid(True)
 plt.savefig('outputs/Year_vs_IceExtent_NH.png')
+# Save the plot
+plt.savefig(output_folder + 'NH_Linear_Regression_plot.png')
 
-#Plot yS vs t with y_estim_sh
+# ----------------------- Plot for Southern Hemisphere ------------------------
+
+#-----------------------
+# Linear regression model
+#-----------------------
+
+fig2, (ax3, ax4) = plt.subplots(1, 2, figsize=(20, 6))
+
+# Plot yS vs CO2
+ax3.scatter(co2, observations_sh, label='Observations SH', color='blue') 
+ax3.plot(co2, y_estim_sh, label='Linear Regression Model', color='red')  
+ax3.set_xlabel('Carbon Dioxide (Gt)', fontsize=12)
+ax3.set_ylabel('Ice Surface (million km²)', fontsize=12)
+ax3.set_title(' Global CO2 emissions vs Sea Ice Extent (Southern Hemisphere)')
+ax3.legend(loc ='lower left')
+ax3.grid(True)
+
+# Plot yS vs year
+ax4.scatter(year, observations_sh, label='Observations SH', color='blue')
+ax4.plot(year, y_estim_sh, label='Linear Regression Model', color='red')
+ax4.set_xlabel('Year', fontsize=12)
+ax4.set_ylabel('Ice Surface (million km²)', fontsize=12)
+ax4.set_title('Year vs Sea Ice Extent (Southern Hemisphere)')
+ax4.legend(loc='lower left')
+ax4.grid(True)
+plt.savefig( output_folder + 'SH_Linear_Regression_plot.png')
+
+# -----------------
+# Multi-linear regression model
+# -----------------
+
+# Plot yS vs year
 plt.figure(figsize=(10, 6))
-plt.scatter(t, y_obs_sh, label='Observations SH', color='blue')
-plt.plot(t, y_estim_sh, label='Estimations SH', color='red')
+plt.scatter(year, observations_sh, label='Observations SH', color='blue')
+plt.plot(year, y_estim_sh_multi, label='Multiple Regression Model', color='red')
 plt.xlabel('Year', fontsize=12)
 plt.ylabel('Ice Surface (million km²)', fontsize=12)
 plt.title('Year vs Sea Ice Extent (Southern Hemisphere)')
-plt.legend(loc='upper right')
+plt.legend(loc='lower left')
 plt.grid(True)
-plt.savefig('outputs/Year_vs_IceExtent_SH_LinearReg.png')
+plt.savefig( output_folder + 'SH_Multiple_Regression_plot.png')
 
-#Plot ySpoly vs CO2 with y_estim_sh
-plt.figure(figsize=(10, 6))
-plt.scatter(CO2, y_obs_sh, label='Observations SH', color='blue')
-plt.plot(CO2, y_estim_sh_poly, label='Polynomial Regression SH', color='green')
-plt.xlabel('Carbon Dioxide (Gt)', fontsize=12)
-plt.ylabel('Ice Surface (million km²)', fontsize=12)
-plt.title('CO2 Emissions vs Sea Ice Extent (Southern Hemisphere) - Polynomial Regression')
-plt.legend(loc='upper right')
-plt.grid(True)
-plt.savefig('outputs/CO2_vs_IceExtentSH_PolyReg.png')
+# -----------------
+# Quadratic regression model
+# -----------------
 
-# Plot ySpoly vs t
-plt.figure(figsize=(10, 6))
-plt.scatter(t, y_obs_sh, label='Observations SH', color='blue')
-plt.plot(t, y_estim_sh_poly, label='Polynomial Regression SH', color='green')
-plt.xlabel('Year', fontsize=12)
-plt.ylabel('Ice Surface (million km²)', fontsize=12)
-plt.title('Year vs Sea Ice Extent (Southern Hemisphere) - Polynomial Regression')
-plt.legend(loc='upper right')
-plt.grid(True)
-plt.savefig('outputs/Year_vs_IceExtent_SH_PolyReg.png')
+fig4, (ax7, ax8) = plt.subplots(1, 2, figsize=(20, 6))
 
-print("Plot saved in outputs folder")
+# Plot yS vs CO2
+ax7.scatter(co2, observations_sh, label='Observations SH', color='blue') 
+ax7.plot(co2, y_estim_sh_poly, label='Quadratic Regression Model', color='red')  
+ax7.set_xlabel('Carbon Dioxide (Gt)', fontsize=12)
+ax7.set_ylabel('Ice Surface (million km²)', fontsize=12)
+ax7.set_title(' Global CO2 emissions vs Sea Ice Extent (Southern Hemisphere)')
+ax7.legend(loc ='lower left')
+ax7.grid(True)
+
+# Plot yS vs year
+ax8.scatter(year, observations_sh, label='Observations SH', color='blue')
+ax8.plot(year, y_estim_sh_poly, label='Quadratic Regression Model', color='red')
+ax8.set_xlabel('Year', fontsize=12)
+ax8.set_ylabel('Ice Surface (million km²)', fontsize=12)
+ax8.set_title('Year vs Sea Ice Extent (Southern Hemisphere)')
+ax8.legend(loc='lower left')
+ax8.grid(True)
+plt.savefig( output_folder + 'SH_Quadratic_Regression_plot.png')
+
+print('Plots saved.')
 
