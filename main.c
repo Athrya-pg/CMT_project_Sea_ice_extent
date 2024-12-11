@@ -2,7 +2,7 @@
 //  ===================================================================================================================
 // Objective = explain sea ice extent depending on explanatory variables such as greenhouse gas emissions, temperature
 // Last update : Chloe Prats Genre (EPFL)
-// date : 08/12/2024
+// date : 11/12/2024
 
 
 // Loading libraries and packages
