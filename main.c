@@ -19,7 +19,7 @@
 // #include "significance_tests.c"
 
 // Define data read function
-int read_data(const char *filename, double *values, double *time, int max_size){
+int read_data_nh(const char *filename, double *year, double *sea_ice_extent, double *co2, int max_size){
     FILE *file = fopen(filename, "r");
     if (file == NULL) {
         perror("Error opening the file");
@@ -34,7 +34,36 @@ int read_data(const char *filename, double *values, double *time, int max_size){
     }
     int count = 0;
     while (count < max_size && fgets(buffer, sizeof(buffer), file) != NULL) {
-        if (sscanf(buffer, "%lf,%lf", &values[count], &time[count]) != 2) {
+        if (sscanf(buffer,"%lf,%lf,%lf", &year[count], &sea_ice_extent[count], &co2[count]) != 3) {
+            fprintf(stderr, "Invalid data format at line %d in file %s\n", count + 2, filename);
+            break;
+        }
+        // // Print the first few values for verification
+        // if (count < 5) {
+        //     printf("Read from %s: value = %lf, time = %lf\n", filename, values[count], time[count]);
+        // }
+        count++;
+    }
+    fclose(file);
+    return count;
+}
+
+int read_data_sh(const char *filename, double *year, double *sea_ice_extent, double *co2, double *precipitation, double *temperature, int max_size) {
+    FILE *file = fopen(filename, "r");
+    if (file == NULL) {
+        perror("Error opening the file");
+        return -1;
+    }
+    // Ignore the first line (header)
+    char buffer[256];  // used to temporarily store lines from the csv file (256 characters max)
+    if (fgets(buffer, sizeof(buffer), file) == NULL) {
+        fprintf(stderr, "Error reading header from %s\n", filename);
+        fclose(file);
+        return -1;
+    }
+    int count = 0;
+    while (count < max_size && fgets(buffer, sizeof(buffer), file) != NULL) {
+        if (sscanf(buffer, "%lf,%lf,%lf,%lf,%lf", &year[count], &sea_ice_extent[count], &co2[count], &precipitation[count], &temperature[count]) != 5) {
             fprintf(stderr, "Invalid data format at line %d in file %s\n", count + 2, filename);
             break;
         }
@@ -50,11 +79,24 @@ int read_data(const char *filename, double *values, double *time, int max_size){
 
 // Define Main function
 int main(){
-    // x are greenhouse gas emissions
-    // yN and yS are sea ice extent for North and South hemisphere
-    const int max_data_size = 1000;
-    const int p = 4; // Number of predictors (including the intercept)
+    // x are CO2 emissions
+    // t is the time in years
+    // yN and yS are sea_ice_extent for North and South hemisphere
+    const int max_data_size = 100;
 
+    double t[max_data_size];
+    double x[max_data_size];
+
+    double yN[max_data_size];
+
+    double yS[max_data_size];
+    double precipitation[max_data_size];
+    double temp[max_data_size];
+
+    int n_yN, n_yS;
+
+    // X is useful for multiple regression for the southern hemisphere
+    const int p = 4; // Number of predictors (including the intercept)
     double *X[max_data_size];
     for (int i = 0; i < max_data_size; i++) {
         X[i] = (double *)malloc(p * sizeof(double));
@@ -67,80 +109,70 @@ int main(){
     //     X[i][0] = 1.0; // Intercept term
     // }
 
-    double t[max_data_size];
-    double x[max_data_size]; 
-    
-    double yN[max_data_size];
-    double yS[max_data_size];
-    int n_x, n_yN, n_yS;
-
-    // Read data from sea ice
-    n_yS = read_data("outputs/sea_ice_sh.csv", yS, t, max_data_size);
-    printf("n_yS = %d\n", n_yS);
-    if (n_yS <= 0) {
-        printf("Error: no data in sea_ice_sh.csv\n");
-        return 1;
-    }
-
-    n_yN = read_data("outputs/sea_ice_nh.csv", yN, t, max_data_size);
+    // Read data from the NH_Data.csv file
+    n_yN = read_data_nh("outputs/NH_Data.csv", t, yN, x, max_data_size);
     if (n_yN <= 0) {
-        printf("Error: no data in sea_ice_nh.csv\n");
+        printf("Error: no data in NH_Data.csv\n");
         return 1;
     }
 
-    // Read data from GHG
-    n_x = read_data("outputs/summed_co2.csv", x, t, max_data_size);
-    if (n_x <= 0) {
-        printf("Error : no data in summed_co2.csv\n");
+    // Read data from the SH_Data.csv file
+    n_yS = read_data_sh("outputs/SH_Data.csv", t, yS, x, precipitation, temp, max_data_size);
+    if (n_yS <= 0) {
+        printf("Error: no data in SH_Data.csv\n");
         return 1;
     }
 
-    // Check if the number of data points is the same
-    if (n_x != n_yN || n_x != n_yS) {
-        printf("Error: Mismatch in the number of data points between files (%d in summed_co2.csv, %d in sea_ice_nh.csv, %d in sea_ice_sh.csv).\n", n_x, n_yN, n_yS);
+    // Check if the number of data points is the same in all files
+    if (n_yS != n_yN || n_yS <= 0) {
+        printf("Error: Mismatch in the number of data points (%d vs %d)\n", n_yN, n_yS);
         return 1;
     }
 
     // Number of data points
-    int n = n_x;
+    int n = n_yN;
+
+    //Fill the X matrix for the southern hemisphere
+    for (int i = 0; i < n; i++) {
+        X[i][1] = x[i];
+        X[i][2] = temp[i];
+        X[i][3] = precipitation[i];
+    }
 
 // ********************************************************************************************************************
     // Estimations
 // ********************************************************************************************************************
-    // Calculate the linear regression for northern hemisphere
+    // Linear regression for Northern hemisphere
     double mN, bN;
     Linear_Regression(x, yN, n, &mN, &bN);
 
-    // Calculate the linear regression for southern hemisphere
+    // Linear regression for Southern hemisphere
     double mS, bS;
     Linear_Regression(x, yS, n, &mS, &bS);
 
-    //Calculate the quadratic regression for southern hemisphere
+    // Quadratic regression for Southern hemisphere
     double aS, cS, dS;
     Quadratic_Regression(x, yS, n, &aS, &cS, &dS);
 
-    //Perform multiple regression for Southern Hemisphere
+    // Multiple regression for Southern Hemisphere
     double coefficients[p];
     multiple_regression(X, yS, n, p, coefficients);
+
+//********************************************************************************************************************
+    // Output the results
+    printf("********************************************************************************************************************\n");
+    printf("Northern Hemisphere, linear regression model: y = %lf * x + %lf\n", mN, bN);
+    printf("Southern Hemisphere, linear regression model: y = %lf * x + %lf\n", mS, bS);
+    printf("Southern Hemisphere, quadratic regression model: y = %lf * x^2 + %lf * x + %lf\n", aS, cS, dS);
+    printf("Southern Hemsiphere, multiple regression model: y = %lf + %lf * x + %lf * temp + %lf * precip\n", coefficients[0], coefficients[1], coefficients[2], coefficients[3]);
     // Print coefficients
     printf("Coefficients:\n");
     for (int i = 0; i < p; i++) {
         printf("b%d = %lf\n", i, coefficients[i]);
     }
-
-    for (int i = 0; i < max_data_size; i++) {
-        free(X[i]);
-    }
-    // free(X);
-    //********************************************************************************************************************
-
-    // Output the results
-    printf("Northern Hemisphere: y = %e * x + %lf\n", mN, bN);
-    printf("Southern Hemisphere: y = %e * x + %lf\n", mS, bS);
-    printf("Southern Hemisphere, quadratic regression model: y = %e * x^2 + %e * x + %e\n", aS, cS, dS);
     printf("********************************************************************************************************************\n");
 
-    // Calculate the predictions and errors for northern hemisphere
+    // Predictions and errors for Northern hemisphere
     double yN_estim[max_data_size];
     // Write the estimations to the file
     for (int i = 0; i < n; i++) {
@@ -151,12 +183,14 @@ int main(){
     printf("Northern Hemisphere RMSE: %f\n", RMSE_N);
     printf("Northern Hemisphere R2: %f\n", R2_N);
 
-    // Calculate the linear and quadratic estimations and errors for southern hemisphere
+    // Estimation for Linear and Quadratic regression and errors for Southern hemisphere
     double yS_estim_lin[max_data_size];
     double yS_estim_poly[max_data_size];
+    double yS_estim_multi[max_data_size];
     for (int i = 0; i < n; i++) {
         yS_estim_lin[i] = mS * x[i] + bS;
         yS_estim_poly[i] = aS * x[i] * x[i] + cS * x[i] + dS;
+        yS_estim_multi[i] = coefficients[0] + coefficients[1] * x[i] + coefficients[2] * temp[i] + coefficients[3] * precipitation[i];
     }
     for (int i = 0; i < n; i++) {
         yS_estim_poly[i] = aS * x[i] * x[i] + cS * x[i] + dS;
@@ -167,12 +201,17 @@ int main(){
     printf("Southern Hemisphere RMSE (Linear): %f\n", RMSE_S);
     printf("Southern Hemisphere R2 (Linear): %f\n", R2_S);
 
-    double RMSE_S_poly = calculate_rmse(yS, yS_estim_poly, n);
-    double R2_S_poly = calculate_R2(yS, yS_estim_poly, n);
-    printf("Southern Hemisphere RMSE (Quadratic): %f\n", RMSE_S_poly);
-    printf("Southern Hemisphere R2 (Quadratic): %f\n", R2_S_poly);
-    printf("********************************************************************************************************************\n");
+    // double RMSE_S_poly = calculate_rmse(yS, yS_estim_poly, n);
+    // double R2_S_poly = calculate_R2(yS, yS_estim_poly, n);
+    // printf("Southern Hemisphere RMSE (Quadratic): %f\n", RMSE_S_poly);
+    // printf("Southern Hemisphere R2 (Quadratic): %f\n", R2_S_poly);
 
+    double RMSE_S_multi = calculate_rmse(yS, yS_estim_multi, n);
+    double R2_S_multi = calculate_R2(yS, yS_estim_multi, n);
+    printf("Southern Hemisphere RMSE (Multiple regression): %f\n", RMSE_S_multi);
+    printf("Southern Hemisphere R2 (Multiple regression): %f\n", R2_S_multi);
+    printf("********************************************************************************************************************\n");
+// ********************************************************************************************************************
     // Create a file to store the estimations
     FILE *file = fopen("outputs/yestimations.csv", "w");
     if (file == NULL) {
@@ -180,9 +219,9 @@ int main(){
         return 1;
     }
 
-    fprintf(file, "Year,Estim_North_linReg,Estim_South_LinReg,Estim_South_polyReg\n");
+    fprintf(file, "Year,Estim_North_linReg,Estim_South_LinReg,Estim_South_multiReg\n");
     for (int i = 0; i < n; i++) {
-        fprintf(file, "%.0f,%.3f,%.3f,%.3f\n", t[i], yN_estim[i], yS_estim_lin[i], yS_estim_poly[i]);
+        fprintf(file, "%.0f,%.3f,%.3f,%.3f\n", t[i], yN_estim[i], yS_estim_lin[i], yS_estim_multi[i]);
     }
     printf("Estimations saved in yestimations.csv\n");
 
@@ -193,8 +232,15 @@ int main(){
         return 1;
     }
     fprintf(coeff_file, "mN=%e\nbN=%lf\n", mN, bN);
+    for (int i = 0; i < p; i++) {
+        fprintf(coeff_file, "b%d=%lf\n", i, coefficients[i]);
+    }
     fclose(coeff_file);
     printf("Coefficients saved in coefficients.txt\n");
+
+    for (int i = 0; i < max_data_size; i++) {
+        free(X[i]);
+    }
 
     // ********************************************************************************************************************
     // Calculate the residuals
