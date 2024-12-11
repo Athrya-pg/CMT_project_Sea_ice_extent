@@ -26,29 +26,30 @@ The program will:
 
 - "*data/*" contains input data
 - "*outputs/*" contains program outputs
-- "*src/*" contains program code
-- /// "*bin/*" generated after compiling C code
-- "*docs/*" contains a notebook illustrating use and validation of the code /// need??? ask paul /// 
+- "*intermediate_outputs/*" contains the intermidiate data tables and figures
+- "*src/*" contains the program codes
+- "*docs/*" contains a notebook illustrating use and validation of the code ############## /// need??? ask paul /// ##########
 
 ### Inputs and outputs
-
+/////////////////////////////////////////////////////////////////////////////////////////////// COMPLETE FILE TYPE ///////////
 Inputs:
-- "*data/Sea_Ice_index_Monthly_Data_by_Year_G02135.xlsx*" 
-- "*data/IEA_EDGAR_CO2_1970_2023.xlsx*" 
-- "*data/precipitations.csv*" 
-- "*data/aravg.ann.ocean.90S.60S.v6.0.0.202410.asc*" is a JSON file.
+- "*data/Sea_Ice_index_Monthly_Data_by_Year_G02135.xlsx*" is a --- file. 
+- "*data/IEA_EDGAR_CO2_1970_2023.xlsx*" is a --- file.
+- "*data/precipitations.csv*" is a --- file.
+- "*data/aravg.ann.ocean.90S.60S.v6.0.0.202410.asc*" is a ASCII --- file.
 
 #################################################################################### CONTINUE HERE! #########################
 
-Outputs:
+Outputs: ///////////////////////////////////////////////////////////////////////////// COMPLETE WHEN SET AT THE END //////////
 - "*outputs/plausibilite.csv*" is a comma-delimted file.
 - "*outputs/plausibilite.png*" is an image file
 
 ### Implementation details
 
 Overview:
-- The simulation is handled by C. The C program is compiled to a shared library, which is called by Python via the `ctypes` module.
-- Python handles most of the I/O, which includes reading sensor information and formatting the output of the single point simulation.
+- Python handles most of the I/O, which means pulling the data and formatting them into 2 distinct CSV documents; one for the Northern Hemisphere data and one for the Southern Hemisphere data. 
+- The regression calculations are done by C.                            /// Use 'ctypes'??? "The C program is compiled to a shared library, which is called by Python via the `ctypes` module." original README.
+
 - For the grid simulation, the C program directly writes each simulation result to a CSV file designated by the calling Python script.
 
 Structure. In the directory "*src/*":
@@ -78,7 +79,7 @@ $ cd docs && quarto render analysis.qmd
 
 ## Instructions
 
-To reproduce results in the report, two steps should be followed:
+To reproduce results in the report, these steps should be followed:
 
 1. Build (compile) the shared library.
 2. Run the program.
