@@ -1,7 +1,7 @@
 // Sea Ice project : 
 //  ===================================================================================================================
 // Objective = explain sea ice extent depending on explanatory variables such as greenhouse gas emissions, temperature
-// Last update : Chloe Prats Genre (EPFL)
+// Last update : Chloe Prats Genre
 // date : 11/12/2024
 
 

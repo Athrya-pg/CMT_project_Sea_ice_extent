@@ -1,5 +1,6 @@
-# Description: This script is used to visualize the data and the results of the linear regression model.
-#
+# ================================================================================================
+# Description: This script is used to visualize the data and the results of the different Regression model.
+# ================================================================================================
 
 import numpy as np
 import matplotlib.pyplot as plt

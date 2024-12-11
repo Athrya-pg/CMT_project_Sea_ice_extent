@@ -1,5 +1,10 @@
+// ============================================================================== 
+// Description: Function to calculate the R2, coefficient of determination
+// ==============================================================================
+
 #include <stdio.h>
 #include <math.h>
+
 // Function to calculate the mean
 double mean(double *values, int n) {
     double sum = 0.0;
