@@ -129,7 +129,7 @@ ax2_twin.legend(loc='upper right')
 plt.tight_layout()
 plt.savefig(output_folder + 'Correlations.png')
 print('Ploted. Saved.')
-plt.show()
+#plt.show()
 
 
 
@@ -142,69 +142,42 @@ output = 'ocean_temp_annual_SPole.csv'
 # Make an empty entry list that can be filled
 list_entries = []
 
-# Reading the ASC file
+# Reading the lines of the ASC file into the entry list
 with open(data_folder + input, 'r') as file:
     content = file.readlines()
     for line in content:
-        #print(line.strip())
         list_entries.append(line.strip())
-#print(list_entries)
 
+# Make an empty list
 split_data = []
 
+# An element in list_entries look like this [1850   -0.419871 -999.000000 -999.000000 -999.000000 -999.000000]
+# We want to get all the values matched with the year, like this [1850,-0.419871], [1850, -999.000000], [1850, -999.000000], [1850, -999.000000], [1850, -999.000000]
 for row in list_entries:
     values = row.strip().split()
     years = values[0]
     for i,value in enumerate(values[1:]):
         split_data.append([f'{years}',value])
 
+# Making the split_data list into a dataframe
 temp_df = pd.DataFrame(split_data, columns=['Year','Temperature'])
-#if temp_df['Value'] == '-999.000000':
+
+# -999.000000 signifies there is no data, so we are removing from the dataframe the rows that do not have data
 temp_df = temp_df[temp_df['Temperature'] != '-999.000000']
-temp_df.reset_index(drop=True, inplace=True)
 
-#print(temp_df[120:130])
-
+# Choosing the years we need for our analysis
 ocean_temp_cut = temp_df[129:174]
-ocean_temp_cut.reset_index(drop=True, inplace=True)
-print(ocean_temp_cut)
 
+# Because we removed columns and cut our dataframe, we reset the row index
+ocean_temp_cut.reset_index(drop=True, inplace=True)
+
+# Converting into a CSV file
 ocean_temp_cut.to_csv(output_folder + output, index=False)
 print('Accomplished.')
 
 
 
-'''
-# Read the text file
-with open(data_folder + input, 'r') as file:
-    rows = file.readlines()
 
-#print(rows[:5])
-
-# Remove headers and things
-data_rows = rows[116:161]
-
-# print(data_rows[-5:])
-# print(data_rows[:5])
-
-# Select the wanted data
-months = ['01','02','03','04','05','06','07','08', '09','10','11','12']
-timeXdata = []
-
-for row in data_rows:
-    values = row.strip().split()
-    years = values[0]
-    for i,value in enumerate(values[1:]):
-        timeXdata.append([f'{years}-{months[i]}',value])
-
-#print(timeXdata[:5])
-
-# Make into a dataframe
-nino_df = pd.DataFrame(timeXdata, columns=['Date','Std_Value'])
-
-# Convert to CSV file
-nino_df.to_csv(output_folder+output, index=False)
-'''
 
 
 
