@@ -136,14 +136,14 @@ print('Ploted. Saved.')
 # --------- Extracting Data from ASC file (.asc) ------------------------------------------------------------
 
 # Set input and output file names
-input = 'aravg.ann.ocean.90S.60S.v6.0.0.202410.asc'
-output = 'ocean_temp_annual_SPole.csv'
+input_1 = 'aravg.ann.ocean.90S.60S.v6.0.0.202410.asc'
+output_1 = 'ocean_temp_annual_SPole.csv'
 
 # Make an empty entry list that can be filled
 list_entries = []
 
 # Reading the lines of the ASC file into the entry list
-with open(data_folder + input, 'r') as file:
+with open(data_folder + input_1, 'r') as file:
     content = file.readlines()
     for line in content:
         list_entries.append(line.strip())
@@ -172,8 +172,83 @@ ocean_temp_cut = temp_df[129:174]
 ocean_temp_cut.reset_index(drop=True, inplace=True)
 
 # Converting into a CSV file
-ocean_temp_cut.to_csv(output_folder + output, index=False)
+ocean_temp_cut.to_csv(output_folder + output_1, index=False)
 print('Accomplished.')
+
+
+
+# --------- Extracting Data from a CSV file (.csv) ---------------------------------------------------------------------
+
+# Create input and output file
+input_2 = 'precipitations.csv'
+output_2 = 'precipitation_adjusted.csv'
+
+# Reading the CSV file, while ignoring the comments
+precipitation_df = pd.read_csv(data_folder + input_2, comment='#')
+
+# Renaming the column for our convinience 
+precipitation_df.rename(columns={'Anomaly' : 'Precipitation'}, inplace=True)
+
+# Creating the new CSV file
+precipitation_df.to_csv(output_folder + output_2, index=False)
+print('Executed.')
+
+
+
+# --------- Merging the Data -------------------------------------------------------------------------------------------------
+# We are merging the data into two distinct files, one for the northern hemisphere regression and one for the southern 
+# hemisphere regression
+
+
+# Setting the same in and output folder
+in_out_folder = 'outputs/'
+
+# Define the input file names
+file_base_nh = 'sea_ice_nh.csv'
+file_co2 = 'summed_co2.csv'
+file_base_sh = 'sea_ice_sh.csv'
+file_precipitation_sh = 'precipitation_adjusted.csv'
+file_temp_sh = 'ocean_temp_annual_SPole.csv'
+
+# Read the individual files as DataFrames
+df_nh = pd.read_csv(in_out_folder + file_base_nh)
+df_co2 = pd.read_csv(in_out_folder + file_co2)
+df_sh = pd.read_csv(in_out_folder + file_base_sh)
+df_precip = pd.read_csv(in_out_folder + file_precipitation_sh)
+df_temp = pd.read_csv(in_out_folder + file_temp_sh)
+
+# Select the desired columns from each dataframe
+base_years = df_nh['Year']
+base_nh = df_nh['NH_Extent']  
+co2 = df_co2['CO2']  
+base_sh = df_sh['SH_Extent']  
+precip = df_precip['Precipitation']
+temp = df_temp['Temperature']
+
+# Combine the selected columns into 2 distinct dataframe (one NH and one for SH)
+nh_merged_df = pd.DataFrame({
+    'Year': base_years,
+    'Sea_Ice_Extent': base_nh,
+    'CO2': co2
+})
+
+sh_merged_df = pd.DataFrame({
+    'Year': base_years,
+    'Sea_Ice_Extent': base_sh,
+    'CO2': co2,
+    'Precipitation' : precip,
+    'Temperature' : temp
+})
+
+
+# Define output names
+output_nh = 'NH_Data.csv'
+output_sh = 'SH_Data.csv'
+
+# Save the merged DataFrame to a new CSV file
+nh_merged_df.to_csv(in_out_folder + output_nh, index=False)
+sh_merged_df.to_csv(in_out_folder + output_sh, index=False)
+print(f"Merged Data")
 
 
 
