@@ -8,22 +8,20 @@ from matplotlib.ticker import MaxNLocator
 from sklearn.preprocessing import StandardScaler
 
 # Set I/O folder names
-data_folder = 'data/'
-output_folder = 'proceced_data'
+data_folder = './data/'
+output_folder = './proceced_data'
 
 # Set dataset file names for the input datasets
 # -------------------------------------------------------
 
-# Define the folder name for output files
-output_folder = "proceced_data"
 # Create the folder where the processed data will go :
 os.makedirs(output_folder, exist_ok=True)
 
 # --------- Extracting Data from an Excelsheet (.xlsx) ---------------------------------------------------------------------
 
 # Read the excel file into a dataFrame
-df_nh = pd.read_excel(data_folder + 'Sea_Ice_Index_Monthly_Data_by_Year_G02135_v3.0.xlsx', sheet_name='NH-Extent')
-df_sh = pd.read_excel(data_folder + 'Sea_Ice_Index_Monthly_Data_by_Year_G02135_v3.0.xlsx', sheet_name='SH-Extent') 
+df_nh = pd.read_excel(data_folder +'Sea_Ice_Index_Monthly_Data_by_Year_G02135_v3.0.xlsx', sheet_name='NH-Extent')
+df_sh = pd.read_excel(data_folder +'Sea_Ice_Index_Monthly_Data_by_Year_G02135_v3.0.xlsx', sheet_name='SH-Extent') 
 df_co2 = pd.read_excel(data_folder + 'IEA_EDGAR_CO2_1970_2023.xlsx', sheet_name='IPCC 2006')
 print('Excel read.')
 
@@ -188,7 +186,7 @@ print('Executed.')
 
 
 # Setting the same in and output folder
-in_out_folder = 'proceced_data/'
+in_out_folder = './proceced_data/'
 
 # Select the desired columns from each dataframe
 base_years = df_nhcut['Year']
