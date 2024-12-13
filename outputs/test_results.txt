@@ -1,0 +1,11 @@
+F-statistic (NH):  541.9819, p-value:  1.1102e-16
+T-test results for the North Pole model:
+Coefficient mN (NH): t-value = -23.280573854481673, p-value =  0.0000e+00
+Coefficient bN (NH): t-value = 112.38950448131311, p-value =  0.0000e+00
+**********************************************************************
+F-statistic (SH):  6.8349, p-value:  7.6922e-04
+T-test results for the South Pole model:
+Coefficient b0 (SH): t-value = 1.0550, p-value = 2.9762e-01
+Coefficient b1 (SH): t-value = -2.6288, p-value = 1.2005e-02
+Coefficient b2 (SH): t-value = -3.9547, p-value = 2.9649e-04
+Coefficient b3 (SH): t-value = 2.5354, p-value = 1.5141e-02
