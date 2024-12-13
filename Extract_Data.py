@@ -1,5 +1,6 @@
 ### Extracting Data ###
 
+import os
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -8,11 +9,15 @@ from sklearn.preprocessing import StandardScaler
 
 # Set I/O folder names
 data_folder = 'data/'
-output_folder = 'outputs/'
+output_folder = 'proceced_data'
 
 # Set dataset file names for the input datasets
 # -------------------------------------------------------
 
+# Define the folder name for output files
+output_folder = "proceced_data"
+# Create the folder where the processed data will go :
+os.makedirs(output_folder, exist_ok=True)
 
 # --------- Extracting Data from an Excelsheet (.xlsx) ---------------------------------------------------------------------
 
@@ -63,22 +68,10 @@ df_shcut['SH_Extent'] = pd.to_numeric(df_shcut['SH_Extent'], errors='coerce')
 sum_co2_df['CO2'] = pd.to_numeric(sum_co2_df['CO2'], errors='coerce')
 print('To numeric.')
 
- 
-# Converting the dataframes to CSV files for safe keeping
-df_nhcut.to_csv(output_folder + 'sea_ice_nh.csv', index=False)
-df_shcut.to_csv(output_folder + 'sea_ice_sh.csv', index=False)
-sum_co2_df.to_csv(output_folder + 'summed_co2.csv', index=False)
-print('Converted to csv.')
-
 
 
 # --------- Ploting Sea Ice Extent and CO2 Emissions Over Time --------------------------------------------------------------
 # We are ploting those graphs to see if it is possible to use a linear regression for our approximation.
-
-# Read the CSV files into DataFrames
-df_nhcut = pd.read_csv(output_folder + 'sea_ice_nh.csv') 
-df_shcut = pd.read_csv(output_folder + 'sea_ice_sh.csv') 
-sum_co2_df = pd.read_csv(output_folder + 'summed_co2.csv')
 
 # Merge the DataFrames on the 'Year' column for plot construction
 merged_nh = pd.merge(df_nhcut, sum_co2_df, on='Year')
@@ -127,7 +120,7 @@ ax2_twin.legend(loc='upper right')
 
 # Show plot
 plt.tight_layout()
-plt.savefig(output_folder + 'Correlations.png')
+plt.savefig(output_folder + '/' + 'Correlations.png')
 print('Ploted. Saved.')
 #plt.show()
 
@@ -170,9 +163,6 @@ ocean_temp_cut = temp_df[129:174]
 
 # Because we removed columns and cut our dataframe, we reset the row index
 ocean_temp_cut.reset_index(drop=True, inplace=True)
-
-# Converting into a CSV file
-ocean_temp_cut.to_csv(output_folder + output_1, index=False)
 print('Accomplished.')
 
 
@@ -188,9 +178,6 @@ precipitation_df = pd.read_csv(data_folder + input_2, comment='#')
 
 # Renaming the column for our convinience 
 precipitation_df.rename(columns={'Anomaly' : 'Precipitation'}, inplace=True)
-
-# Creating the new CSV file
-precipitation_df.to_csv(output_folder + output_2, index=False)
 print('Executed.')
 
 
@@ -201,29 +188,16 @@ print('Executed.')
 
 
 # Setting the same in and output folder
-in_out_folder = 'outputs/'
-
-# Define the input file names
-file_base_nh = 'sea_ice_nh.csv'
-file_co2 = 'summed_co2.csv'
-file_base_sh = 'sea_ice_sh.csv'
-file_precipitation_sh = 'precipitation_adjusted.csv'
-file_temp_sh = 'ocean_temp_annual_SPole.csv'
-
-# Read the individual files as DataFrames
-df_nh = pd.read_csv(in_out_folder + file_base_nh)
-df_co2 = pd.read_csv(in_out_folder + file_co2)
-df_sh = pd.read_csv(in_out_folder + file_base_sh)
-df_precip = pd.read_csv(in_out_folder + file_precipitation_sh)
-df_temp = pd.read_csv(in_out_folder + file_temp_sh)
+in_out_folder = 'proceced_data/'
 
 # Select the desired columns from each dataframe
-base_years = df_nh['Year']
-base_nh = df_nh['NH_Extent']  
-co2 = df_co2['CO2']  
-base_sh = df_sh['SH_Extent']  
-precip = df_precip['Precipitation']
-temp = df_temp['Temperature']
+base_years = df_nhcut['Year']
+base_nh = df_nhcut['NH_Extent']  
+co2 = sum_co2_df['CO2']  
+base_sh = df_shcut['SH_Extent']  
+precip = precipitation_df['Precipitation']
+temp = ocean_temp_cut['Temperature']
+
 
 # Combine the selected columns into 2 distinct dataframe (one NH and one for SH)
 nh_merged_df = pd.DataFrame({
