@@ -4,7 +4,6 @@
 // Last update : Chloe Prats Genre
 // date : 11/12/2024
 
-
 // Loading libraries and packages
 #include <stdio.h>
 #include <math.h>
@@ -16,8 +15,8 @@
 #include "calculate_RMSE.c"
 #include "calculate_R2.c"
 #include "multiple_regression.c"
-// #include "significance_tests.c"
 
+// ********************************************************************************************************************
 // Define data read function
 int read_data_nh(const char *filename, double *year, double *sea_ice_extent, double *co2, int max_size){
     FILE *file = fopen(filename, "r");
@@ -240,7 +239,7 @@ int main(){
         free(X[i]);
     }
 
-    // ********************************************************************************************************************
+// ********************************************************************************************************************
     // Calculate the residuals
     // Residuals are the differences between observed and estimated values, used to assess the accuracy of the model
     double residuals_N[max_data_size];
@@ -264,54 +263,8 @@ int main(){
         fprintf(residuals_file, "%.0f,%.3f,%.3f\n", t[i], residuals_N[i], residuals_S[i]);
     }
     printf("Residuals saved in residuals.csv\n");  
-// ********************************************************************************************************************
-    // // Calculate standard errors and p-values
-    // double se_mN, se_bN;
-    // double se_mS, se_bS;
-    // calculate_standard_errors(x, yN, n, mN, bN, &se_mN, &se_bN);
-    // calculate_standard_errors(x, yS, n, mS, bS, &se_mS, &se_bS);
-    // //North
-    // double t_value_mN = mN / se_mN;
-    // double t_value_bN = bN / se_bN;
-    // double p_value_mN = calculate_p_value(t_value_mN, n - 2);
-    // double p_value_bN = calculate_p_value(t_value_bN, n - 2);
-    // printf("Northern Hemisphere: Coefficient m: %lf, Standard Error: %lf, t-value: %lf, p-value: %lf\n", mN, se_mN, t_value_mN, p_value_mN);
-    // printf("Northern Hemisphere: Coefficient b: %lf, Standard Error: %lf, t-value: %lf, p-value: %lf\n", bN, se_bN, t_value_bN, p_value_mN);
-    // // South
-    // double t_value_mS = mS / se_mS;
-    // double t_value_bS = bS / se_bS;
-    // double p_value_mS = calculate_p_value(t_value_mS, n - 2);
-    // double p_value_bS = calculate_p_value(t_value_bS, n - 2);
-    // printf("Southern Hemisphere: Coefficient m: %lf, Standard Error: %lf, t-value: %lf, p-value: %lf\n", mS, se_mS, t_value_mS, p_value_mS);
-    // printf("Southern Hemisphere: Coefficient b: %lf, Standard Error: %lf, t-value: %lf, p-value: %lf\n", bS, se_bS, t_value_bS, p_value_mS);
-
-    // // Calculate the F-statistic and p-value for the regression model
-    // double f_statistic_N = calculate_f_statistic(R2_N, n, 2);
-    // double p_value_N = calculate_p_value(f_statistic_N, n - 2);
-    // printf("Northern Hemisphere: F-statistic: %lf, p-value: %lf\n", f_statistic_N, p_value_N);
-
-    // double f_statistic_S = calculate_f_statistic(R2_S, n, 2);
-    // double p_value_S = calculate_p_value(f_statistic_S, n - 2);
-    // printf("Southern Hemisphere: F-statistic: %lf, p-value: %lf\n", f_statistic_S, p_value_S);
-
-    // // Test the significance of the coefficients
-    // t_test_significance(x, yN, n, mN, bN);
-    // t_test_significance(x, yS, n, mS, bS);
+    fclose(residuals_file);
     
-//********************************************************************************************************************
-    // Calculate F-statistic and p-value for the overall model for Northern Hemisphere
-    // double f_stat_N = calculate_f_statistic(yN, yN_pred, n, 2);
-    // double f_p_value_N = calculate_f_p_value(f_stat_N, 1, n - 2);
-
-    // printf("Northern Hemisphere: F-statistic: %lf, p-value: %lf\n", f_stat_N, f_p_value_N);
-
-    // // Calculate F-statistic and p-value for the overall model for Southern Hemisphere
-    // double f_stat_S = calculate_f_statistic(yS, yS_pred, n, 2);
-    // double f_p_value_S = calculate_f_p_value(f_stat_S, 1, n - 2);
-
-    // printf("Southern Hemisphere: F-statistic: %lf, p-value: %lf\n", f_stat_S, f_p_value_S);
-
-
     return 0;
 }
 
