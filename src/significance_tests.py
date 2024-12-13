@@ -7,7 +7,7 @@ import pandas as pd
 import scipy.stats as stats
 
 # Set I/O folder names
-data_folder = 'outputs/'
+data_folder = './processed_data/'
 
 # Load residuals from residuals.csv
 data = pd.read_csv(data_folder + 'residuals.csv', delimiter=',')
