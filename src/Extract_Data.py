@@ -9,7 +9,7 @@ from sklearn.preprocessing import StandardScaler
 
 # Set I/O folder names
 data_folder = './data/'
-output_folder = './proceced_data'
+output_folder = './processed_data'
 
 # Set dataset file names for the input datasets
 # -------------------------------------------------------
@@ -186,7 +186,7 @@ print('Executed.')
 
 
 # Setting the same in and output folder
-in_out_folder = './proceced_data/'
+in_out_folder = './processed_data/'
 
 # Select the desired columns from each dataframe
 base_years = df_nhcut['Year']
