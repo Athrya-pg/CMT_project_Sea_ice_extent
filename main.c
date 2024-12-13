@@ -249,7 +249,7 @@ int main(){
     }
     double residuals_S[max_data_size];
     for (int i = 0; i < n; i++) {
-        residuals_S[i] = yS[i] - yS_estim_lin[i];
+        residuals_S[i] = yS[i] - yS_estim_multi[i];
     }
     printf("********************************************************************************************************************\n");
     printf("Residuals calculated\n");
