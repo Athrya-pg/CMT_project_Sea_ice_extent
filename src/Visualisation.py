@@ -7,8 +7,8 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import os
 
-data_folder = 'outputs/'
-output_folder = 'outputs/'
+data_folder = './outputs/'
+output_folder = './outputs/'
 
 # ------------------------ Load data (observations and estimation) ------------------------
 observations_nh = pd.read_csv(os.path.join(data_folder, 'NH_Data.csv'), usecols=['Sea_Ice_Extent'])  # Observation of Northern Hemisphere

@@ -7,8 +7,8 @@ import matplotlib.pyplot as plt
 from scipy.interpolate import interp1d
 
 # Set I/O folder names
-data_folder = 'outputs/'
-output_folder = 'outputs/'
+data_folder = './outputs/'
+output_folder = './outputs/'
 
 # Function to interpolate emissions
 def interpolate_emissions(years, emissions, target_years):
