@@ -11,9 +11,12 @@ LIBS = -lm
 # Output
 OUT = -o
 
+#Save
+SAVE = > results.txt
+
 ### ------ Setting up the compiling of Python files ------ ###
 # Specify the Python interpreter - use your own. 
-PYTHON = ~miniconda3/bin/python 									# HELP HELP HELP	mmmmmm
+PYTHON = /Users/chloe/anaconda3/python.exe								# HELP HELP HELP	mmmmmm
 
 # Specify file names and their relative paths
 C_FILE = src/main.c
@@ -29,7 +32,7 @@ all: run_first_python compile_c run_second_python run_third_python run_fouth_pyt
 
 ### --- Line command (target) to compile the C file --- ###
 compile_c: $(C_FILE)
-	$(CC) $(C_FILE) $(CFLAGS) $(LIBS) $(OUT) $(basename $(C_FILE))
+	$(CC) $(C_FILE) $(CFLAGS) $(LIBS) $(OUT) $(basename $(C_FILE)) $(SAVE)
 
 ### --- Target to run the Python files --- ###
 run_first_python:
