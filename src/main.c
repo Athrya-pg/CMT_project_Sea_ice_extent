@@ -109,14 +109,14 @@ int main(){
     // }
 
     // Read data from the NH_Data.csv file
-    n_yN = read_data_nh("outputs/NH_Data.csv", t, yN, x, max_data_size);
+    n_yN = read_data_nh("processed_data/NH_Data.csv", t, yN, x, max_data_size);
     if (n_yN <= 0) {
         printf("Error: no data in NH_Data.csv\n");
         return 1;
     }
 
     // Read data from the SH_Data.csv file
-    n_yS = read_data_sh("outputs/SH_Data.csv", t, yS, x, precipitation, temp, max_data_size);
+    n_yS = read_data_sh("processed_data/SH_Data.csv", t, yS, x, precipitation, temp, max_data_size);
     if (n_yS <= 0) {
         printf("Error: no data in SH_Data.csv\n");
         return 1;
@@ -223,7 +223,7 @@ int main(){
     fclose(file);
 
     // Write the coefficients to the file
-    FILE *coeff_file = fopen("outputs/coefficients.txt", "w");
+    FILE *coeff_file = fopen("processed_data/coefficients.txt", "w");
     if (coeff_file == NULL) {
         printf("Error opening the coefficients file\n");
         return 1;
@@ -253,7 +253,7 @@ int main(){
     printf("********************************************************************************************************************\n");
     printf("Residuals calculated\n");
     // Write residuals to a file
-    FILE *residuals_file = fopen("outputs/residuals.csv", "w");
+    FILE *residuals_file = fopen("processed_data/residuals.csv", "w");
     if (residuals_file == NULL) {
         printf("Error opening the residuals file\n");
         return 1;
