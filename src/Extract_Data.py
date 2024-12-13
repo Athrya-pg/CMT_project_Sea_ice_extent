@@ -23,20 +23,17 @@ os.makedirs(output_folder, exist_ok=True)
 df_nh = pd.read_excel(data_folder +'Sea_Ice_Index_Monthly_Data_by_Year_G02135_v3.0.xlsx', sheet_name='NH-Extent')
 df_sh = pd.read_excel(data_folder +'Sea_Ice_Index_Monthly_Data_by_Year_G02135_v3.0.xlsx', sheet_name='SH-Extent') 
 df_co2 = pd.read_excel(data_folder + 'IEA_EDGAR_CO2_1970_2023.xlsx', sheet_name='IPCC 2006')
-print('Excel read.')
 
 
 # Define the columns and rows we want from the data sheet
 df_nhcut= df_nh.iloc[1:46,14:15].reset_index(drop=True)
 df_shcut= df_sh.iloc[1:46,14:15].reset_index(drop=True)
 df_co2cut= df_co2.iloc[9:3539, 17:62].reset_index(drop=True)
-print('Dataframe cut.')
 
 
 # Rename dataframe columns to fit our needs
 df_nhcut.rename(columns={'Annual': 'NH_Extent'}, inplace=True)
 df_shcut.rename(columns={'Annual': 'SH_Extent'}, inplace=True)
-print('Column renamed.')
 
 
 # Summing individual country CO2 emmissions to get the total CO2 emmissions for each year
@@ -49,7 +46,6 @@ sum_co2_df.reset_index(drop=True, inplace=True)
 
 # Adjusting the data from Gg to Gt for future calculation purposes
 sum_co2_df['CO2'] = sum_co2_df['CO2'] * 0.000001
-print('CO2 total calculated.')
 
 
 # Adding a 'Year' column to be able to keep track of the data acurately
@@ -57,14 +53,13 @@ years = list(range(1979, 2024))
 sum_co2_df['Year'] = years
 df_nhcut['Year'] = years
 df_shcut['Year'] = years
-print('Years column added.')
 
 
 # Ensure the data is numeric and handle missing values
 df_nhcut['NH_Extent'] = pd.to_numeric(df_nhcut['NH_Extent'], errors='coerce')
 df_shcut['SH_Extent'] = pd.to_numeric(df_shcut['SH_Extent'], errors='coerce')
 sum_co2_df['CO2'] = pd.to_numeric(sum_co2_df['CO2'], errors='coerce')
-print('To numeric.')
+print('NH, SH, CO2 data processed.')
 
 
 
@@ -118,8 +113,8 @@ ax2_twin.legend(loc='upper right')
 
 # Show plot
 plt.tight_layout()
-plt.savefig(output_folder + '/' + 'Correlations.png')
-print('Ploted. Saved.')
+plt.savefig('./outputs/' + 'Correlations.png')
+print('Ploted Correlation. Saved Figure.')
 #plt.show()
 
 
@@ -161,7 +156,7 @@ ocean_temp_cut = temp_df[129:174]
 
 # Because we removed columns and cut our dataframe, we reset the row index
 ocean_temp_cut.reset_index(drop=True, inplace=True)
-print('Accomplished.')
+print('Temperature data processed.')
 
 
 
@@ -176,7 +171,7 @@ precipitation_df = pd.read_csv(data_folder + input_2, comment='#')
 
 # Renaming the column for our convinience 
 precipitation_df.rename(columns={'Anomaly' : 'Precipitation'}, inplace=True)
-print('Executed.')
+print('Precipitation data processed.')
 
 
 
@@ -220,7 +215,7 @@ output_sh = 'SH_Data.csv'
 # Save the merged DataFrame to a new CSV file
 nh_merged_df.to_csv(in_out_folder + output_nh, index=False)
 sh_merged_df.to_csv(in_out_folder + output_sh, index=False)
-print(f"Merged Data")
+print(f"Data saved.")
 
 
 
