@@ -23,7 +23,7 @@ C_FILE = src/main.c
 
 # Specify the name of your Python files
 PYTHON_FILE_1 = src/Extract_Data.py
-PYTHON_FILE_2 = src/significance_test.py
+PYTHON_FILE_2 = src/significance_tests.py
 PYTHON_FILE_3 = src/Visualisation.py
 PYTHON_FILE_4 = src/Predictions.py
 
@@ -44,7 +44,7 @@ run_second_python:
 run_third_python:
 	$(PYTHON) $(PYTHON_FILE_3)
 
-run_third_python:
+run_fourth_python:
 	$(PYTHON) $(PYTHON_FILE_4)
 
 # Clean target to remove compiled files

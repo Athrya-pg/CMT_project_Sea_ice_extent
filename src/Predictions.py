@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 from scipy.interpolate import interp1d
 
 # Set I/O folder names
-data_folder = './outputs/'
+data_folder = './processed_data/'
 output_folder = './outputs/'
 
 # Function to interpolate emissions
@@ -76,5 +76,6 @@ ax2.legend()
 ax2.grid(True)
 
 plt.savefig(output_folder + 'NH_Predictions_plot.png')
+print('Ploted. Saved.')
 
 
