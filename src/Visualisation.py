@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import os
 
-data_folder = './outputs/'
+data_folder = './processed_data/'
 output_folder = './outputs/'
 
 # ------------------------ Load data (observations and estimation) ------------------------
@@ -15,8 +15,8 @@ observations_nh = pd.read_csv(os.path.join(data_folder, 'NH_Data.csv'), usecols=
 observations_sh = pd.read_csv(os.path.join(data_folder, 'SH_Data.csv'), usecols=['Sea_Ice_Extent'])  # Observation of Southern Hemisphere
 co2 = pd.read_csv(os.path.join(data_folder, 'NH_Data.csv'), usecols=['CO2'])  # CO2 emissions
 year = pd.read_csv(os.path.join(data_folder, 'NH_Data.csv'), usecols=['Year'])  # Year
-estimations = pd.read_csv(os.path.join(data_folder, 'yestimations.csv'))  # Estimations of Northern Hemisphere
-estimations = pd.read_csv(os.path.join(data_folder, 'yestimations.csv'))  # Estimations of Northern Hemisphere
+estimations = pd.read_csv(os.path.join(output_folder, 'yestimations.csv'))  # Estimations of Northern Hemisphere
+estimations = pd.read_csv(os.path.join(output_folder, 'yestimations.csv'))  # Estimations of Northern Hemisphere
 
 # Ensure that the columns exist in the estimation file
 if 'Estim_North_linReg' in estimations.columns and 'Estim_South_LinReg' in estimations.columns and 'Estim_South_polyReg' in estimations.columns and 'Estim_South_multiReg':
