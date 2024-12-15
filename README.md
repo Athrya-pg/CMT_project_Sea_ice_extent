@@ -55,57 +55,40 @@ Outputs: (once the code is run)
 - Python handles most of the I/O, which means pulling the data and formatting them into 2 distinct CSV documents; one for the Northern Hemisphere data and one for the Southern Hemisphere data. 
 - The regression calculations are done by C.                            /// Use 'ctypes'??? "The C program is compiled to a shared library, which is called by Python via the `ctypes` module." original README.
 
-- For the grid simulation, the C program directly writes each simulation result to a CSV file designated by the calling Python script.
 
 **Structure:** In the directory "*src/*":
 - "*Extract_Data.py*":
-  - imports "*mylib.py*" as a module, which wraps the compiled C library file.
-  - reads in "*data/capteurs.csv*" and executes the C code.
-- "*analysis.py*":
-  - reads in the generated output ("*outputs/plausibilite.csv*") and makes the plot.
+  - Reads in the files from "*data/*"
+  - Computes to extract data from the year 1979 to the year 2023, it takes Sea Ice Extent, CO2 emissions, ... which are stored in two files, one for the Northern Hemisphere and for the Southern Hemisphere.
+- "*Main.c*":
+  - Uses the other .c programs in "*src/*". They define various function to calculate the linear regression, quadratic regression, multiple regression, calculate R squared and calculate RMSE.
+  - After the calculations, it stores the estimated y values, "*regression_results.txt*" containing the regression models and the R squared and RMSE values for each in "*outputs/*" and the residuals in "*processed_data/*".
+- "*Significance_Tests.py*":
+  - //////////////////////////////////////////////////////////////////////////////////// NOT SURE, PLEASE COMPLETE <3 ///////////////////////////////
+- "*Visualisation.py*":
+  - Plots the different regressions for each hemisphere and puts them in "*outputs/*".
+- "*Predictions.py*":
+  - Plots 3 different prediction scenarios; SSP1, SSP3 and SSP5. They are also stored in outputs.
 
-In each Python code, the project root directory is assigned using 
-
-```{python}
-import sys
-from pathlib import Path
-ROOT = Path(sys.path[0]).parent
-```
-`sys.path[0]` is the directory of the script or noteoobk file, and not the working directory of the shell from which the code is called. This allows the following commands to produce equivalent output. Starting in the project root directory:
-```
-$ python src/simulategrid.py
-$ cd src && python simulategrid.py
-```
-This convention works for both Python scripts and Jupyter notebooks / Quarto documents, so the following two commands will also generate the same output.
-```
-$ quarto render docs/analysis.qmd
-$ cd docs && quarto render analysis.qmd
-```
 
 ## Instructions
 
 To reproduce results in the report, these steps should be followed:
 
-1. Build (compile) the shared library.
-2. Run the program.
-
-To compile the C code, run the following line in the terminal from the project root directory (location of this README.md file):
-```{sh}
-make
-```
-This command will create a directory called bin/ and populated it with C object files, and the compiled .so file.
-
-To run the Python and C code, run the following line in the terminal from the project root directory:
-```{sh}
-bash run.sh
-```
-This command will run the program and generate all of the output described above.
-
-To generate documentation for the validation, run the following command from the root directory:
-```{sh}
-quarto render docs/analysis.qmd --to pdf
-```
-This generates the file "*docs/analysis.pdf*".
+1. Go to the makefile to ensure the Python interpreter selected is yours.
+2. Open the terminal from the project root directory (location of this README.md file). You can check this is the case by typing:
+    ```
+    ls
+    ```
+    The terminal should return:
+    ```
+    
+    ```
+3. Run the following line in the terminal:
+    ```
+    make
+    ```
+The program will run automatically, and will open two plotting windows in full screen. Once you close them , the program cleans up compiled filed files and terminates automatically.
 
 ## Requirements
 
