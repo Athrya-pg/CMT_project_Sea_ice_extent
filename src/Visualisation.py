@@ -2,7 +2,7 @@
 # Description: This script is used to visualise the data and the results of the different Regression model.
 # ==========================================================================================================
 
-import numpy as np
+#import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 import os
@@ -63,7 +63,7 @@ ax2.legend(loc='lower left')
 ax2.grid(True)
 plt.savefig('outputs/2_Year_vs_IceExtent_NH.png')
 # Save the plot
-plt.savefig(output_folder + '3_NH_Linear_Regression_plot.png')
+plt.savefig(output_folder + '3_NH_Linear_Regression_plot.png')         ################# NORMAL?? ###########################################
 
 # ----------------------- Plot for Southern Hemisphere ------------------------
 

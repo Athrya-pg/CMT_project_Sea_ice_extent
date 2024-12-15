@@ -7,7 +7,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.ticker import MaxNLocator
-from sklearn.preprocessing import StandardScaler
+#from sklearn.preprocessing import StandardScaler
 
 # Set I/O folder names
 data_folder = './data/'
@@ -214,21 +214,5 @@ output_sh = 'SH_Data.csv'
 nh_merged_df.to_csv(in_out_folder + output_nh, index=False)
 sh_merged_df.to_csv(in_out_folder + output_sh, index=False)
 print(f"Data saved.")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 

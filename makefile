@@ -17,7 +17,7 @@ SAVE_PY = > outputs/test_results.txt
 
 ### ------ Setting up the compiling of Python files ------ ###
 # Specify the Python interpreter - use your own. 
-PYTHON = /home/alicia/miniconda3/bin/python 	
+PYTHON = /home/alicia/miniconda3/bin/python 		
 
 # Specify file names and their relative paths
 C_FILE = src/Main.c

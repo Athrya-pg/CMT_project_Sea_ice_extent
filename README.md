@@ -10,8 +10,11 @@ The program will:
    - CO2 yearly global emission data in "*data/IEA_EDGAR_CO2_1970_2023.xlsx*",
    - precipitation data in the southern hemisphere in "*data/precipitations.csv*", and
    - average annual ocean temperature in the southern hemisphere (60S.90S) "*data/aravg.ann.ocean.90S.60S.v6.0.0.202410.asc*".
-2.   "*outputs/plausibilite.csv*". ///////////////////////////////////////////////////// COMPLETE FILE TYPE ///////////
-3. Plot the table of plausibilities ("*outputs/plausibilite.png*").
+2. Calculates different types of regressions (linear, multiple and quadratics).
+3. Calculate t-tests for the regressions ("*outputs/test_results.txt*").
+4. Plots graphs, and save the figures in "*outputs*".
+5. Make predictions for the Northern Hemisphere.
+
 
 ## Project structure
 
@@ -53,8 +56,8 @@ Outputs: (once the code is run)
  
 **Overview:**
 - Python handles most of the I/O, which means pulling the data and formatting them into 2 distinct CSV documents; one for the Northern Hemisphere data and one for the Southern Hemisphere data. 
-- The regression calculations are done by C.                            /// Use 'ctypes'??? "The C program is compiled to a shared library, which is called by Python via the `ctypes` module." original README.
-
+- The regression calculations are done by C. It stores the estimated values in "*outputs/*".
+- Python handles the t-tests, visualisation and prediction.
 
 **Structure:** In the directory "*src/*":
 - "*Extract_Data.py*":
@@ -75,7 +78,7 @@ Outputs: (once the code is run)
 
 To reproduce results in the report, these steps should be followed:
 
-1. Go to the makefile to ensure the Python interpreter selected is yours.
+1. Go to the makefile to ensure the Python interpreter selected is yours (eg. PYTHON = your_python_interpreter_path).
 2. Open the terminal from the project root directory (location of this README.md file). You can check this is the case by typing:
     ```
     ls
@@ -88,58 +91,69 @@ To reproduce results in the report, these steps should be followed:
     ```
     make
     ```
-The program will run automatically, and will open a plotting window. Once you close them, the program cleans up compiled filed files and terminates automatically.
+The program will run automatically, and will open a plotting window with 2 graphs. 
+Once you close the window, the program cleans up (eg. the executable file) and terminates automatically.
 
 ## Requirements
 ///////////////////////////////////////////////////////////////////////////////////////////////////// STILL NEED TO CHANGE ///////////////////////////
-
-Versions of Python and C used are as follows. Optionally, the Quarto version is also included for rendering the "*docs/analysis.qmd*" file. 
+**Python**
+Versions of Python used: 
 ```
 $ python --version
-Python 3.9.18
+Python 3.12.2
+```
 
+Tools/Modules required: 
+- os
+- pandas
+- numpy
+- matplotlib.pyplot
+- matplotlib.ticker import MaxNLocator
+- scipy.interpolate import interp1d
+- scipy.stats
+
+**C**
+Version of C used:
+```
 $ gcc --version
 gcc (Ubuntu 11.4.0-1ubuntu1~22.04) 11.4.0
-
-$ quarto --version
-1.3.450
 ```
 
-The "*requirements.txt*" file for Python packages was generated with the command
-```{sh}
-conda list --export > requirements.txt
+Tools/Modules required:
+- <stdio.h>
+- <math.h>
+- <string.h>
+- <stdlib.h>
+
+**In case of errors**
+In case of a missing module.
+Use:
+ ```
+ conda install {module name}
 ```
-and deleting all but the relevant packages specifically used by this project.
+This should install the module.
+
+In case of the following error:
+MESA-LOADER: failed to open: iris / swrast
+
+Use:
+```
+ conda install -c conda-forge libstdcxx-ng
+```
+
+**To check the packages already installed:**
+Use:
+```
+conda list
+```
 
 ## Credits
 ///////////////////////////////////////////////////////////////////////////////////////////////////// STILL NEED TO CHANGE ///////////////////////////
 
-The code is adapted from the [solutions](https://sieprog.ch/#c/pollution/solutions) of sieprog.ch.
+Us crediting??? CHECKKKKKKKKKK!!!!!!!!!!!!!!!
 
 
-
-## (***Extra notes for students***)
-
-### Regarding relative paths
-
-When running python scripts from the command line:
-```{bash}
-python src/simulategrid.py
-```
-the working directory of the Python program is the project root (the location of this README.md file) and not "*src/*". 
-
-When running the Python program after changing into the "*code/*" directory,
-```{bash}
-cd src
-python simulategrid.py
-```
-the working directory is "*src/*". (A word of caution - changing directories multiple times in shell scripts can be tricky since the program may end up in a different working directory than intended if any of the programs that are called exit with error.)
-
-The important point is that relative paths to input files and other files/directories should be relative to the working directory. 
-
-- If the Python program is run from the root directory, the relative path to "*capteurs.csv*" is "*data/capteurs.csv*". 
-- If the Python program is run from the "*code/*" directory, the relative path to "*capteurs.csv*" is "*../data/capteurs.csv*". 
-
+`teacher comment`
 Using the `sys.path[0]` and `ROOT` convention as shown in this project example circumvents this ambiguity by anchoring all paths to `ROOT`.
 
 
