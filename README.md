@@ -82,15 +82,16 @@ To reproduce results in the report, these steps should be followed:
     ```
     The terminal should return:
     ```
-    
+    data  docs  makefile  README.md  src
     ```
 3. Run the following line in the terminal:
     ```
     make
     ```
-The program will run automatically, and will open two plotting windows in full screen. Once you close them , the program cleans up compiled filed files and terminates automatically.
+The program will run automatically, and will open a plotting window. Once you close them, the program cleans up compiled filed files and terminates automatically.
 
 ## Requirements
+///////////////////////////////////////////////////////////////////////////////////////////////////// STILL NEED TO CHANGE ///////////////////////////
 
 Versions of Python and C used are as follows. Optionally, the Quarto version is also included for rendering the "*docs/analysis.qmd*" file. 
 ```
@@ -111,8 +112,11 @@ conda list --export > requirements.txt
 and deleting all but the relevant packages specifically used by this project.
 
 ## Credits
+///////////////////////////////////////////////////////////////////////////////////////////////////// STILL NEED TO CHANGE ///////////////////////////
 
 The code is adapted from the [solutions](https://sieprog.ch/#c/pollution/solutions) of sieprog.ch.
+
+
 
 ## (***Extra notes for students***)
 
@@ -138,35 +142,4 @@ The important point is that relative paths to input files and other files/direct
 
 Using the `sys.path[0]` and `ROOT` convention as shown in this project example circumvents this ambiguity by anchoring all paths to `ROOT`.
 
-### Regarding the build process
-
-Note that to build on Windows, the "*Makefile*" line 
-```{lang-makefile}
-CFLAGS=-Wall -fPIC -O2
-```
-should be replaced with
-```{lang-makefile}
-CFLAGS=-Wall -fPIC -O2 -Dsrandom=srand -Drandom=rand
-```
-to account for the fact that `srand` and `rand` are to be used in place of `srandom` and `random`, respectively. It is possible to further automate this substitution by writing conditional statements in the "*Makefile*" based on the operating system - e.g.,
-```{lang-makefile}
-ifeq ($(OS), Windows_NT)
-    CCFLAGS += -Dsrandom=srand -Drandom=rand
-endif
-```
-Alteratively create separate makefiles for each operating system - e.g., "*Makefile.win*" and "*Makefile.linux*" and so on, and the user must rename the appropriate file on their machine to "*Makefile*" before calling `make`.
-
-The "*Makefile*" is a general build tool and is useful for projects with many files that need to be compiled. For simple cases, you can create a shell script called, for instance, "*build.bash*" in the root directory with the following contents:
-```{bash}
-#!/bin/bash
-mkdir -p bin
-gcc -Wall -fPIC -O2 -o bin/cmain.o -c code/cmain.c
-gcc -Wall -fPIC -O2 -o bin/cfunctions.o -c code/cfunctions.c -lm
-gcc -shared -o bin/clib.so bin/cmain.o bin/cfunctions.o
-```
-Then, the library files can be built with 
-```{bash}
-bash build.bash
-```
-before running `bash run.bash`.
 

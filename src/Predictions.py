@@ -76,6 +76,7 @@ ax2.legend()
 ax2.grid(True)
 
 plt.savefig(output_folder + '7_NH_Predictions_plot.png')
-print('Ploted. Saved.')
+plt.show()
+print('Predictions ploted and saved.')
 
 
