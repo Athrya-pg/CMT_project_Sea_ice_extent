@@ -20,11 +20,11 @@ SAVE_PY = > outputs/test_results.txt
 PYTHON = /home/alicia/miniconda3/bin/python 	
 
 # Specify file names and their relative paths
-C_FILE = src/main.c
+C_FILE = src/Main.c
 
 # Specify the name of your Python files
 PYTHON_FILE_1 = src/Extract_Data.py
-PYTHON_FILE_2 = src/significance_tests.py
+PYTHON_FILE_2 = src/Significance_Tests.py
 PYTHON_FILE_3 = src/Visualisation.py
 PYTHON_FILE_4 = src/Predictions.py
 

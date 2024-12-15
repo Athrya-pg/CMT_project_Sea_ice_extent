@@ -1,6 +1,6 @@
-# ================================================================================================
-# Description: This script is used to visualize the data and the results of the different Regression model.
-# ================================================================================================
+# ==========================================================================================================
+# Description: This script is used to visualise the data and the results of the different Regression model.
+# ==========================================================================================================
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -11,6 +11,7 @@ data_folder = './processed_data/'
 output_folder = './outputs/'
 
 # ------------------------ Load data (observations and estimation) ------------------------
+
 observations_nh = pd.read_csv(os.path.join(data_folder, 'NH_Data.csv'), usecols=['Sea_Ice_Extent'])  # Observation of Northern Hemisphere
 observations_sh = pd.read_csv(os.path.join(data_folder, 'SH_Data.csv'), usecols=['Sea_Ice_Extent'])  # Observation of Southern Hemisphere
 co2 = pd.read_csv(os.path.join(data_folder, 'NH_Data.csv'), usecols=['CO2'])  # CO2 emissions
@@ -60,15 +61,15 @@ ax2.set_ylabel('Ice Surface North (million km²)', fontsize=12)
 ax2.set_title('Year vs Sea Ice Extent (Northern Hemisphere)')
 ax2.legend(loc='lower left')
 ax2.grid(True)
-plt.savefig('outputs/Year_vs_IceExtent_NH.png')
+plt.savefig('outputs/2_Year_vs_IceExtent_NH.png')
 # Save the plot
-plt.savefig(output_folder + 'NH_Linear_Regression_plot.png')
+plt.savefig(output_folder + '3_NH_Linear_Regression_plot.png')
 
 # ----------------------- Plot for Southern Hemisphere ------------------------
 
-#-----------------------
+#--------------------------
 # Linear regression model
-#-----------------------
+#--------------------------
 
 fig2, (ax3, ax4) = plt.subplots(1, 2, figsize=(20, 6))
 
@@ -89,11 +90,11 @@ ax4.set_ylabel('Ice Surface (million km²)', fontsize=12)
 ax4.set_title('Year vs Sea Ice Extent (Southern Hemisphere)')
 ax4.legend(loc='lower left')
 ax4.grid(True)
-plt.savefig( output_folder + 'SH_Linear_Regression_plot.png')
+plt.savefig( output_folder + '4_SH_Linear_Regression_plot.png')
 
-# -----------------
+# ------------------------------
 # Multi-linear regression model
-# -----------------
+# ------------------------------
 
 # Plot yS vs year
 plt.figure(figsize=(10, 6))
@@ -104,11 +105,11 @@ plt.ylabel('Ice Surface (million km²)', fontsize=12)
 plt.title('Year vs Sea Ice Extent (Southern Hemisphere)')
 plt.legend(loc='lower left')
 plt.grid(True)
-plt.savefig( output_folder + 'SH_Multiple_Regression_plot.png')
+plt.savefig( output_folder + '6_SH_Multiple_Regression_plot.png')
 
-# -----------------
+# ---------------------------
 # Quadratic regression model
-# -----------------
+# ---------------------------
 
 fig4, (ax7, ax8) = plt.subplots(1, 2, figsize=(20, 6))
 
@@ -129,7 +130,7 @@ ax8.set_ylabel('Ice Surface (million km²)', fontsize=12)
 ax8.set_title('Year vs Sea Ice Extent (Southern Hemisphere)')
 ax8.legend(loc='lower left')
 ax8.grid(True)
-plt.savefig( output_folder + 'SH_Quadratic_Regression_plot.png')
+plt.savefig( output_folder + '5_SH_Quadratic_Regression_plot.png')
 
 print('Plots saved.')
 

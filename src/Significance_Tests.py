@@ -87,6 +87,7 @@ print(f"Coefficient bN (NH): t-value = {t_value_bN}, p-value = {p_value_bN: .4e}
 
 # ================================================================================================
 print("*" * 70) 
+
 # ----------------------Statistique F for the South model-----------------------------------------
 F_stat_sh = (SSR_sh / df_model_sh) / (SSE_sh / df_residuals_sh)
 f_p_value_sh = 1 - stats.f.cdf(F_stat_sh, df_model_sh, df_residuals_sh)

@@ -2,8 +2,7 @@
 
 ## Project Description
 
-This program is trying to find a approximation ....
-explain more
+This program explores the relationship between sea ice extent and environmental factors such as CO2 emissions, temperature, and precipitation over the period from 1979 to 2023. Using data from both hemispheres, we discover a strong linear correlation between Arctic sea ice extent and global CO2 emissions which allows us to make future predictions through a simple regression. However, Antarctic sea ice extent proves more complex which makes us use a polynomial regression with multiple data inputs.
 
 The program will:
 1. Read in input
@@ -11,41 +10,55 @@ The program will:
    - CO2 yearly global emission data in "*data/IEA_EDGAR_CO2_1970_2023.xlsx*",
    - precipitation data in the southern hemisphere in "*data/precipitations.csv*", and
    - average annual ocean temperature in the southern hemisphere (60S.90S) "*data/aravg.ann.ocean.90S.60S.v6.0.0.202410.asc*".
-2.   "*outputs/plausibilite.csv*".
+2.   "*outputs/plausibilite.csv*". ///////////////////////////////////////////////////// COMPLETE FILE TYPE ///////////
 3. Plot the table of plausibilities ("*outputs/plausibilite.png*").
 
 ## Project structure
 
 - "*data/*" contains input data
+- "*docs/*" contains informations on the datasets
 - "*outputs/*" contains program outputs
-- "*intermediate_outputs/*" contains the intermidiate data tables and figures
+- "*processed_data/*" contains the intermidiate data tables 
 - "*src/*" contains the program codes
-- "*docs/*" contains a notebook illustrating use and validation of the code ############## /// need??? ask paul /// ##########
 
 ### Inputs and outputs
-/////////////////////////////////////////////////////////////////////////////////////////////// COMPLETE FILE TYPE ///////////
+
 Inputs:
-- "*data/Sea_Ice_index_Monthly_Data_by_Year_G02135.xlsx*" is a --- file. 
-- "*data/IEA_EDGAR_CO2_1970_2023.xlsx*" is a --- file.
-- "*data/precipitations.csv*" is a --- file.
-- "*data/aravg.ann.ocean.90S.60S.v6.0.0.202410.asc*" is a ASCII --- file.
+- "*data/Sea_Ice_index_Monthly_Data_by_Year_G02135.xlsx*" is a Excel file. 
+- "*data/IEA_EDGAR_CO2_1970_2023.xlsx*" is a Excel file.
+- "*data/precipitations.csv*" is a comma-delimited file.
+- "*data/aravg.ann.ocean.90S.60S.v6.0.0.202410.asc*" is a space-delimited file.
 
-#################################################################################### CONTINUE HERE! #########################
+Processed Data: (once the code is run)
+- "*processed_data/coefficient.txt*" is a text file
+- "*processed_data/NH_Data.csv*" is comma-delimited file.
+- "*processed_data/SH_Data.csv*" is comma-delimited file.
+- "*processed_data/residuals.csv*" is comma-delimited file.
 
-Outputs: ///////////////////////////////////////////////////////////////////////////// COMPLETE WHEN SET AT THE END //////////
-- "*outputs/plausibilite.csv*" is a comma-delimted file.
-- "*outputs/plausibilite.png*" is an image file
+Outputs: (once the code is run)
+- "*outputs/1_Correlations.png*" is a image file.
+- "*outputs/2_Year_vs_IceExtent.png*" is an image file.
+- "*outputs/3_NH_Linear_Regression_plot.png*" is an image file.
+- "*outputs/4_SH_Linear_Regression_plot.png*" is an image file.
+- "*outputs/5_SH_Quadratic_Regression_plot.png*" is an image file.
+- "*outputs/6_SH_Multiple_Regression_plot.png*" is an image file.
+- "*outputs/7_NH_Predictions.png*" is an image file.
+- "*outputs/regression_results.txt*" is a text file.
+- "*outputs/test_results.txt*" is a text file.
+- "*outputs/yestimations.csv*" is a comma-delimited file.
+
+///////////////////////////////////////////////////////////////////////// NEED TO ADD DOCS FOLDER??? Ask Paul ///////////////
 
 ### Implementation details
-
-Overview:
+ 
+**Overview:**
 - Python handles most of the I/O, which means pulling the data and formatting them into 2 distinct CSV documents; one for the Northern Hemisphere data and one for the Southern Hemisphere data. 
 - The regression calculations are done by C.                            /// Use 'ctypes'??? "The C program is compiled to a shared library, which is called by Python via the `ctypes` module." original README.
 
 - For the grid simulation, the C program directly writes each simulation result to a CSV file designated by the calling Python script.
 
-Structure. In the directory "*src/*":
-- "*simulategrid.py*":
+**Structure:** In the directory "*src/*":
+- "*Extract_Data.py*":
   - imports "*mylib.py*" as a module, which wraps the compiled C library file.
   - reads in "*data/capteurs.csv*" and executes the C code.
 - "*analysis.py*":

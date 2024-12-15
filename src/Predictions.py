@@ -75,7 +75,7 @@ ax2.set_title('Sea Ice Extent Scenarios from 2023 to 2100 (North Pole)')
 ax2.legend()
 ax2.grid(True)
 
-plt.savefig(output_folder + 'NH_Predictions_plot.png')
+plt.savefig(output_folder + '7_NH_Predictions_plot.png')
 print('Ploted. Saved.')
 
 
