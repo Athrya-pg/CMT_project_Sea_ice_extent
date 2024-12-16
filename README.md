@@ -2,8 +2,7 @@
 
 ## Project Description
 
-This program is trying to find a approximation ....
-explain more
+This program explores the relationship between sea ice extent and environmental factors such as CO2 emissions, temperature, and precipitation over the period from 1979 to 2023. Using data from both hemispheres, we discover a strong linear correlation between Arctic sea ice extent and global CO2 emissions which allows us to make future predictions through a simple regression. However, Antarctic sea ice extent proves more complex which makes us use a polynomial regression with multiple data inputs.
 
 The program will:
 1. Read in input
@@ -11,166 +10,150 @@ The program will:
    - CO2 yearly global emission data in "*data/IEA_EDGAR_CO2_1970_2023.xlsx*",
    - precipitation data in the southern hemisphere in "*data/precipitations.csv*", and
    - average annual ocean temperature in the southern hemisphere (60S.90S) "*data/aravg.ann.ocean.90S.60S.v6.0.0.202410.asc*".
-2.   "*outputs/plausibilite.csv*".
-3. Plot the table of plausibilities ("*outputs/plausibilite.png*").
+2. Calculates different types of regressions (linear, multiple and quadratics).
+3. Calculate t-tests for the regressions ("*outputs/test_results.txt*").
+4. Plots graphs, and save the figures in "*outputs*".
+5. Make predictions for the Northern Hemisphere.
+
 
 ## Project structure
 
 - "*data/*" contains input data
+- "*docs/*" contains informations on the datasets
 - "*outputs/*" contains program outputs
-- "*intermediate_outputs/*" contains the intermidiate data tables and figures
+- "*processed_data/*" contains the intermidiate data tables 
 - "*src/*" contains the program codes
-- "*docs/*" contains a notebook illustrating use and validation of the code ############## /// need??? ask paul /// ##########
 
 ### Inputs and outputs
-/////////////////////////////////////////////////////////////////////////////////////////////// COMPLETE FILE TYPE ///////////
+
 Inputs:
-- "*data/Sea_Ice_index_Monthly_Data_by_Year_G02135.xlsx*" is a --- file. 
-- "*data/IEA_EDGAR_CO2_1970_2023.xlsx*" is a --- file.
-- "*data/precipitations.csv*" is a --- file.
-- "*data/aravg.ann.ocean.90S.60S.v6.0.0.202410.asc*" is a ASCII --- file.
+- "*data/Sea_Ice_index_Monthly_Data_by_Year_G02135.xlsx*" is a Excel file. 
+- "*data/IEA_EDGAR_CO2_1970_2023.xlsx*" is a Excel file.
+- "*data/precipitations.csv*" is a comma-delimited file.
+- "*data/aravg.ann.ocean.90S.60S.v6.0.0.202410.asc*" is a space-delimited file.
 
-#################################################################################### CONTINUE HERE! #########################
+Processed Data: (once the code is run)
+- "*processed_data/coefficient.txt*" is a text file
+- "*processed_data/NH_Data.csv*" is comma-delimited file.
+- "*processed_data/SH_Data.csv*" is comma-delimited file.
+- "*processed_data/residuals.csv*" is comma-delimited file.
 
-Outputs: ///////////////////////////////////////////////////////////////////////////// COMPLETE WHEN SET AT THE END //////////
-- "*outputs/plausibilite.csv*" is a comma-delimted file.
-- "*outputs/plausibilite.png*" is an image file
+Outputs: (once the code is run)
+- "*outputs/1_Correlations.png*" is a image file.
+- "*outputs/2_Year_vs_IceExtent.png*" is an image file.
+- "*outputs/3_NH_Linear_Regression_plot.png*" is an image file.
+- "*outputs/4_SH_Linear_Regression_plot.png*" is an image file.
+- "*outputs/5_SH_Quadratic_Regression_plot.png*" is an image file.
+- "*outputs/6_SH_Multiple_Regression_plot.png*" is an image file.
+- "*outputs/7_NH_Predictions.png*" is an image file.
+- "*outputs/regression_results.txt*" is a text file.
+- "*outputs/test_results.txt*" is a text file.
+- "*outputs/yestimations.csv*" is a comma-delimited file.
+
+///////////////////////////////////////////////////////////////////////// NEED TO ADD DOCS FOLDER??? Ask Paul ///////////////
 
 ### Implementation details
-
-Overview:
+ 
+**Overview:**
 - Python handles most of the I/O, which means pulling the data and formatting them into 2 distinct CSV documents; one for the Northern Hemisphere data and one for the Southern Hemisphere data. 
-- The regression calculations are done by C.                            /// Use 'ctypes'??? "The C program is compiled to a shared library, which is called by Python via the `ctypes` module." original README.
+- The regression calculations are done by C. It stores the estimated values in "*outputs/*".
+- Python handles the t-tests, visualisation and prediction.
 
-- For the grid simulation, the C program directly writes each simulation result to a CSV file designated by the calling Python script.
+**Structure:** In the directory "*src/*":
+- "*Extract_Data.py*":
+  - Reads in the files from "*data/*"
+  - Computes to extract data from the year 1979 to the year 2023, it takes Sea Ice Extent, CO2 emissions, ... which are stored in two files, one for the Northern Hemisphere and for the Southern Hemisphere.
+- "*Main.c*":
+  - Uses the other .c programs in "*src/*". They define various function to calculate the linear regression, quadratic regression, multiple regression, calculate R squared and calculate RMSE.
+  - After the calculations, it stores the estimated y values, "*regression_results.txt*" containing the regression models and the R squared and RMSE values for each in "*outputs/*" and the residuals in "*processed_data/*".
+- "*Significance_Tests.py*":
+  - //////////////////////////////////////////////////////////////////////////////////// NOT SURE, PLEASE COMPLETE <3 ///////////////////////////////
+- "*Visualisation.py*":
+  - Plots the different regressions for each hemisphere and puts them in "*outputs/*".
+- "*Predictions.py*":
+  - Plots 3 different prediction scenarios; SSP1, SSP3 and SSP5. They are also stored in outputs.
 
-Structure. In the directory "*src/*":
-- "*simulategrid.py*":
-  - imports "*mylib.py*" as a module, which wraps the compiled C library file.
-  - reads in "*data/capteurs.csv*" and executes the C code.
-- "*analysis.py*":
-  - reads in the generated output ("*outputs/plausibilite.csv*") and makes the plot.
-
-In each Python code, the project root directory is assigned using 
-
-```{python}
-import sys
-from pathlib import Path
-ROOT = Path(sys.path[0]).parent
-```
-`sys.path[0]` is the directory of the script or noteoobk file, and not the working directory of the shell from which the code is called. This allows the following commands to produce equivalent output. Starting in the project root directory:
-```
-$ python src/simulategrid.py
-$ cd src && python simulategrid.py
-```
-This convention works for both Python scripts and Jupyter notebooks / Quarto documents, so the following two commands will also generate the same output.
-```
-$ quarto render docs/analysis.qmd
-$ cd docs && quarto render analysis.qmd
-```
 
 ## Instructions
 
 To reproduce results in the report, these steps should be followed:
 
-1. Build (compile) the shared library.
-2. Run the program.
-
-To compile the C code, run the following line in the terminal from the project root directory (location of this README.md file):
-```{sh}
-make
-```
-This command will create a directory called bin/ and populated it with C object files, and the compiled .so file.
-
-To run the Python and C code, run the following line in the terminal from the project root directory:
-```{sh}
-bash run.sh
-```
-This command will run the program and generate all of the output described above.
-
-To generate documentation for the validation, run the following command from the root directory:
-```{sh}
-quarto render docs/analysis.qmd --to pdf
-```
-This generates the file "*docs/analysis.pdf*".
+1. Go to the makefile to ensure the Python interpreter selected is yours (eg. PYTHON = your_python_interpreter_path).
+2. Open the terminal from the project root directory (location of this README.md file). You can check this is the case by typing:
+    ```
+    ls
+    ```
+    The terminal should return:
+    ```
+    data  docs  makefile  README.md  src
+    ```
+3. Run the following line in the terminal:
+    ```
+    make
+    ```
+The program will run automatically, and will open a plotting window with 2 graphs. 
+Once you close the window, the program cleans up (eg. the executable file) and terminates automatically.
 
 ## Requirements
-
-Versions of Python and C used are as follows. Optionally, the Quarto version is also included for rendering the "*docs/analysis.qmd*" file. 
+///////////////////////////////////////////////////////////////////////////////////////////////////// STILL NEED TO CHANGE ///////////////////////////
+**Python**
+Versions of Python used: 
 ```
 $ python --version
-Python 3.9.18
+Python 3.12.2
+```
 
+Tools/Modules required: 
+- os
+- pandas
+- numpy
+- matplotlib.pyplot
+- matplotlib.ticker import MaxNLocator
+- scipy.interpolate import interp1d
+- scipy.stats
+
+**C**
+Version of C used:
+```
 $ gcc --version
 gcc (Ubuntu 11.4.0-1ubuntu1~22.04) 11.4.0
-
-$ quarto --version
-1.3.450
 ```
 
-The "*requirements.txt*" file for Python packages was generated with the command
-```{sh}
-conda list --export > requirements.txt
+Tools/Modules required:
+- <stdio.h>
+- <math.h>
+- <string.h>
+- <stdlib.h>
+
+**In case of errors**
+In case of a missing module.
+Use:
+ ```
+ conda install {module name}
 ```
-and deleting all but the relevant packages specifically used by this project.
+This should install the module.
+
+In case of the following error:
+MESA-LOADER: failed to open: iris / swrast
+
+Use:
+```
+ conda install -c conda-forge libstdcxx-ng
+```
+
+**To check the packages already installed:**
+Use:
+```
+conda list
+```
 
 ## Credits
+///////////////////////////////////////////////////////////////////////////////////////////////////// STILL NEED TO CHANGE ///////////////////////////
 
-The code is adapted from the [solutions](https://sieprog.ch/#c/pollution/solutions) of sieprog.ch.
+Us crediting??? CHECKKKKKKKKKK!!!!!!!!!!!!!!!
 
-## (***Extra notes for students***)
 
-### Regarding relative paths
-
-When running python scripts from the command line:
-```{bash}
-python src/simulategrid.py
-```
-the working directory of the Python program is the project root (the location of this README.md file) and not "*src/*". 
-
-When running the Python program after changing into the "*code/*" directory,
-```{bash}
-cd src
-python simulategrid.py
-```
-the working directory is "*src/*". (A word of caution - changing directories multiple times in shell scripts can be tricky since the program may end up in a different working directory than intended if any of the programs that are called exit with error.)
-
-The important point is that relative paths to input files and other files/directories should be relative to the working directory. 
-
-- If the Python program is run from the root directory, the relative path to "*capteurs.csv*" is "*data/capteurs.csv*". 
-- If the Python program is run from the "*code/*" directory, the relative path to "*capteurs.csv*" is "*../data/capteurs.csv*". 
-
+`teacher comment`
 Using the `sys.path[0]` and `ROOT` convention as shown in this project example circumvents this ambiguity by anchoring all paths to `ROOT`.
 
-### Regarding the build process
-
-Note that to build on Windows, the "*Makefile*" line 
-```{lang-makefile}
-CFLAGS=-Wall -fPIC -O2
-```
-should be replaced with
-```{lang-makefile}
-CFLAGS=-Wall -fPIC -O2 -Dsrandom=srand -Drandom=rand
-```
-to account for the fact that `srand` and `rand` are to be used in place of `srandom` and `random`, respectively. It is possible to further automate this substitution by writing conditional statements in the "*Makefile*" based on the operating system - e.g.,
-```{lang-makefile}
-ifeq ($(OS), Windows_NT)
-    CCFLAGS += -Dsrandom=srand -Drandom=rand
-endif
-```
-Alteratively create separate makefiles for each operating system - e.g., "*Makefile.win*" and "*Makefile.linux*" and so on, and the user must rename the appropriate file on their machine to "*Makefile*" before calling `make`.
-
-The "*Makefile*" is a general build tool and is useful for projects with many files that need to be compiled. For simple cases, you can create a shell script called, for instance, "*build.bash*" in the root directory with the following contents:
-```{bash}
-#!/bin/bash
-mkdir -p bin
-gcc -Wall -fPIC -O2 -o bin/cmain.o -c code/cmain.c
-gcc -Wall -fPIC -O2 -o bin/cfunctions.o -c code/cfunctions.c -lm
-gcc -shared -o bin/clib.so bin/cmain.o bin/cfunctions.o
-```
-Then, the library files can be built with 
-```{bash}
-bash build.bash
-```
-before running `bash run.bash`.
 

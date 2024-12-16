@@ -1,20 +1,20 @@
-### Extracting Data ###
+# ==============================================================================================
+# Description: This script is used to extract the data from the different datasets we gathered.
+# ==============================================================================================
 
 import os
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.ticker import MaxNLocator
-from sklearn.preprocessing import StandardScaler
+#from sklearn.preprocessing import StandardScaler
 
 # Set I/O folder names
 data_folder = './data/'
 output_folder = './processed_data'
 
-# Set dataset file names for the input datasets
-# -------------------------------------------------------
-
-# Create the folder where the processed data will go :
+# Create the folder where the processed data will go
+os.makedirs('./outputs', exist_ok=True)
 os.makedirs(output_folder, exist_ok=True)
 
 # --------- Extracting Data from an Excelsheet (.xlsx) ---------------------------------------------------------------------
@@ -47,13 +47,11 @@ sum_co2_df.reset_index(drop=True, inplace=True)
 # Adjusting the data from Gg to Gt for future calculation purposes
 sum_co2_df['CO2'] = sum_co2_df['CO2'] * 0.000001
 
-
 # Adding a 'Year' column to be able to keep track of the data acurately
 years = list(range(1979, 2024))
 sum_co2_df['Year'] = years
 df_nhcut['Year'] = years
 df_shcut['Year'] = years
-
 
 # Ensure the data is numeric and handle missing values
 df_nhcut['NH_Extent'] = pd.to_numeric(df_nhcut['NH_Extent'], errors='coerce')
@@ -113,7 +111,7 @@ ax2_twin.legend(loc='upper right')
 
 # Show plot
 plt.tight_layout()
-plt.savefig('./outputs/' + 'Correlations.png')
+plt.savefig('./outputs/' + '1_Correlations.png')
 print('Ploted Correlation. Saved Figure.')
 #plt.show()
 
@@ -216,21 +214,5 @@ output_sh = 'SH_Data.csv'
 nh_merged_df.to_csv(in_out_folder + output_nh, index=False)
 sh_merged_df.to_csv(in_out_folder + output_sh, index=False)
 print(f"Data saved.")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 

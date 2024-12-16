@@ -1,6 +1,6 @@
-#==============================================================================
+#======================================================================================================================
 # Description: This script uses the linear regression coefficients to predict future CO2 emissions and sea ice extent.
-#==============================================================================
+#======================================================================================================================
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -75,7 +75,8 @@ ax2.set_title('Sea Ice Extent Scenarios from 2023 to 2100 (North Pole)')
 ax2.legend()
 ax2.grid(True)
 
-plt.savefig(output_folder + 'NH_Predictions_plot.png')
-print('Ploted. Saved.')
+plt.savefig(output_folder + '7_NH_Predictions_plot.png')
+plt.show()
+print('Predictions ploted and saved.')
 
 
