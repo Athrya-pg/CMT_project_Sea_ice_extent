@@ -49,9 +49,7 @@ Outputs: (once the code is run)
 - "*outputs/regression_results.txt*" is a text file.
 - "*outputs/test_results.txt*" is a text file.
 - "*outputs/yestimations.csv*" is a comma-delimited file.
-
-///////////////////////////////////////////////////////////////////////// NEED TO ADD DOCS FOLDER??? Ask Paul ///////////////
-
+ 
 ### Implementation details
  
 **Overview:**
