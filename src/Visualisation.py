@@ -2,7 +2,6 @@
 # Description: This script is used to visualise the data and the results of the different Regression model.
 # ==========================================================================================================
 
-#import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 import os
@@ -12,32 +11,30 @@ output_folder = './outputs/'
 
 # ------------------------ Load data (observations and estimation) ------------------------
 
-observations_nh = pd.read_csv(os.path.join(data_folder, 'NH_Data.csv'), usecols=['Sea_Ice_Extent'])  # Observation of Northern Hemisphere
-observations_sh = pd.read_csv(os.path.join(data_folder, 'SH_Data.csv'), usecols=['Sea_Ice_Extent'])  # Observation of Southern Hemisphere
-co2 = pd.read_csv(os.path.join(data_folder, 'NH_Data.csv'), usecols=['CO2'])  # CO2 emissions
-year = pd.read_csv(os.path.join(data_folder, 'NH_Data.csv'), usecols=['Year'])  # Year
-estimations = pd.read_csv(os.path.join(output_folder, 'yestimations.csv'))  # Estimations of Northern Hemisphere
-estimations = pd.read_csv(os.path.join(output_folder, 'yestimations.csv'))  # Estimations of Northern Hemisphere
+# Load observations
+observations_nh = pd.read_csv(os.path.join(data_folder, 'NH_Data.csv'), usecols=['Sea_Ice_Extent'])
+observations_sh = pd.read_csv(os.path.join(data_folder, 'SH_Data.csv'), usecols=['Sea_Ice_Extent'])
+
+# Load CO2 emissions and year data
+co2 = pd.read_csv(os.path.join(data_folder, 'NH_Data.csv'), usecols=['CO2'])
+year = pd.read_csv(os.path.join(data_folder, 'NH_Data.csv'), usecols=['Year'])
+
+# Load estimations
+estimations = pd.read_csv(os.path.join(output_folder, 'yestimations.csv'))
 
 # Ensure that the columns exist in the estimation file
-if 'Estim_North_linReg' in estimations.columns and 'Estim_South_LinReg' in estimations.columns and 'Estim_South_polyReg' in estimations.columns and 'Estim_South_multiReg':
+required_columns = ['Estim_North_linReg', 'Estim_South_LinReg', 'Estim_South_polyReg', 'Estim_South_multiReg']
+missing_columns = [col for col in required_columns if col not in estimations.columns]
+
+if not missing_columns:
     y_estim_nh = estimations['Estim_North_linReg']
     y_estim_sh = estimations['Estim_South_LinReg']
     y_estim_sh_poly = estimations['Estim_South_polyReg']
     y_estim_sh_multi = estimations['Estim_South_multiReg']
     print("Estimation columns found and extracted.")
 else:
-    print("Estimation columns are missing in the CSV file.")
+    print(f"Estimation columns are missing in the CSV file: {', '.join(missing_columns)}")
     exit(1)
-
-# # Extraire les colonnes nécessaires pour les observations
-# if 'NH_Extent' in observations_nh.columns and 'SH_Extent' in observations_sh.columns:
-#     y_obs_nh = observations_nh['NH_Extent']  # Observations de l'Hémisphère Nord
-#     y_obs_sh = observations_sh['SH_Extent']  # Observations de l'Hémisphère Sud
-#     print("Colonnes 'Year' trouvées et extraites pour les observations.")
-# else:
-#     print("Les colonnes 'Year' sont manquantes dans les fichiers d'observations.")
-#     exit(1)
 
 #----------------------- Plot for Northern Hemisphere ------------------------
 
