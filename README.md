@@ -76,7 +76,10 @@ Outputs: (once the code is run)
 
 To reproduce results in the report, these steps should be followed:
 
-1. Go to the makefile to ensure the Python interpreter selected is yours (eg. PYTHON = your_python_interpreter_path).
+1. Go to the makefile to ensure the Python interpreter selected is yours
+   ```
+    PYTHON = your_python_interpreter_path
+   ```
 2. Open the terminal from the project root directory (location of this README.md file). You can check this is the case by typing:
     ```
     ls
