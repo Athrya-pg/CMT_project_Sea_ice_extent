@@ -89,6 +89,7 @@ ax1_twin.tick_params(axis='y', labelcolor='red')
 ax1.set_title('Northern Hemisphere\'s Sea Ice Extent and CO2 Emissions Over Time')
 ax1.legend(loc='upper left')
 ax1_twin.legend(loc='upper right')
+plt.grid(True)
 
 # Second plot Sourthern Hemisphere sea ice extent vs CO2
 # Sea ice extent over Time
@@ -110,7 +111,8 @@ ax2.legend(loc='upper left')
 ax2_twin.legend(loc='upper right')
 
 # Show plot
-plt.tight_layout()
+#plt.tight_layout()
+plt.grid(True)
 plt.savefig('./outputs/' + '1_Correlations.png')
 print('Ploted Correlation. Saved Figure.')
 #plt.show()
