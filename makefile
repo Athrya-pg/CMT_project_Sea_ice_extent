@@ -1,4 +1,4 @@
-### ------ Setting up the compiling of C files ------ ###
+### ------ Setting up the compiling of C files ------ 
 # Specify the compiler for C files
 CC = gcc
 
@@ -15,10 +15,9 @@ OUT = -o
 SAVE_C = > outputs/regression_results.txt
 SAVE_PY = > outputs/test_results.txt
 
-### ------ Setting up the compiling of Python files ------ ###
-# Specify the Python interpreter - use your own. 	
-
-PYTHON = /home/alicia/miniconda3/bin/python 		
+### ------ Setting up the compiling of Python files ------
+# Specify the Python interpreter.	
+PYTHON = /home/alicia/miniconda3/bin/python 		### Change your interpreter here
 
 # Specify file names and their relative paths
 C_FILE = src/Main.c
@@ -29,10 +28,11 @@ PYTHON_FILE_2 = src/Significance_Tests.py
 PYTHON_FILE_3 = src/Visualisation.py
 PYTHON_FILE_4 = src/Predictions.py
 
-### ------ Default target -> order in which you want the files to be run this is what will actually happen in your terminal ------ ###
+### ------ Default target -> order in which you want the files to be run this is what will actually happen in your terminal ------
 all: run_first_python compile_c run_c_program run_second_python run_third_python run_fourth_python clean
 
-### --- Line command (target) to compile the C file --- ###
+
+### --- Line command (target) to compile the C file ---------------
 compile_c: $(C_FILE)
 	$(CC) $(C_FILE) $(CFLAGS) $(LIBS) $(OUT) $(basename $(C_FILE))
 
