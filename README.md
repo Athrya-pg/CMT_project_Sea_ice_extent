@@ -76,6 +76,8 @@ Outputs: (once the code is run)
 
 To reproduce results in the report, these steps should be followed:
 
+1. In the GitHub repository, click on the green box calles "*<> Code*"
+
 1. Go to the makefile to ensure the Python interpreter selected is yours
    ```
     PYTHON = your_python_interpreter_path
@@ -96,37 +98,22 @@ The program will run automatically, and will open a plotting window with 2 graph
 Once you close the window, the program cleans up (eg. the executable file) and terminates automatically.
 
 ## Requirements
-///////////////////////////////////////////////////////////////////////////////////////////////////// STILL NEED TO CHANGE ///////////////////////////
-**Python**
+///////////////////////////////////////////////////////////////////////////////////////////////////// STILL NEED TO CHANGE //////////////////// \
+### **Python** \
 Versions of Python used: 
 ```
 $ python --version
 Python 3.12.2
 ```
 
-Tools/Modules required: 
+Modules required: 
 - os
 - pandas
 - numpy
-- matplotlib.pyplot
-- matplotlib.ticker import MaxNLocator
-- scipy.interpolate import interp1d
-- scipy.stats
+- matplotlib
+- scipy
 
-**C**
-Version of C used:
-```
-$ gcc --version
-gcc (Ubuntu 11.4.0-1ubuntu1~22.04) 11.4.0
-```
-
-Tools/Modules required:
-- <stdio.h>
-- <math.h>
-- <string.h>
-- <stdlib.h>
-
-**In case of errors**
+**In case of errors** \
 In case of a missing module.
 Use:
  ```
@@ -141,12 +128,25 @@ Use:
 ```
  conda install -c conda-forge libstdcxx-ng
 ```
-
-**To check the packages already installed:**
+**To check the packages already installed:** \
 Use:
 ```
 conda list
 ```
+
+**C** \
+Version of C used:
+```
+$ gcc --version
+gcc (Ubuntu 11.4.0-1ubuntu1~22.04) 11.4.0
+```
+
+Libraries required:
+- <stdio.h>
+- <math.h>
+- <string.h>
+- <stdlib.h>
+
 
 ## Credits
 ///////////////////////////////////////////////////////////////////////////////////////////////////// STILL NEED TO CHANGE ///////////////////////////
