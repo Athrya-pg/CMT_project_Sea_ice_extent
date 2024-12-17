@@ -70,7 +70,7 @@ merged_sh = pd.merge(df_shcut, sum_co2_df, on='Year')
 
 
 # Plot the data on 2 figures, one for the Northern Hemisphere and one for the Sourthern Hemisphere
-fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(10, 12))
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(18, 6))
 
 ## Plot Northern Hemisphere sea ice extent vs CO2
 # Sea ice extent over Time

@@ -78,7 +78,7 @@ plt.savefig(output_folder + '7_NH_Predictions_plot.png')
 plt.show()
 print('Predictions ploted and saved.')
 
-#----------------------- Predictions file ------------------------
+#----------------------- Predictions file ----------------------------
 data_nh = pd.read_csv(data_folder + 'NH_Data.csv', delimiter=',')
 
 year_existing = data_nh['Year'].values

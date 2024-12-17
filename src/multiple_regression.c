@@ -1,3 +1,7 @@
+//===================================================================================
+// Description: This file contains the function to calculate the multiple regression
+//===================================================================================
+
 #include <stdio.h>
 #include <math.h>
 

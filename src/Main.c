@@ -37,7 +37,7 @@ int read_data_nh(const char *filename, double *year, double *sea_ice_extent, dou
             fprintf(stderr, "Invalid data format at line %d in file %s\n", count + 2, filename);
             break;
         }
-        // OPTION : Print the first few values for verification
+        // // OPTION : Print the first few values for verification
         // if (count < 5) {
         //     printf("Read from %s: value = %lf, time = %lf\n", filename, values[count], time[count]);
         // }

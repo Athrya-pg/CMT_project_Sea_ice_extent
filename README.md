@@ -70,19 +70,23 @@ Outputs: (once the code is run)
   - Plots the different regressions for each hemisphere and puts them in "*outputs/*".
 - "*Predictions.py*":
   - Plots 3 different prediction scenarios; SSP1, SSP3 and SSP5. They are also stored in outputs.
+    - SSP1: represents a sustainable trajectory with fast CO2 reductions and global cooperation.
+    - SSP3: A fragmented world with high challenges to both mitigation and adaptation.
+    - SSP5: A future world with high emissions, minimal cooperation, and significant warming.
 
 
 ## Instructions
 
 To reproduce results in the report, these steps should be followed:
 
-1. In the GitHub repository, click on the green box calles "*<> Code*"
-
-1. Go to the makefile to ensure the Python interpreter selected is yours
+1. In the GitHub repository, click, on the right hand side, the green box calles "*<> Code*", and "*Download .zip*" and save in your local file manager.
+2. Unzip the folder.
+3. Edit the makefile at line 20 to change the Python interpreter to be your own. 
+   For example:
    ```
-    PYTHON = your_python_interpreter_path
+    PYTHON = User/home/bin/python3
    ```
-2. Open the terminal from the project root directory (location of this README.md file). You can check this is the case by typing:
+4. Open the terminal from the project root directory (location of this README.md file). You can check this is the case by typing:
     ```
     ls
     ```
@@ -90,7 +94,7 @@ To reproduce results in the report, these steps should be followed:
     ```
     data  docs  makefile  README.md  src
     ```
-3. Run the following line in the terminal:
+5. Run the following line in the terminal:
     ```
     make
     ```
@@ -99,7 +103,7 @@ Once you close the window, the program cleans up (eg. the executable file) and t
 
 ## Requirements
 ///////////////////////////////////////////////////////////////////////////////////////////////////// STILL NEED TO CHANGE //////////////////// \
-### **Python** \
+### **Python**
 Versions of Python used: 
 ```
 $ python --version
@@ -119,7 +123,7 @@ Use:
  ```
  conda install {module name}
 ```
-This should install the module.
+This should install the module.\
 
 In case of the following error:
 MESA-LOADER: failed to open: iris / swrast
@@ -133,8 +137,9 @@ Use:
 ```
 conda list
 ```
+\
 
-**C** \
+### **C** 
 Version of C used:
 ```
 $ gcc --version
