@@ -19,7 +19,6 @@ The program will:
 ## Project structure
 
 - "*data/*" contains input data
-- "*docs/*" contains informations on the datasets                    ************************ TO DO STILL!!!! **********************
 - "*outputs/*" contains program outputs
 - "*processed_data/*" contains the intermidiate data tables 
 - "*src/*" contains the program codes
@@ -92,7 +91,7 @@ To reproduce results in the report, these steps should be followed:
     ```
     The terminal should return:
     ```
-    data  docs  makefile  README.md  src
+    data  makefile  README.md  src
     ```
 5. Run the following line in the terminal:
     ```
@@ -102,7 +101,7 @@ The program will run automatically, and will open a plotting window with 2 graph
 Once you close the window, the program cleans up (eg. the executable file) and terminates automatically.
 
 ## Requirements
-It is important to note that the command 'make' is not compatible with Windows.\
+It is important to note that the command 'make' is not compatible with Windows.
 ### **Python**
 Versions of Python used: 
 ```
