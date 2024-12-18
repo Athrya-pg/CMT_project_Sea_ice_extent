@@ -1,8 +1,7 @@
 // Sea Ice project : 
 //  ===================================================================================================================
-// Objective = explain sea ice extent depending on explanatory variables such as greenhouse gas emissions, temperature
-// Last update : Chloe Prats Genre
-// date : 11/12/2024
+// Objective = explain sea ice extent depending on explanatory variables such as dioxide emissions, sea ice temperature, precipitation
+
 
 // Loading libraries and packages
 #include <stdio.h>
