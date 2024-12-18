@@ -122,7 +122,8 @@ Use:
  ```
  conda install {module name}
 ```
-This should install the module.\
+This should install the module.
+
 
 In case of the following error:
 MESA-LOADER: failed to open: iris / swrast
@@ -136,7 +137,6 @@ Use:
 ```
 conda list
 ```
-\
 
 ### **C** 
 Version of C used:
