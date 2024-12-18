@@ -125,7 +125,7 @@ Use:
 This should install the module.
 
 
-In case of the following error:
+**In case of the following error:**\
 MESA-LOADER: failed to open: iris / swrast
 
 Use:
