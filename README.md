@@ -1,5 +1,5 @@
 # COMPUTATIONAL METHODS AND TOOLS - PROJECT 
-
+By: PRATS-GENRE Chloé, BÄCHLER Alicia
 ## Project Description
 
 This program explores the relationship between sea ice extent and environmental factors such as CO2 emissions, temperature, and precipitation over the period from 1979 to 2023. Using data from both hemispheres, we discover a strong linear correlation between Arctic sea ice extent and global CO2 emissions which allows us to make future predictions through a simple regression. However, Antarctic sea ice extent proves more complex which makes us use a polynomial regression with multiple data inputs.
@@ -19,7 +19,7 @@ The program will:
 ## Project structure
 
 - "*data/*" contains input data
-- "*docs/*" contains informations on the datasets
+- "*docs/*" contains informations on the datasets                    ************************ TO DO STILL!!!! **********************
 - "*outputs/*" contains program outputs
 - "*processed_data/*" contains the intermidiate data tables 
 - "*src/*" contains the program codes
@@ -102,7 +102,7 @@ The program will run automatically, and will open a plotting window with 2 graph
 Once you close the window, the program cleans up (eg. the executable file) and terminates automatically.
 
 ## Requirements
-///////////////////////////////////////////////////////////////////////////////////////////////////// STILL NEED TO CHANGE //////////////////// \
+It is important to note that the command 'make' is not compatible with Windows.\
 ### **Python**
 Versions of Python used: 
 ```
@@ -155,11 +155,22 @@ Libraries required:
 
 ## Credits
 ///////////////////////////////////////////////////////////////////////////////////////////////////// STILL NEED TO CHANGE ///////////////////////////
+### Data
+- "*data/Sea_Ice_index_Monthly_Data_by_Year_G02135.xlsx*" is a Excel file.
 
-Us crediting??? CHECKKKKKKKKKK!!!!!!!!!!!!!!!
+- "*data/IEA_EDGAR_CO2_1970_2023.xlsx*" is a Excel file.
+
+- "*data/precipitations.csv*" is a comma-delimited file.
+
+- "*data/aravg.ann.ocean.90S.60S.v6.0.0.202410.asc*" is a space-delimited file.
 
 
-`teacher comment`
-Using the `sys.path[0]` and `ROOT` convention as shown in this project example circumvents this ambiguity by anchoring all paths to `ROOT`.
+### Code
+In the code "*multiple_regression.c*": 
+- **Matrix Inversion (Gauss-Jordan Method)**:
+  This implementation was inspired by the examples provided on Rosetta Code.
+  - Link: [Gauss-Jordan Matrix Inversion - Rosetta Code](https://rosettacode.org/wiki/Gauss-Jordan_matrix_inversion)
+
+Portions of this code were developed with the assistance of GitHub Copilot, which provided suggestions and solutions to improve and address issues. These suggestions were reviewed and adapted as needed to meet the project's requirements. Any similarity to third-party code is unintentional.
 
 
