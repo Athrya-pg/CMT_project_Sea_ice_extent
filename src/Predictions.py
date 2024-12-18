@@ -1,5 +1,5 @@
 #======================================================================================================================
-# Description: This script uses the linear regression coefficients to predict future CO2 emissions and sea ice extent.
+# Description: This script uses linear regression coefficients to predict future CO2 emissions and sea ice extent according to 3 IPCC scenarios
 #======================================================================================================================
 
 import numpy as np
@@ -74,7 +74,7 @@ ax2.set_title('Sea Ice Extent Scenarios from 2023 to 2100 (North Pole)')
 ax2.legend()
 ax2.grid(True)
 
-plt.savefig(output_folder + '7_NH_Predictions_plot.png')
+plt.savefig(output_folder + '6_NH_Predictions_plot.png')
 plt.show()
 print('Predictions ploted and saved.')
 
@@ -107,7 +107,6 @@ extended_data = pd.DataFrame({
 
 # Save the DataFrame to a CSV file
 extended_data.to_csv(f'{output_folder}/Predictions.csv', index=False)
-
 print(f"Extended predictions saved to {output_folder}/Predictions.csv")
 
 

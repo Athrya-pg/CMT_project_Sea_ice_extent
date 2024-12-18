@@ -102,12 +102,6 @@ int main(){
         X[i][0] = 1.0; // Intercept term
     }
 
-    // double **X = (double **)malloc(max_data_size * sizeof(double *));
-    // for (int i = 0; i < max_data_size; i++) {
-    //     X[i] = (double *)malloc(p * sizeof(double));
-    //     X[i][0] = 1.0; // Intercept term
-    // }
-
     // Read data from the NH_Data.csv file
     n_yN = read_data_nh("./processed_data/NH_Data.csv", t, yN, x, max_data_size);
     if (n_yN <= 0) {
@@ -159,6 +153,7 @@ int main(){
 
 //********************************************************************************************************************
     // Output the results
+//********************************************************************************************************************
     printf("********************************************************************************************************************\n");
     printf("Northern Hemisphere, linear regression model: y = %lf * x + %lf\n", mN, bN);
     printf("Southern Hemisphere, linear regression model: y = %lf * x + %lf\n", mS, bS);
@@ -171,18 +166,14 @@ int main(){
     }
     printf("********************************************************************************************************************\n");
 
-    // Predictions and errors for Northern hemisphere
+    // Estimation for Northern hemisphere
     double yN_estim[max_data_size];
     // Write the estimations to the file
     for (int i = 0; i < n; i++) {
         yN_estim[i] = mN * x[i] + bN;
     }
-    double RMSE_N = calculate_rmse(yN, yN_estim, n);
-    double R2_N = calculate_R2(yN, yN_estim, n);
-    printf("Northern Hemisphere RMSE: %f\n", RMSE_N);
-    printf("Northern Hemisphere R2: %f\n", R2_N);
 
-    // Estimation for Linear and Quadratic regression and errors for Southern hemisphere
+    // Estimation for Linear and Quadratic regression for Southern hemisphere
     double yS_estim_lin[max_data_size];
     double yS_estim_poly[max_data_size];
     double yS_estim_multi[max_data_size];
@@ -191,22 +182,24 @@ int main(){
         yS_estim_poly[i] = aS * x[i] * x[i] + cS * x[i] + dS;
         yS_estim_multi[i] = coefficients[0] + coefficients[1] * x[i] + coefficients[2] * temp[i] + coefficients[3] * precipitation[i];
     }
+
     // Calculate the RMSE and R2
+    double RMSE_N = calculate_rmse(yN, yN_estim, n);
+    double R2_N = calculate_R2(yN, yN_estim, n);
+    printf("Northern Hemisphere RMSE: %f\n", RMSE_N);
+    printf("Northern Hemisphere R2: %f\n", R2_N);
+
     double RMSE_S = calculate_rmse(yS, yS_estim_lin, n);
     double R2_S = calculate_R2(yS, yS_estim_lin, n);
     printf("Southern Hemisphere RMSE (Linear): %f\n", RMSE_S);
     printf("Southern Hemisphere R2 (Linear): %f\n", R2_S);
 
-    // double RMSE_S_poly = calculate_rmse(yS, yS_estim_poly, n);
-    // double R2_S_poly = calculate_R2(yS, yS_estim_poly, n);
-    // printf("Southern Hemisphere RMSE (Quadratic): %f\n", RMSE_S_poly);
-    // printf("Southern Hemisphere R2 (Quadratic): %f\n", R2_S_poly);
-
     double RMSE_S_multi = calculate_rmse(yS, yS_estim_multi, n);
     double R2_S_multi = calculate_R2(yS, yS_estim_multi, n);
     printf("Southern Hemisphere RMSE (Multiple regression): %f\n", RMSE_S_multi);
-    printf("Southern Hemisphere R2 (Multiple regression): %f\n", R2_S_multi);
+    printf("Southern Hemisphere R2 (Multiple regression): %f\n", R2_S_multi);    
     printf("********************************************************************************************************************\n");
+    
 // ********************************************************************************************************************
     // Create a file to store the estimations
     FILE *file = fopen("./outputs/yestimations.csv", "w");
@@ -252,6 +245,7 @@ int main(){
     }
     printf("********************************************************************************************************************\n");
     printf("Residuals calculated\n");
+    
     // Write residuals to a file
     FILE *residuals_file = fopen("./processed_data/residuals.csv", "w");
     if (residuals_file == NULL) {

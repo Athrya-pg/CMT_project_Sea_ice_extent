@@ -60,12 +60,12 @@ Outputs: (once the code is run)
 **Structure:** In the directory "*src/*":
 - "*Extract_Data.py*":
   - Reads in the files from "*data/*"
-  - Computes to extract data from the year 1979 to the year 2023, it takes Sea Ice Extent, CO2 emissions, ... which are stored in two files, one for the Northern Hemisphere and for the Southern Hemisphere.
+  - Computes to extract data from the year 1979 to the year 2023, it takes Sea Ice Extent, CO2 emissions and Precipitations and sea temperature in the Southern Hemisphere. They are stored in two files, one for the Northern Hemisphere and one for the Southern Hemisphere.
 - "*Main.c*":
   - Uses the other .c programs in "*src/*". They define various function to calculate the linear regression, quadratic regression, multiple regression, calculate R squared and calculate RMSE.
   - After the calculations, it stores the estimated y values, "*regression_results.txt*" containing the regression models and the R squared and RMSE values for each in "*outputs/*" and the residuals in "*processed_data/*".
 - "*Significance_Tests.py*":
-  - //////////////////////////////////////////////////////////////////////////////////// NOT SURE, PLEASE COMPLETE <3 ///////////////////////////////
+  - Performs F-tests and t-tests using the loaded residuals.csv, and coefficients.txt to evaluate the significance of the regression model and its coefficients. It stores the test results in "*test_results.txt*" in "*outputs/*" .
 - "*Visualisation.py*":
   - Plots the different regressions for each hemisphere and puts them in "*outputs/*".
 - "*Predictions.py*":

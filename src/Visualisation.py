@@ -36,6 +36,26 @@ else:
     print(f"Estimation columns are missing in the CSV file: {', '.join(missing_columns)}")
     exit(1)
 
+# ------------------------ Load R2 and RMSE values ------------------------
+# Load R2 and RMSE values
+r2_rmse = {}
+with open(os.path.join(output_folder, 'regression_results.txt'), 'r') as f:
+    for line in f:
+        if 'RMSE' in line or 'R2' in line:
+            parts = line.split(':')
+            if len(parts) == 2:
+                metric_name = parts[0].strip()
+                metric_value = float(parts[1].strip())
+                r2_rmse[metric_name] = metric_value
+
+# Extract R2 and RMSE values
+R2_N = r2_rmse.get('Northern Hemisphere R2', None)
+RMSE_N = r2_rmse.get('Northern Hemisphere RMSE', None)
+R2_S_lin = r2_rmse.get('Southern Hemisphere R2 (Linear)', None)
+RMSE_S_lin = r2_rmse.get('Southern Hemisphere RMSE (Linear)', None)
+R2_S_multi = r2_rmse.get('Southern Hemisphere R2 (Multiple regression)', None)
+RMSE_S_multi = r2_rmse.get('Southern Hemisphere RMSE (Multiple regression)', None)
+
 #----------------------- Plot for Northern Hemisphere ------------------------
 
 # Créer une figure avec deux sous-graphiques côte à côte
@@ -49,6 +69,8 @@ ax1.set_ylabel('Ice Surface North (million km²)', fontsize=12)
 ax1.set_title('Global CO2 emissions vs Sea Ice Extent (Northern Hemisphere)')
 ax1.legend(loc='lower left')
 ax1.grid(True)
+if R2_N is not None and RMSE_N is not None:
+    ax1.text(0.95, 0.95, f'R²: {R2_N:.4f}\nRMSE: {RMSE_N:.4f}', transform=ax1.transAxes, fontsize=12, verticalalignment='top', horizontalalignment='right')
 
 # Plot yN vs year
 ax2.scatter(year, observations_nh, label='Observations NH', color='blue')
@@ -58,9 +80,10 @@ ax2.set_ylabel('Ice Surface North (million km²)', fontsize=12)
 ax2.set_title('Year vs Sea Ice Extent (Northern Hemisphere)')
 ax2.legend(loc='lower left')
 ax2.grid(True)
-plt.savefig('outputs/2_Year_vs_IceExtent_NH.png')
+if R2_N is not None and RMSE_N is not None:
+    ax2.text(0.95, 0.95, f'R²: {R2_N:.4f}\nRMSE: {RMSE_N:.4f}', transform=ax2.transAxes, fontsize=12, verticalalignment='top', horizontalalignment='right')
 # Save the plot
-plt.savefig(output_folder + '3_NH_Linear_Regression_plot.png')         ################# NORMAL?? ###########################################
+plt.savefig(output_folder + '2_NH_Linear_Regression_plot.png')         
 
 # ----------------------- Plot for Southern Hemisphere ------------------------
 
@@ -78,6 +101,8 @@ ax3.set_ylabel('Ice Surface (million km²)', fontsize=12)
 ax3.set_title(' Global CO2 emissions vs Sea Ice Extent (Southern Hemisphere)')
 ax3.legend(loc ='lower left')
 ax3.grid(True)
+if R2_S_lin is not None and RMSE_S_lin is not None:
+    ax3.text(0.95, 0.95, f'R²: {R2_S_lin:.4f}\nRMSE: {RMSE_S_lin:.4f}', transform=ax3.transAxes, fontsize=12, verticalalignment='top', horizontalalignment='right')
 
 # Plot yS vs year
 ax4.scatter(year, observations_sh, label='Observations SH', color='blue')
@@ -87,7 +112,9 @@ ax4.set_ylabel('Ice Surface (million km²)', fontsize=12)
 ax4.set_title('Year vs Sea Ice Extent (Southern Hemisphere)')
 ax4.legend(loc='lower left')
 ax4.grid(True)
-plt.savefig( output_folder + '4_SH_Linear_Regression_plot.png')
+if R2_S_lin is not None and RMSE_S_lin is not None:
+    ax4.text(0.95, 0.95, f'R²: {R2_S_lin:.4f}\nRMSE: {RMSE_S_lin:.4f}', transform=ax4.transAxes, fontsize=12, verticalalignment='top', horizontalalignment='right')
+plt.savefig( output_folder + '3_SH_Linear_Regression_plot.png')
 
 # ------------------------------
 # Multi-linear regression model
@@ -102,7 +129,9 @@ plt.ylabel('Ice Surface (million km²)', fontsize=12)
 plt.title('Year vs Sea Ice Extent (Southern Hemisphere)')
 plt.legend(loc='lower left')
 plt.grid(True)
-plt.savefig( output_folder + '6_SH_Multiple_Regression_plot.png')
+if R2_S_multi is not None and RMSE_S_multi is not None:
+    plt.text(0.95, 0.95, f'R²: {R2_S_multi:.4f}\nRMSE: {RMSE_S_multi:.4f}', transform=plt.gca().transAxes, fontsize=12, verticalalignment='top', horizontalalignment='right')
+plt.savefig( output_folder + '4_SH_Multiple_Regression_plot.png')
 
 # ---------------------------
 # Quadratic regression model

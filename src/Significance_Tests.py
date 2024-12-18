@@ -1,5 +1,5 @@
 # =============================================================================================================================
-# Description: This script is used  to perform F-test and t-test to determine the significance of the regression coefficients.
+# Description: This script is used  to perform F-test and t-test to determine the significance of the regression model and coefficients.
 # =============================================================================================================================
 
 import numpy as np
