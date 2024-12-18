@@ -1,5 +1,5 @@
 # COMPUTATIONAL METHODS AND TOOLS - PROJECT 
-By: PRATS-GENRE Chloé, BÄCHLER Alicia
+Authors: BÄCHLER Alicia and PRATS-GENRE Chloé
 ## Project Description
 
 This program explores the relationship between sea ice extent and environmental factors such as CO2 emissions, temperature, and precipitation over the period from 1979 to 2023. Using data from both hemispheres, we discover a strong linear correlation between Arctic sea ice extent and global CO2 emissions which allows us to make future predictions through a simple regression. However, Antarctic sea ice extent proves more complex which makes us use a polynomial regression with multiple data inputs.
@@ -154,20 +154,26 @@ Libraries required:
 
 
 ## Credits
-///////////////////////////////////////////////////////////////////////////////////////////////////// STILL NEED TO CHANGE ///////////////////////////
-### Data
-- "*data/Sea_Ice_index_Monthly_Data_by_Year_G02135.xlsx*" is a Excel file.
+### **Data**
+- "*Sea_Ice_index_Monthly_Data_by_Year_G02135.xlsx*":
+  - Fetterer, F., Knowles, K., Meier, W. N., Savoie, M. & Windnagel, A. K. (2017). Sea Ice Index. (G02135, Version 3). [Sea_Ice_index_Monthly_Data_by_Year_G02135]. Boulder, Colorado USA. National Snow and Ice Data Center. https://doi.org/10.7265/N5K072F8. [NH-Extent, SH-Extent]. Date Accessed 12-11-2024.
 
-- "*data/IEA_EDGAR_CO2_1970_2023.xlsx*" is a Excel file.
+- "*IEA_EDGAR_CO2_1970_2023.xlsx*":
+  - EDGAR (Emissions Database for Global Atmospheric Research) Community GHG Database a collaboration between the European Commission, Joint Research Centre (JRC), the International Energy Agency (IEA), and comprising IEA-EDGAR CO2, EDGAR CH4, EDGAR N2O, EDGAR F-GASES version EDGAR_2024_GHG (2024) European Commission. EDGAR report webpage (https://edgar.jrc.ec.europa.eu/report_2024) and EDGAR_2024_GHG website (https://edgar.jrc.ec.europa.eu/dataset_ghg2024)
+  - IEA-EDGAR CO2 (v3), a component of the EDGAR (Emissions Database for Global Atmospheric Research) Community GHG database version EDGAR_2024_GHG (2024) including or based on data from IEA (2023) Greenhouse Gas Emissions from Energy, www.iea.org/statistics, as modified by the Joint Research Centre.
 
-- "*data/precipitations.csv*" is a comma-delimited file.
+- "*precipitations.csv*":
+  - NOAA National Centers for Environmental information, Climate at a Glance: Global Time Series, published December 2024, retrieved on November 12, 2024 from https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/global/time-series 
 
-- "*data/aravg.ann.ocean.90S.60S.v6.0.0.202410.asc*" is a space-delimited file.
+- "*aravg.ann.ocean.90S.60S.v6.0.0.202410.asc*":
+  - Huang, B., X. Yin, M. J. Menne, R. Vose, and H. Zhang, NOAA Global Surface Temperature Dataset (NOAAGlobalTemp), Version 6.0.0 [aravg.ann.ocean.90S.60S.v6.0.0.202410]. NOAA National Centers for Environmental Information. https://doi.org/10.25921/rzxg-p717
 
+- SSP scenarios:
+  - IPCC, 2023: Sections. In: Climate Change 2023: Synthesis Report. Contribution of Working Groups I, II and III to the Sixth Assessment Report of the Intergovernmental Panel on Climate Change [Core Writing Team, H. Lee and J. Romero (eds.)]. IPCC, Geneva, Switzerland, pp. 35-115, doi: 10.59327/IPCC/AR6-9789291691647
 
-### Code
+### **Code**
 In the code "*multiple_regression.c*": 
-- **Matrix Inversion (Gauss-Jordan Method)**:
+- Matrix Inversion (Gauss-Jordan Method):
   This implementation was inspired by the examples provided on Rosetta Code.
   - Link: [Gauss-Jordan Matrix Inversion - Rosetta Code](https://rosettacode.org/wiki/Gauss-Jordan_matrix_inversion)
 
