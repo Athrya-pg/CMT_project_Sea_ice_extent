@@ -5,7 +5,7 @@ Authors: BÄCHLER Alicia and PRATS-GENRE Chloé
 This program explores the relationship between sea ice extent and environmental factors such as CO2 emissions, temperature, and precipitation over the period from 1979 to 2023. Using data from both hemispheres, we discover a strong linear correlation between Arctic sea ice extent and global CO2 emissions which allows us to make future predictions through a simple regression. However, Antarctic sea ice extent proves more complex which makes us use a polynomial regression with multiple data inputs.
 
 The program will:
-1. Reads in input
+1. Read in input
    - sea ice extent from the north and south hemisphere in "*data/Sea_Ice_index_Monthly_Data_by_Year_G02135.xlsx*",
    - CO2 yearly global emission data in "*data/IEA_EDGAR_CO2_1970_2023.xlsx*",
    - precipitation data in the southern hemisphere in "*data/precipitations.csv*", and
@@ -83,7 +83,7 @@ To reproduce results in the report, these steps should be followed:
 3. Edit the makefile at line 20 to change the Python interpreter to be your own. 
    For example:
    ```
-    PYTHON = /user/home/bin/miniconda3/python
+    PYTHON = /user/home/miniconda3/bin/python
    ```
 4. Open the terminal from the project root directory (location of this README.md file). To check type the following command:
     ```
