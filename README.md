@@ -5,14 +5,14 @@ Authors: BÄCHLER Alicia and PRATS-GENRE Chloé
 This program explores the relationship between sea ice extent and environmental factors such as CO2 emissions, temperature, and precipitation over the period from 1979 to 2023. Using data from both hemispheres, we discover a strong linear correlation between Arctic sea ice extent and global CO2 emissions which allows us to make future predictions through a simple regression. However, Antarctic sea ice extent proves more complex which makes us use a polynomial regression with multiple data inputs.
 
 The program will:
-1. Read in input
+1. Reads in input
    - sea ice extent from the north and south hemisphere in "*data/Sea_Ice_index_Monthly_Data_by_Year_G02135.xlsx*",
    - CO2 yearly global emission data in "*data/IEA_EDGAR_CO2_1970_2023.xlsx*",
    - precipitation data in the southern hemisphere in "*data/precipitations.csv*", and
    - average annual ocean temperature in the southern hemisphere (60S.90S) "*data/aravg.ann.ocean.90S.60S.v6.0.0.202410.asc*".
-2. Calculates different types of regressions (linear, multiple and quadratics).
+2. Calculate different types of regressions (linear, multiple and quadratics).
 3. Calculate t-tests for the regressions ("*outputs/test_results.txt*").
-4. Plots graphs, and save the figures in "*outputs*".
+4. Plot graphs, and save the figures in "*outputs*".
 5. Make predictions for the Northern Hemisphere.
 
 
@@ -83,9 +83,9 @@ To reproduce results in the report, these steps should be followed:
 3. Edit the makefile at line 20 to change the Python interpreter to be your own. 
    For example:
    ```
-    PYTHON = User/home/bin/python3
+    PYTHON = /user/home/bin/miniconda3/python
    ```
-4. Open the terminal from the project root directory (location of this README.md file). You can check this is the case by typing:
+4. Open the terminal from the project root directory (location of this README.md file). To check type the following command:
     ```
     ls
     ```
@@ -93,7 +93,7 @@ To reproduce results in the report, these steps should be followed:
     ```
     data  makefile  README.md  src
     ```
-5. Run the following line in the terminal:
+5. To run the project type the following command in the terminal:
     ```
     make
     ```
@@ -101,7 +101,7 @@ The program will run automatically, and will open a plotting window with 2 graph
 Once you close the window, the program cleans up (eg. the executable file) and terminates automatically.
 
 ## Requirements
-It is important to note that the command 'make' is not compatible with Windows.
+It is important to note that the command ```make``` is not compatible with Windows.
 ### **Python**
 Versions of Python used: 
 ```
@@ -118,7 +118,7 @@ Modules required:
 
 **In case of errors** \
 In case of a missing module.
-Use:
+Type the following command:
  ```
  conda install {module name}
 ```
@@ -128,12 +128,12 @@ This should install the module.
 **In case of the following error:**\
 MESA-LOADER: failed to open: iris / swrast
 
-Use:
+Type the following command:
 ```
  conda install -c conda-forge libstdcxx-ng
 ```
 **To check the packages already installed:** \
-Use:
+Type the following command:
 ```
 conda list
 ```
