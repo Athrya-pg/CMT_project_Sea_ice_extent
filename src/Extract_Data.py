@@ -76,13 +76,13 @@ fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(18, 6))
 # Sea ice extent over Time
 ax1.plot(merged_nh['Year'], merged_nh['NH_Extent'], color='blue', label='NH Sea Ice Extent')
 ax1.set_xlabel('Year')
-ax1.set_ylabel('NH Sea Ice Extent (million sq km)', color='blue')                                 ## Units??
+ax1.set_ylabel('NH Sea Ice Extent [Million km²]', color='blue')
 ax1.tick_params(axis='y', labelcolor='blue')
 
 # CO2 over Time
 ax1_twin = ax1.twinx()
 ax1_twin.plot(merged_nh['Year'], merged_nh['CO2'], color='red', label='CO2')
-ax1_twin.set_ylabel('CO2 (Gt)', color='red')
+ax1_twin.set_ylabel('CO2 [Gt]', color='red')
 ax1_twin.tick_params(axis='y', labelcolor='red')
 
 # Set a figure title and legends 
@@ -95,14 +95,14 @@ plt.grid(True)
 # Sea ice extent over Time
 ax2.plot(merged_sh['Year'], merged_sh['SH_Extent'], color='green', label='SH Sea Ice Extent')
 ax2.set_xlabel('Year')
-ax2.set_ylabel('SH Sea Ice Extent (million sq km)', color='green')
+ax2.set_ylabel('SH Sea Ice Extent [Million km²]', color='green')
 ax2.tick_params(axis='y', labelcolor='green')
 ax2.xaxis.set_major_locator(MaxNLocator(nbins=10))
 
 # CO2 over Time
 ax2_twin = ax2.twinx()
 ax2_twin.plot(merged_sh['Year'], merged_sh['CO2'], color='red', label='CO2')
-ax2_twin.set_ylabel('CO2 (Gt)', color='red')
+ax2_twin.set_ylabel('CO2 [Gt]', color='red')
 ax2_twin.tick_params(axis='y', labelcolor='red')
 
 # Set a figure title and legends 

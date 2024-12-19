@@ -10,16 +10,15 @@ The program will:
    - CO2 yearly global emission data in "*data/IEA_EDGAR_CO2_1970_2023.xlsx*",
    - precipitation data in the southern hemisphere in "*data/precipitations.csv*", and
    - average annual ocean temperature in the southern hemisphere (60S.90S) "*data/aravg.ann.ocean.90S.60S.v6.0.0.202410.asc*".
-2. Calculates different types of regressions (linear, multiple and quadratics).
+2. Calculate different types of regressions (linear, multiple and quadratics).
 3. Calculate t-tests for the regressions ("*outputs/test_results.txt*").
-4. Plots graphs, and save the figures in "*outputs*".
+4. Plot graphs, and save the figures in "*outputs*".
 5. Make predictions for the Northern Hemisphere.
 
 
 ## Project structure
 
 - "*data/*" contains input data
-- "*docs/*" contains informations on the datasets                    ************************ TO DO STILL!!!! **********************
 - "*outputs/*" contains program outputs
 - "*processed_data/*" contains the intermidiate data tables 
 - "*src/*" contains the program codes
@@ -84,17 +83,17 @@ To reproduce results in the report, these steps should be followed:
 3. Edit the makefile at line 20 to change the Python interpreter to be your own. 
    For example:
    ```
-    PYTHON = User/home/bin/python3
+    PYTHON = /user/home/miniconda3/bin/python
    ```
-4. Open the terminal from the project root directory (location of this README.md file). You can check this is the case by typing:
+4. Open the terminal from the project root directory (location of this README.md file). To check type the following command:
     ```
     ls
     ```
     The terminal should return:
     ```
-    data  docs  makefile  README.md  src
+    data  makefile  README.md  src
     ```
-5. Run the following line in the terminal:
+5. To run the project type the following command in the terminal:
     ```
     make
     ```
@@ -102,7 +101,7 @@ The program will run automatically, and will open a plotting window with 2 graph
 Once you close the window, the program cleans up (eg. the executable file) and terminates automatically.
 
 ## Requirements
-It is important to note that the command 'make' is not compatible with Windows.\
+It is important to note that the command ```make``` is not compatible with Windows.
 ### **Python**
 Versions of Python used: 
 ```
@@ -119,25 +118,25 @@ Modules required:
 
 **In case of errors** \
 In case of a missing module.
-Use:
+Type the following command:
  ```
  conda install {module name}
 ```
-This should install the module.\
+This should install the module.
 
-In case of the following error:
+
+**In case of the following error:**\
 MESA-LOADER: failed to open: iris / swrast
 
-Use:
+Type the following command:
 ```
  conda install -c conda-forge libstdcxx-ng
 ```
 **To check the packages already installed:** \
-Use:
+Type the following command:
 ```
 conda list
 ```
-\
 
 ### **C** 
 Version of C used:
