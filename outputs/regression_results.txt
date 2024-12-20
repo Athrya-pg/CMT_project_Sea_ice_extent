@@ -16,8 +16,3 @@ Southern Hemisphere R2 (Linear): 0.003655
 Southern Hemisphere RMSE (Multiple regression): 0.405475
 Southern Hemisphere R2 (Multiple regression): 0.333439
 ********************************************************************************************************************
-Estimations saved in yestimations.csv
-Coefficients saved in coefficients.txt
-********************************************************************************************************************
-Residuals calculated
-Residuals saved in residuals.csv

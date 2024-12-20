@@ -22,7 +22,7 @@ co2 = pd.read_csv(os.path.join(data_folder, 'NH_Data.csv'), usecols=['CO2'])
 year = pd.read_csv(os.path.join(data_folder, 'NH_Data.csv'), usecols=['Year'])
 
 # Load estimations
-estimations = pd.read_csv(os.path.join(output_folder, 'yestimations.csv'))
+estimations = pd.read_csv(os.path.join(output_folder, 'y_estimations.csv'))
 
 # Ensure that the columns exist in the estimation file
 required_columns = ['Estim_North_linReg', 'Estim_South_LinReg', 'Estim_South_polyReg', 'Estim_South_multiReg']
