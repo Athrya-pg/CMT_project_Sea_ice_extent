@@ -11,6 +11,7 @@ import os
 data_folder = './processed_data/'
 output_folder = './outputs/'
 
+
 # ------------------------ Load data (observations and estimation) ------------------------------------
 
 # Load observations
@@ -38,6 +39,7 @@ if not missing_columns:
 else:
     print(f"Estimation columns are missing in the CSV file: {', '.join(missing_columns)}")
     exit(1)
+
 
 # ------------------------ Load R2 and RMSE values ------------------------
 # Load R2 and RMSE values
@@ -95,6 +97,7 @@ if R2_N is not None and RMSE_N is not None:
 
 # Save the plot
 plt.savefig(output_folder + '2_NH_Linear_Regression_plot.png')         
+
 
 # ----------------------- Plot for Southern Hemisphere ------------------------
 
