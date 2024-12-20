@@ -12,7 +12,6 @@
 void Linear_Regression(double *x, double *y, int n, double *m, double *b){
     // Initialise variables
     double sum_x = 0, sum_y = 0, sum_xy = 0, sum_x2 = 0;
-    ///////////////////////////////////////////////////////////////////////////////////Add comment??? or too much?
     for(int i = 0; i < n; i++){
         sum_x += x[i];
         sum_y += y[i];
