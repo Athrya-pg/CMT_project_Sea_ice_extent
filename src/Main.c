@@ -1,7 +1,7 @@
-// Sea Ice project : 
-//  ===================================================================================================================
-// Objective = explain sea ice extent depending on explanatory variables such as dioxide emissions, sea ice temperature, precipitation
-
+// =======================================================================================================================
+// Description : Calculating regressions for sea ice extent depending on explanatory variables such as dioxide emissions, 
+//               sea ice temperature, precipitation.
+//========================================================================================================================
 
 // Loading libraries and packages
 #include <stdio.h>
@@ -15,8 +15,10 @@
 #include "calculate_R2.c"
 #include "multiple_regression.c"
 
-// ********************************************************************************************************************
-// Define data read function
+
+// ------------------ Defining various functions ----------------------------------------------------------
+
+// Define "data read" function 
 int read_data_nh(const char *filename, double *year, double *sea_ice_extent, double *co2, int max_size){
     FILE *file = fopen(filename, "r");
     if (file == NULL) {
@@ -24,12 +26,14 @@ int read_data_nh(const char *filename, double *year, double *sea_ice_extent, dou
         return -1;
     }
     // Ignore the first line (header)
-    char buffer[256];  // used to temporarily store lines from the csv file (256 characters max)
+    // Using temporarily store lines from the csv file (256 characters max)
+    char buffer[256];  
     if (fgets(buffer, sizeof(buffer), file) == NULL) {
         fprintf(stderr, "Error reading header from %s\n", filename);
         fclose(file);
         return -1;
     }
+    // Check for invalid data
     int count = 0;
     while (count < max_size && fgets(buffer, sizeof(buffer), file) != NULL) {
         if (sscanf(buffer,"%lf,%lf,%lf", &year[count], &sea_ice_extent[count], &co2[count]) != 3) {

@@ -16,6 +16,8 @@ output_folder = './processed_data'
 # Create the folder where the processed data will go
 os.makedirs('./outputs', exist_ok=True)
 os.makedirs(output_folder, exist_ok=True)
+print('Output folders created.')
+
 
 # --------- Extracting Data from an Excelsheet (.xlsx) ---------------------------------------------------------------------
 
@@ -57,8 +59,7 @@ df_shcut['Year'] = years
 df_nhcut['NH_Extent'] = pd.to_numeric(df_nhcut['NH_Extent'], errors='coerce')
 df_shcut['SH_Extent'] = pd.to_numeric(df_shcut['SH_Extent'], errors='coerce')
 sum_co2_df['CO2'] = pd.to_numeric(sum_co2_df['CO2'], errors='coerce')
-print('NH, SH, CO2 data processed.')
-
+#print('NH, SH, CO2 data processed.')
 
 
 # --------- Ploting Sea Ice Extent and CO2 Emissions Over Time --------------------------------------------------------------
@@ -114,8 +115,7 @@ ax2_twin.legend(loc='upper right')
 #plt.tight_layout()
 plt.grid(True)
 plt.savefig('./outputs/' + '1_Correlations.png')
-print('Ploted Correlation. Saved Figure.')
-#plt.show()
+#print('Ploted Correlation. Saved Figure.')
 
 
 
@@ -156,7 +156,7 @@ ocean_temp_cut = temp_df[129:174]
 
 # Because we removed columns and cut our dataframe, we reset the row index
 ocean_temp_cut.reset_index(drop=True, inplace=True)
-print('Temperature data processed.')
+#print('Temperature data processed.')
 
 
 
@@ -171,7 +171,7 @@ precipitation_df = pd.read_csv(data_folder + input_2, comment='#')
 
 # Renaming the column for our convinience 
 precipitation_df.rename(columns={'Anomaly' : 'Precipitation'}, inplace=True)
-print('Precipitation data processed.')
+#print('Precipitation data processed.')
 
 
 
