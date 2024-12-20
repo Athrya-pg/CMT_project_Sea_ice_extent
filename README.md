@@ -2,7 +2,7 @@
 Authors: BÄCHLER Alicia and PRATS-GENRE Chloé
 ## Project Description
 
-This program explores the relationship between sea ice extent and environmental factors such as CO2 emissions, temperature, and precipitation over the period from 1979 to 2023. Using data from both hemispheres, we discover a strong linear correlation between Arctic sea ice extent and global CO2 emissions which allows us to make future predictions through a simple regression. However, Antarctic sea ice extent proves more complex which makes us use a polynomial regression with multiple data inputs.
+This program explores the relationship between sea ice extent and environmental factors such as CO2 emissions, ocean temperature, and precipitation over the period from 1979 to 2023. Using data from both hemispheres, we discover a strong linear correlation between Arctic sea ice extent and global CO2 emissions which allows us to make future predictions through a simple regression. However, Antarctic sea ice extent proves more complex which makes us use a polynomial regression with multiple data inputs.
 
 The program will:
 1. Read in input
@@ -11,7 +11,7 @@ The program will:
    - precipitation data in the southern hemisphere in "*data/precipitations.csv*", and
    - average annual ocean temperature in the southern hemisphere (60S.90S) "*data/aravg.ann.ocean.90S.60S.v6.0.0.202410.asc*".
 2. Calculate different types of regressions (linear, multiple and quadratics).
-3. Calculate t-tests for the regressions ("*outputs/test_results.txt*").
+3. Calculate t-tests and F-tests for the regressions ("*outputs/test_results.txt*").
 4. Plot graphs, and save the figures in "*outputs*".
 5. Make predictions for the Northern Hemisphere.
 

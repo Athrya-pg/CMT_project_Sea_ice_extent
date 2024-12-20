@@ -162,7 +162,7 @@ int main(){
     printf("********************************************************************************************************************\n");
     printf("Northern Hemisphere, linear regression model: y = %lf * x + %lf\n", mN, bN);
     printf("Southern Hemisphere, linear regression model: y = %lf * x + %lf\n", mS, bS);
-    printf("Southern Hemisphere, quadratic regression model: y = %lf * x^2 + %lf * x + %lf\n", dS, cS, aS);
+    printf("Southern Hemisphere, quadratic regression model: y = %lf * x^2 + %lf * x + %lf\n", aS, cS, dS);
     printf("Southern Hemsiphere, multiple regression model: y = %lf + %lf * x + %lf * temp + %lf * precip\n", coefficients[0], coefficients[1], coefficients[2], coefficients[3]);
     // Print coefficients
     printf("Coefficients:\n");
