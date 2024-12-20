@@ -19,7 +19,7 @@ The program will:
 ## Project structure
 
 - "*data/*" contains input data
-- "*outputs/*" contains program outputs
+- "*outputs/*" contains program outputs 
 - "*processed_data/*" contains the intermidiate data tables 
 - "*src/*" contains the program codes
 
@@ -31,7 +31,7 @@ Inputs:
 - "*data/precipitations.csv*" is a comma-delimited file.
 - "*data/aravg.ann.ocean.90S.60S.v6.0.0.202410.asc*" is a space-delimited file.
 
-Processed Data: (once the code is run)
+Processed Data: (generated once the code is run)
 - "*processed_data/coefficient.txt*" is a text file
 - "*processed_data/NH_Data.csv*" is comma-delimited file.
 - "*processed_data/SH_Data.csv*" is comma-delimited file.
@@ -91,7 +91,7 @@ To reproduce results in the report, these steps should be followed:
     ```
     The terminal should return:
     ```
-    data  makefile  README.md  src
+    CMT_ProjectReport.pdf  data  makefile  README.md  src  
     ```
 5. To run the project type the following command in the terminal:
     ```

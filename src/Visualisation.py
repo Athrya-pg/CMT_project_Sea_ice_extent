@@ -118,7 +118,7 @@ ax3.legend(loc ='lower left')
 ax3.grid(True)
 # Add the R2 and RSME to the graph
 if R2_S_lin is not None and RMSE_S_lin is not None:
-    ax3.text(0.95, 0.95, f'R²: {R2_S_lin:.4f}\nRMSE: {RMSE_S_lin:.4f}', transform=ax3.transAxes, fontsize=12, verticalalignment='top', horizontalalignment='left')
+    ax3.text(0.05, 0.95, f'R²: {R2_S_lin:.4f}\nRMSE: {RMSE_S_lin:.4f}', transform=ax3.transAxes, fontsize=12, verticalalignment='top', horizontalalignment='left')
 
 # Plot linear regression: yS vs year
 ax4.scatter(year, observations_sh, label='Observations SH', color='blue')
@@ -130,7 +130,7 @@ ax4.legend(loc='lower left')
 ax4.grid(True)
 # Add the R2 and RSME to the graph
 if R2_S_lin is not None and RMSE_S_lin is not None:
-    ax4.text(0.95, 0.95, f'R²: {R2_S_lin:.4f}\nRMSE: {RMSE_S_lin:.4f}', transform=ax4.transAxes, fontsize=12, verticalalignment='top', horizontalalignment='left')
+    ax4.text(0.05, 0.95, f'R²: {R2_S_lin:.4f}\nRMSE: {RMSE_S_lin:.4f}', transform=ax4.transAxes, fontsize=12, verticalalignment='top', horizontalalignment='left')
 
 plt.savefig( output_folder + '3_SH_Linear_Regression_plot.png')
 
@@ -170,7 +170,7 @@ ax7.set_title(' Global CO2 emissions vs Sea Ice Extent (Southern Hemisphere)')
 ax7.legend(loc ='lower left')
 ax7.grid(True)
 if R2_S_poly is not None and RMSE_S_poly is not None:
-    ax7.text(0.95, 0.95, f'R²: {R2_S_poly:.4f}\nRMSE: {RMSE_S_poly:.4f}', transform=ax7.transAxes, fontsize=12, verticalalignment='top', horizontalalignment='left')
+    ax7.text(0.05, 0.95, f'R²: {R2_S_poly:.4f}\nRMSE: {RMSE_S_poly:.4f}', transform=ax7.transAxes, fontsize=12, verticalalignment='top', horizontalalignment='left')
 
 # Plot quadratic regression: yS vs year
 ax8.scatter(year, observations_sh, label='Observations SH', color='blue')
@@ -181,7 +181,7 @@ ax8.set_title('Year vs Sea Ice Extent (Southern Hemisphere)')
 ax8.legend(loc='lower left')
 ax8.grid(True)
 if R2_S_poly is not None and RMSE_S_poly is not None:
-    ax8.text(0.95, 0.95, f'R²: {R2_S_poly:.4f}\nRMSE: {RMSE_S_poly:.4f}', transform=ax8.transAxes, fontsize=12, verticalalignment='top', horizontalalignment='left')
+    ax8.text(0.05, 0.95, f'R²: {R2_S_poly:.4f}\nRMSE: {RMSE_S_poly:.4f}', transform=ax8.transAxes, fontsize=12, verticalalignment='top', horizontalalignment='left')
 plt.savefig( output_folder + '5_SH_Quadratic_Regression_plot.png')
 
 print('Regression plots saved.')

@@ -13,6 +13,8 @@ Northern Hemisphere RMSE: 0.191951
 Northern Hemisphere R2: 0.926498
 Southern Hemisphere RMSE (Linear): 0.495735
 Southern Hemisphere R2 (Linear): 0.003655
+Southern Hemisphere RMSE (Quadratic regression): 0.443555
+Southern Hemisphere R2 (Quadratic regression): 0.202360
 Southern Hemisphere RMSE (Multiple regression): 0.405475
 Southern Hemisphere R2 (Multiple regression): 0.333439
 ********************************************************************************************************************
