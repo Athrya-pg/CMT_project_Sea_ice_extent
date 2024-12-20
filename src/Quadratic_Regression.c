@@ -28,7 +28,7 @@ void Quadratic_Regression(double *x, double *y, int n, double *a, double *b, dou
                 - sum_x * (sum_x * sum_x4 - sum_x2 * sum_x3)
                 + sum_x2 * (sum_x * sum_x3 - sum_x2 * sum_x2);
 
-    double det_a = sum_y * (sum_x2 * sum_x4 - sum_x3 * sum_x3)
+    double det_c = sum_y * (sum_x2 * sum_x4 - sum_x3 * sum_x3)
                  - sum_x * (sum_xy * sum_x4 - sum_x2y * sum_x3)
                  + sum_x2 * (sum_xy * sum_x3 - sum_x2y * sum_x2);
 
@@ -36,11 +36,11 @@ void Quadratic_Regression(double *x, double *y, int n, double *a, double *b, dou
                  - sum_y * (sum_x * sum_x4 - sum_x2 * sum_x3)
                  + sum_x2 * (sum_x * sum_x2y - sum_xy * sum_x2);
 
-    double det_c = n * (sum_x2 * sum_x2y - sum_x3 * sum_xy)
+    double det_a = n * (sum_x2 * sum_x2y - sum_x3 * sum_xy)
                  - sum_x * (sum_x * sum_x2y - sum_x2 * sum_xy)
                  + sum_y * (sum_x * sum_x3 - sum_x2 * sum_x2);
 
-    *c = det_a / det;
+    *c = det_c / det;
     *b = det_b / det;
-    *a = det_c / det;
+    *a = det_a / det;
 }
