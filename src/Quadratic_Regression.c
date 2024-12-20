@@ -2,11 +2,11 @@
 // Description: This file contains the function to calculate the quadratic regression
 //=====================================================================================
 
+// Loading libraries
 #include <stdio.h>
 #include <math.h>
 
-// Function to calulate the quadratic regression
-// y = ax^2 + bx + c
+// Function to calulate the quadratic regression: y = ax^2 + bx + c
 // y is the sea ice extent
 // x is the CO2 emissions
 void Quadratic_Regression(double *x, double *y, int n, double *a, double *b, double *c){

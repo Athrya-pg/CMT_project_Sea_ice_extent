@@ -39,15 +39,15 @@ Processed Data: (once the code is run)
 
 Outputs: (once the code is run)
 - "*outputs/1_Correlations.png*" is a image file.
-- "*outputs/2_Year_vs_IceExtent.png*" is an image file.
-- "*outputs/3_NH_Linear_Regression_plot.png*" is an image file.
-- "*outputs/4_SH_Linear_Regression_plot.png*" is an image file.
+- "*outputs/2_NH_Linear_Regression_plot.png*" is an image file.
+- "*outputs/3_SH_Linear_Regression_plot.png*" is an image file.
+- "*outputs/4_SH_Multiple_Regression_plot.png*" is an image file.
 - "*outputs/5_SH_Quadratic_Regression_plot.png*" is an image file.
-- "*outputs/6_SH_Multiple_Regression_plot.png*" is an image file.
-- "*outputs/7_NH_Predictions.png*" is an image file.
+- "*outputs/6_NH_Predictions_plot.png*" is an image file.
 - "*outputs/regression_results.txt*" is a text file.
 - "*outputs/test_results.txt*" is a text file.
-- "*outputs/yestimations.csv*" is a comma-delimited file.
+- "*outputs/y_estimations.csv*" is a comma-delimited file.
+- "*outputs/predictions_data.csv*" is a comma-delimited file.
  
 ### Implementation details
  

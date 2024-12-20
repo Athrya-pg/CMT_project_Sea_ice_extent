@@ -2,6 +2,7 @@
 // Description: Function to calculate the R2, coefficient of determination
 // =========================================================================
 
+// Loading libraries
 #include <stdio.h>
 #include <math.h>
 
@@ -16,7 +17,7 @@ double mean(double *values, int n) {
 
 // Function to calculate R2, the coefficient of determination
 double calculate_R2(double* y_true, double* y_pred, int n) {
-    // Initialize variables : ssr = Sum of squares of residuals, sse = Total sum of squares, y_mean = Mean of true values
+    // Initialise variables : ssr = Sum of squares of residuals, sse = Total sum of squares, y_mean = Mean of true values
     double ssr = 0.0; 
     double sse = 0.0; 
     double y_mean = mean(y_true, n); 

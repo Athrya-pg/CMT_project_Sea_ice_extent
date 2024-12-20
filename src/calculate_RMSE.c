@@ -2,6 +2,7 @@
 // Description : Function to calculate the root mean square error, RMSE
 //======================================================================
 
+// Loading libraries
 #include <stdio.h>
 #include <math.h>
 

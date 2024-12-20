@@ -2,12 +2,12 @@
 # Description: This script is used to extract the data from the different datasets we gathered.
 # ==============================================================================================
 
+# Import de modules
 import os
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.ticker import MaxNLocator
-#from sklearn.preprocessing import StandardScaler
 
 # Set I/O folder names
 data_folder = './data/'

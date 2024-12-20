@@ -201,7 +201,7 @@ int main(){
     
 // ********************************************************************************************************************
     // Create a file to store the estimations
-    FILE *file = fopen("./outputs/yestimations.csv", "w");
+    FILE *file = fopen("./outputs/y_estimations.csv", "w");
     if (file == NULL) {
         printf("Error opening the file\n");
         return 1;
