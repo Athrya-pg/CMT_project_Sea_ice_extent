@@ -1,10 +1,7 @@
-sum_x = 0.000000, sum_y = 521.282000, sum_x2 = 2030.632517, sum_x3 = 3219.126889, sum_x4 = 138410.055943
-sum_xy = -9.076275, sum_x2y = 23205.376835
-det = 3808124149.498416, det_a = 45363599697.647919, det_b = 26896624.472811, det_c = -27703394.394171
 ********************************************************************************************************************
 Northern Hemisphere, linear regression model: y = -0.101450 * x + 14.180093
 Southern Hemisphere, linear regression model: y = -0.004470 * x + 11.709924
-Southern Hemisphere, quadratic regression model: y = -0.007275 * x^2 + 0.007063 * x + 11.912322
+Southern Hemisphere, quadratic regression model: y = -0.007275 * x^2 + 0.416823 * x + 5.943379
 Southern Hemsiphere, multiple regression model: y = 3.523724 + -0.033887 * x + -3.928913 * temp + 0.008648 * precip
 Coefficients:
 b0 = 3.523724
