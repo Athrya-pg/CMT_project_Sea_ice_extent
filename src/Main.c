@@ -57,12 +57,14 @@ int read_data_sh(const char *filename, double *year, double *sea_ice_extent, dou
         return -1;
     }
     // Ignore the first line (header)
-    char buffer[256];  // used to temporarily store lines from the csv file (256 characters max)
+    // Using temporarily store lines from the csv file (256 characters max)
+    char buffer[256];
     if (fgets(buffer, sizeof(buffer), file) == NULL) {
         fprintf(stderr, "Error reading header from %s\n", filename);
         fclose(file);
         return -1;
     }
+    // Check for invalid data
     int count = 0;
     while (count < max_size && fgets(buffer, sizeof(buffer), file) != NULL) {
         if (sscanf(buffer, "%lf,%lf,%lf,%lf,%lf", &year[count], &sea_ice_extent[count], &co2[count], &precipitation[count], &temperature[count]) != 5) {
@@ -81,7 +83,7 @@ int read_data_sh(const char *filename, double *year, double *sea_ice_extent, dou
 
 // Define Main function
 int main(){
-    // x are CO2 emissions
+    // x is CO2 emissions
     // t is the time in years
     // yN and yS are sea_ice_extent for North and South hemisphere
     const int max_data_size = 100;
@@ -98,7 +100,7 @@ int main(){
     int n_yN, n_yS;
 
     // X is useful for multiple regression for the southern hemisphere
-    const int p = 4; // Number of predictors (including the intercept)
+    const int p = 4; // Number of independent variavbles (including the intercept)
     double *X[max_data_size];
     for (int i = 0; i < max_data_size; i++) {
         X[i] = (double *)malloc(p * sizeof(double));
@@ -135,9 +137,9 @@ int main(){
         X[i][3] = precipitation[i];
     }
 
-// ********************************************************************************************************************
-    // Estimations
-// ********************************************************************************************************************
+
+// ------------------ Estimations  ------------------------------------
+
     // Linear regression for Northern hemisphere
     double mN, bN;
     Linear_Regression(x, yN, n, &mN, &bN);
@@ -154,9 +156,9 @@ int main(){
     double coefficients[p];
     multiple_regression(X, yS, n, p, coefficients);
 
-//********************************************************************************************************************
-    // Output the results
-//********************************************************************************************************************
+
+// ------------------ Output the results ----------------------------------------------------------
+
     printf("********************************************************************************************************************\n");
     printf("Northern Hemisphere, linear regression model: y = %lf * x + %lf\n", mN, bN);
     printf("Southern Hemisphere, linear regression model: y = %lf * x + %lf\n", mS, bS);
@@ -171,6 +173,7 @@ int main(){
 
     // Estimation for Northern hemisphere
     double yN_estim[max_data_size];
+
     // Write the estimations to the file
     for (int i = 0; i < n; i++) {
         yN_estim[i] = mN * x[i] + bN;
@@ -186,7 +189,7 @@ int main(){
         yS_estim_multi[i] = coefficients[0] + coefficients[1] * x[i] + coefficients[2] * temp[i] + coefficients[3] * precipitation[i];
     }
 
-    // Calculate the RMSE and R2
+    // Calculate the RMSE and R2 for all the regressions
     double RMSE_N = calculate_rmse(yN, yN_estim, n);
     double R2_N = calculate_R2(yN, yN_estim, n);
     printf("Northern Hemisphere RMSE: %f\n", RMSE_N);
@@ -203,7 +206,7 @@ int main(){
     printf("Southern Hemisphere R2 (Multiple regression): %f\n", R2_S_multi);    
     printf("********************************************************************************************************************\n");
     
-// ********************************************************************************************************************
+// ------------------------------------------------------------------------------------------------------------------------------------
     // Create a file to store the estimations
     FILE *file = fopen("./outputs/y_estimations.csv", "w");
     if (file == NULL) {
@@ -215,10 +218,10 @@ int main(){
     for (int i = 0; i < n; i++) {
         fprintf(file, "%.0f,%.3f,%.3f,%.3f,%.3f\n", t[i], yN_estim[i], yS_estim_lin[i], yS_estim_multi[i], yS_estim_poly[i]);
     }
-    printf("Estimations saved in yestimations.csv\n");
+    // printf("Estimations saved in y_estimations.csv\n");
     fclose(file);
 
-    // Write the coefficients to the file
+    // Write the coefficients into the file
     FILE *coeff_file = fopen("./processed_data/coefficients.txt", "w");
     if (coeff_file == NULL) {
         printf("Error opening the coefficients file\n");
@@ -229,13 +232,13 @@ int main(){
         fprintf(coeff_file, "b%d=%lf\n", i, coefficients[i]);
     }
     fclose(coeff_file);
-    printf("Coefficients saved in coefficients.txt\n");
+    // printf("Coefficients saved in coefficients.txt\n");
 
     for (int i = 0; i < max_data_size; i++) {
         free(X[i]);
     }
 
-// ********************************************************************************************************************
+// ---------------------- Residuals ---------------------------------------------------------------------------------
     // Calculate the residuals
     // Residuals are the differences between observed and estimated values, used to assess the accuracy of the model
     double residuals_N[max_data_size];
@@ -246,8 +249,8 @@ int main(){
     for (int i = 0; i < n; i++) {
         residuals_S[i] = yS[i] - yS_estim_multi[i];
     }
-    printf("********************************************************************************************************************\n");
-    printf("Residuals calculated\n");
+    // printf("********************************************************************************************************************\n");
+    // printf("Residuals calculated\n");
     
     // Write residuals to a file
     FILE *residuals_file = fopen("./processed_data/residuals.csv", "w");
@@ -259,7 +262,7 @@ int main(){
     for (int i = 0; i < n; i++) {
         fprintf(residuals_file, "%.0f,%.3f,%.3f\n", t[i], residuals_N[i], residuals_S[i]);
     }
-    printf("Residuals saved in residuals.csv\n");  
+    // printf("Residuals saved in residuals.csv\n");  
     fclose(residuals_file);
     
     return 0;
