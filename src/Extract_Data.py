@@ -176,8 +176,8 @@ print('Precipitation data processed.')
 
 
 # --------- Merging the Data -------------------------------------------------------------------------------------------------
-# We are merging the data into two distinct files, one for the northern hemisphere regression and one for the southern 
-# hemisphere regression
+# We are merging the data into two distinct files
+# One for the northern hemisphere regression and one for the southern hemisphere regression
 
 
 # Setting the same in and output folder

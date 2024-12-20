@@ -99,7 +99,7 @@ plt.savefig(output_folder + '2_NH_Linear_Regression_plot.png')
 
 fig2, (ax3, ax4) = plt.subplots(1, 2, figsize=(20, 6))
 
-# Plot linear regression: yS vs CO2
+# Plot linear regression: yS vs CO2                                            //////////////////////// is it also yS??? //////////////////////
 ax3.scatter(co2, observations_sh, label='Observations SH', color='blue') 
 ax3.plot(co2, y_estim_sh, label='Linear Regression Model', color='red')  
 ax3.set_xlabel('Carbon Dioxide [Gt]', fontsize=12)

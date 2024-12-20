@@ -1,6 +1,6 @@
-#======================================================================================================================
-# Description: This script uses linear regression coefficients to predict future CO2 emissions and sea ice extent according to 3 IPCC scenarios
-#======================================================================================================================
+#===============================================================================================================================================
+# Description: This script uses linear regression coefficients to predict future CO2 emissions and sea ice extent according to 3 IPCC scenarios.
+#===============================================================================================================================================
 
 # Import de modules
 import numpy as np

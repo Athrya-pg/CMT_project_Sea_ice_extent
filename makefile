@@ -15,9 +15,9 @@ OUT = -o
 SAVE_C = > outputs/regression_results.txt
 SAVE_PY = > outputs/test_results.txt
 
-### ------ Setting up the compiling of Python files ------
+### ------ Setting up the compiling of Python files -------------------------------------
 # Specify the Python interpreter.	
-PYTHON = /home/alicia/miniconda3/bin/python 		### Change your interpreter here
+PYTHON = /home/alicia/miniconda3/bin/python 		### Change your interpreter here ###
 
 # Specify file names and their relative paths
 C_FILE = src/Main.c
@@ -32,14 +32,14 @@ PYTHON_FILE_4 = src/Predictions.py
 all: run_first_python compile_c run_c_program run_second_python run_third_python run_fourth_python clean
 
 
-### --- Line command (target) to compile the C file ---------------
+### ------ Line command (target) to compile the C file -------------
 compile_c: $(C_FILE)
 	$(CC) $(C_FILE) $(CFLAGS) $(LIBS) $(OUT) $(basename $(C_FILE))
 
 run_c_program:
 	./$(basename $(C_FILE)) $(SAVE_C)
 
-### --- Target to run the Python files --- ###
+### ------ Target to run the Python files ----
 run_first_python:
 	$(PYTHON) $(PYTHON_FILE_1)
 
@@ -52,6 +52,6 @@ run_third_python:
 run_fourth_python:
 	$(PYTHON) $(PYTHON_FILE_4)
 
-# Clean target to remove compiled files
+# Clean target to remove compiled file
 clean:
 	rm -f $(basename $(C_FILE))
