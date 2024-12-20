@@ -179,7 +179,7 @@ int main(){
         yN_estim[i] = mN * x[i] + bN;
     }
 
-    // Estimation for Linear and Quadratic regression for Southern hemisphere
+    // Estimation for Linear, Multiple and Quadratic regression for Southern hemisphere
     double yS_estim_lin[max_data_size];
     double yS_estim_poly[max_data_size];
     double yS_estim_multi[max_data_size];
@@ -200,10 +200,16 @@ int main(){
     printf("Southern Hemisphere RMSE (Linear): %f\n", RMSE_S);
     printf("Southern Hemisphere R2 (Linear): %f\n", R2_S);
 
+    double RMSE_S_poly = calculate_rmse(yS, yS_estim_poly, n);
+    double R2_S_poly = calculate_R2(yS, yS_estim_poly, n);
+    printf("Southern Hemisphere RMSE (Quadratic regression): %f\n", RMSE_S_poly);
+    printf("Southern Hemisphere R2 (Quadratic regression): %f\n", R2_S_poly); 
+    
     double RMSE_S_multi = calculate_rmse(yS, yS_estim_multi, n);
     double R2_S_multi = calculate_R2(yS, yS_estim_multi, n);
     printf("Southern Hemisphere RMSE (Multiple regression): %f\n", RMSE_S_multi);
-    printf("Southern Hemisphere R2 (Multiple regression): %f\n", R2_S_multi);    
+    printf("Southern Hemisphere R2 (Multiple regression): %f\n", R2_S_multi);   
+    
     printf("********************************************************************************************************************\n");
     
 // ------------------------------------------------------------------------------------------------------------------------------------

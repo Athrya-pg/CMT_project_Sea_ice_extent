@@ -60,7 +60,8 @@ R2_S_lin = r2_rmse.get('Southern Hemisphere R2 (Linear)', None)
 RMSE_S_lin = r2_rmse.get('Southern Hemisphere RMSE (Linear)', None)
 R2_S_multi = r2_rmse.get('Southern Hemisphere R2 (Multiple regression)', None)
 RMSE_S_multi = r2_rmse.get('Southern Hemisphere RMSE (Multiple regression)', None)
-
+RMSE_S_poly = r2_rmse.get('Southern Hemisphere RMSE (Quadratic regression)', None)
+R2_S_poly = r2_rmse.get('Southern Hemisphere R2 (Quadratic regression)', None)
 
 # ----------------------------- Plotting  ------------------------------------
 # All the plot are made with regard to their corresponding y estimate.
@@ -168,6 +169,8 @@ ax7.set_ylabel('Ice Surface [Million km²]', fontsize=12)
 ax7.set_title(' Global CO2 emissions vs Sea Ice Extent (Southern Hemisphere)')
 ax7.legend(loc ='lower left')
 ax7.grid(True)
+if R2_S_poly is not None and RMSE_S_poly is not None:
+    ax7.text(0.95, 0.95, f'R²: {R2_S_poly:.4f}\nRMSE: {RMSE_S_poly:.4f}', transform=ax7.transAxes, fontsize=12, verticalalignment='top', horizontalalignment='right')
 
 # Plot quadratic regression: yS vs year
 ax8.scatter(year, observations_sh, label='Observations SH', color='blue')
@@ -177,6 +180,8 @@ ax8.set_ylabel('Ice Surface [Million km²]', fontsize=12)
 ax8.set_title('Year vs Sea Ice Extent (Southern Hemisphere)')
 ax8.legend(loc='lower left')
 ax8.grid(True)
+if R2_S_poly is not None and RMSE_S_poly is not None:
+    ax8.text(0.95, 0.95, f'R²: {R2_S_poly:.4f}\nRMSE: {RMSE_S_poly:.4f}', transform=ax8.transAxes, fontsize=12, verticalalignment='top', horizontalalignment='right')
 plt.savefig( output_folder + '5_SH_Quadratic_Regression_plot.png')
 
 print('Regression plots saved.')

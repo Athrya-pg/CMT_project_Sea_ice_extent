@@ -37,16 +37,17 @@ int matrix_invert(double **A, double **A_inv, int n) {
             augmented[i][j + n] = (i == j) ? 1.0 : 0.0;
         }
     }
-
+    // Perform Gauss-Jordan elimination
     for (int i = 0; i < n; i++) {
         if (augmented[i][i] == 0) {
             free(augmented);
             return -1; // Matrix is singular
         }
-        double pivot = augmented[i][i];
+        double pivot = augmented[i][i]; 
         for (int j = 0; j < 2 * n; j++) {
             augmented[i][j] /= pivot;
         }
+        // Eliminate the other elements in the column
         for (int k = 0; k < n; k++) {
             if (k != i) {
                 double factor = augmented[k][i];
@@ -56,23 +57,33 @@ int matrix_invert(double **A, double **A_inv, int n) {
             }
         }
     }
-
+    // Copy the inverse matrix to the output
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < n; j++) {
             A_inv[i][j] = augmented[i][j + n];
         }
         free(augmented[i]);
     }
+    // Free the memory
     free(augmented);
     return 0;
 }
 
-// Function to calculate a multiple regression model
+// Function to perform multiple regression
+// X: matrix of independent variables/predictors (n x p)
+// y : vector of values to predict (n x 1)
+// n : number of data points
+// p : number of independent variables (including the intercept)
+// coefficients : output vector of coefficients (p x 1)
+
+// The function calculates the coefficients of the multiple regression model
 void multiple_regression(double **X, double *y, int n, int p, double *coefficients) {
+    // Allocate memory for intermediate matrices
     double **X_transpose = (double **)malloc(p * sizeof(double *));
     double **X_transpose_X = (double **)malloc(p * sizeof(double *));
     double **X_transpose_X_inv = (double **)malloc(p * sizeof(double *));
     double **X_transpose_y = (double **)malloc(p * sizeof(double *));
+    // Allocate memory for each row
     for (int i = 0; i < p; i++) {
         X_transpose[i] = (double *)malloc(n * sizeof(double));
         X_transpose_X[i] = (double *)malloc(p * sizeof(double));
@@ -107,7 +118,7 @@ void multiple_regression(double **X, double *y, int n, int p, double *coefficien
             coefficients[i] += X_transpose_X_inv[i][j] * X_transpose_y[j][0];
         }
     }
-
+    // Free the memory
     for (int i = 0; i < p; i++) {
         free(X_transpose[i]);
         free(X_transpose_X[i]);
