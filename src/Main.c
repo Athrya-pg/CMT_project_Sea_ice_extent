@@ -3,7 +3,15 @@
 // Objective = explain sea ice extent depending on explanatory variables such as dioxide emissions, sea ice temperature, precipitation
 
 
-// Loading libraries and packages
+/*
+ * Additionally, the following custom modules are included:
+ * - Linear_Regression.c: Contains functions for performing linear regression analysis.
+ * - Quadratic_Regression.c: Contains functions for performing quadratic regression analysis.
+ * - calculate_RMSE.c: Contains functions to calculate the Root Mean Square Error (RMSE).
+ * - calculate_R2.c: Contains functions to calculate the R-squared (R²) value.
+ * - multiple_regression.c: Contains functions for performing multiple regression analysis.
+ */
+// Loading libraries and packages and modules 
 #include <stdio.h>
 #include <math.h>
 #include <string.h>
@@ -16,7 +24,7 @@
 #include "multiple_regression.c"
 
 // ********************************************************************************************************************
-// Define data read function
+// Define data read function for the two datasets (NH and SH)
 int read_data_nh(const char *filename, double *year, double *sea_ice_extent, double *co2, int max_size){
     FILE *file = fopen(filename, "r");
     if (file == NULL) {

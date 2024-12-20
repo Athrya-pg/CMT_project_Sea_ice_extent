@@ -2,7 +2,7 @@
 # Description: This script is used to extract the data from the different datasets we gathered.
 # ==============================================================================================
 
-# Import de modules
+# Import the modules
 import os
 import pandas as pd
 import numpy as np
@@ -24,12 +24,10 @@ df_nh = pd.read_excel(data_folder +'Sea_Ice_Index_Monthly_Data_by_Year_G02135_v3
 df_sh = pd.read_excel(data_folder +'Sea_Ice_Index_Monthly_Data_by_Year_G02135_v3.0.xlsx', sheet_name='SH-Extent') 
 df_co2 = pd.read_excel(data_folder + 'IEA_EDGAR_CO2_1970_2023.xlsx', sheet_name='IPCC 2006')
 
-
 # Define the columns and rows we want from the data sheet
 df_nhcut= df_nh.iloc[1:46,14:15].reset_index(drop=True)
 df_shcut= df_sh.iloc[1:46,14:15].reset_index(drop=True)
 df_co2cut= df_co2.iloc[9:3539, 17:62].reset_index(drop=True)
-
 
 # Rename dataframe columns to fit our needs
 df_nhcut.rename(columns={'Annual': 'NH_Extent'}, inplace=True)
@@ -60,14 +58,12 @@ sum_co2_df['CO2'] = pd.to_numeric(sum_co2_df['CO2'], errors='coerce')
 print('NH, SH, CO2 data processed.')
 
 
-
 # --------- Ploting Sea Ice Extent and CO2 Emissions Over Time --------------------------------------------------------------
-# We are ploting those graphs to see if it is possible to use a linear regression for our approximation.
+# We are ploting those graphs to see if it is possible to use a linear regression for our estimation.
 
 # Merge the DataFrames on the 'Year' column for plot construction
 merged_nh = pd.merge(df_nhcut, sum_co2_df, on='Year')
 merged_sh = pd.merge(df_shcut, sum_co2_df, on='Year')
-
 
 # Plot the data on 2 figures, one for the Northern Hemisphere and one for the Sourthern Hemisphere
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(18, 6))
@@ -91,7 +87,7 @@ ax1.legend(loc='upper left')
 ax1_twin.legend(loc='upper right')
 plt.grid(True)
 
-# Second plot Sourthern Hemisphere sea ice extent vs CO2
+## Second plot Sourthern Hemisphere sea ice extent vs CO2
 # Sea ice extent over Time
 ax2.plot(merged_sh['Year'], merged_sh['SH_Extent'], color='green', label='SH Sea Ice Extent')
 ax2.set_xlabel('Year')
@@ -116,7 +112,6 @@ plt.grid(True)
 plt.savefig('./outputs/' + '1_Correlations.png')
 print('Ploted Correlation. Saved Figure.')
 #plt.show()
-
 
 
 # --------- Extracting Data from ASC file (.asc) ------------------------------------------------------------
@@ -159,7 +154,6 @@ ocean_temp_cut.reset_index(drop=True, inplace=True)
 print('Temperature data processed.')
 
 
-
 # --------- Extracting Data from a CSV file (.csv) ---------------------------------------------------------------------
 
 # Create input and output file
@@ -174,11 +168,9 @@ precipitation_df.rename(columns={'Anomaly' : 'Precipitation'}, inplace=True)
 print('Precipitation data processed.')
 
 
-
 # --------- Merging the Data -------------------------------------------------------------------------------------------------
 # We are merging the data into two distinct files
-# One for the northern hemisphere regression and one for the southern hemisphere regression
-
+# One for northern hemisphere regression and one for southern hemisphere regression
 
 # Setting the same in and output folder
 in_out_folder = './processed_data/'
@@ -190,7 +182,6 @@ co2 = sum_co2_df['CO2']
 base_sh = df_shcut['SH_Extent']  
 precip = precipitation_df['Precipitation']
 temp = ocean_temp_cut['Temperature']
-
 
 # Combine the selected columns into 2 distinct dataframe (one NH and one for SH)
 nh_merged_df = pd.DataFrame({
@@ -206,7 +197,6 @@ sh_merged_df = pd.DataFrame({
     'Precipitation' : precip,
     'Temperature' : temp
 })
-
 
 # Define output names
 output_nh = 'NH_Data.csv'
