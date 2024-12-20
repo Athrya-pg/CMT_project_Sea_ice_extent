@@ -36,12 +36,14 @@ n = len(residuals_North)
 kN = 2  # number of coefficient of the North model (includes the intercept)
 kS = 4  # of the South model 
 
+
 # -----------------------------------------------------------------------------------------------
+
 # Calculate the sum of squared residuals (SSE)
 SSE_nh = np.sum(residuals_North**2)
 SSE_sh = np.sum(residuals_South**2)
 
-# SST: Total sum of squares (requires observed y)
+# SST: Total sum of squares (requires observed y) for NH and SH 
 yN_data = pd.read_csv(data_folder + 'NH_Data.csv', delimiter=',')  # Charger y observé
 yN = yN_data['Sea_Ice_Extent'].values
 yN_mean = np.mean(yN)
@@ -56,15 +58,17 @@ SST_sh = np.sum((yS - yS_mean)**2)
 SSR_nh = SST_nh - SSE_nh
 SSR_sh = SST_sh - SSE_sh
 
-# Degrés de liberté
+# Degrés de liberté for NH and SH
 df_model_nh = kN - 1
 df_residuals_nh = n - kN
 
 df_model_sh = kS - 1
 df_residuals_sh = n - kS
 
-# ------------------------Statistique F for the North model---------------------------------------
-# Statistique F for the North model
+
+# ------------------------ Statistic F for the North model---------------------------------------
+
+# Statistic F and p-value
 F_stat_nh = (SSR_nh / df_model_nh) / (SSE_nh / df_residuals_nh)
 f_p_value_nh = 1 - stats.f.cdf(F_stat_nh, df_model_nh, df_residuals_nh)
 print(f"F-statistic (NH): {F_stat_nh: .4f}, p-value: {f_p_value_nh: .4e}")
@@ -75,7 +79,9 @@ MSE_nh = SSE_nh / df_residuals_nh
 se_mN = np.sqrt(MSE_nh / np.sum((x_nh - np.mean(x_nh))**2))
 se_bN = np.sqrt(MSE_nh * (1/n + np.mean(x_nh)**2 / np.sum((x_nh - np.mean(x_nh))**2)))
 
-#--------Calculate t-statistics and p-values for the coefficients of the North model----------------
+
+#-------- Calculate t-statistics and p-values for the coefficients of the North model----------------
+# Calculate t-value and p-value
 t_value_mN = mN / se_mN
 t_value_bN = bN / se_bN
 p_value_mN = 2 * (1 - stats.t.cdf(np.abs(t_value_mN), df_residuals_nh))
@@ -86,10 +92,13 @@ print("T-test results for the North Pole model:")
 print(f"Coefficient mN (NH): t-value = {t_value_mN}, p-value = {p_value_mN: .4e}")
 print(f"Coefficient bN (NH): t-value = {t_value_bN}, p-value = {p_value_bN: .4e}")
 
+
 # ================================================================================================
 print("*" * 70) 
 
-# ----------------------Statistique F for the South model-----------------------------------------
+
+# ---------------------- Statistic F for the South model-----------------------------------------
+# Calculate the F-statistic and p-value
 F_stat_sh = (SSR_sh / df_model_sh) / (SSE_sh / df_residuals_sh)
 f_p_value_sh = 1 - stats.f.cdf(F_stat_sh, df_model_sh, df_residuals_sh)
 print(f"F-statistic (SH): {F_stat_sh: .4f}, p-value: {f_p_value_sh: .4e}")
@@ -101,7 +110,9 @@ X_sh = np.hstack((np.ones((X_sh.shape[0], 1)), X_sh))
 XTX_inv_sh = np.linalg.inv(X_sh.T @ X_sh)
 se_sh = np.sqrt(MSE_sh * np.diag(XTX_inv_sh))  # Erreurs standards des coefficients
 
-# ---------- Calculer les statistiques t et les p-valeurs pour les coefficients -------------------
+
+# ---------- Calculate t-statistics and p-values for the coefficients of the South model -------------------
+# Calculate t-value and p-value
 t_values_sh = np.array([b0, b1, b2, b3]) / se_sh
 p_values_sh = 2 * (1 - stats.t.cdf(np.abs(t_values_sh), df_residuals_sh))
 

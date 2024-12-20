@@ -59,6 +59,7 @@ df_shcut['SH_Extent'] = pd.to_numeric(df_shcut['SH_Extent'], errors='coerce')
 sum_co2_df['CO2'] = pd.to_numeric(sum_co2_df['CO2'], errors='coerce')
 #print('NH, SH, CO2 data processed.')
 
+
 # --------- Ploting Sea Ice Extent and CO2 Emissions Over Time --------------------------------------------------------------
 # We are ploting those graphs to see if it is possible to use a linear regression for our estimation.
 
