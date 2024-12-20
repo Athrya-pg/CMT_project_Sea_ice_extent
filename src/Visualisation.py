@@ -2,7 +2,7 @@
 # Description: This script is used to visualise the data and the results of the different Regression model.
 # ==========================================================================================================
 
-# Import de modules
+# Import the modules
 import matplotlib.pyplot as plt
 import pandas as pd
 import os
@@ -59,14 +59,19 @@ RMSE_S_lin = r2_rmse.get('Southern Hemisphere RMSE (Linear)', None)
 R2_S_multi = r2_rmse.get('Southern Hemisphere R2 (Multiple regression)', None)
 RMSE_S_multi = r2_rmse.get('Southern Hemisphere RMSE (Multiple regression)', None)
 
+
+# ----------------------------- Plotting  ------------------------------------
+# All the plot are made with regard to their corresponding y estimate.
+
 #----------------------- Plot for Northern Hemisphere ------------------------
 
-# Créer une figure avec deux sous-graphiques côte à côte
+# Create a figure with two side-by-side subplots
+# Plot the data on 2 figures, one against time and one against CO2 emissions
 fig1, (ax1, ax2) = plt.subplots(1, 2, figsize=(20, 6))
 
 # Plot linear regression: yN vs co2
 ax1.scatter(co2, observations_nh, label='Observations NH', color='blue')
-ax1.plot(co2, y_estim_nh, label='Linear Regression Model', color='red')
+ax1.plot(co2, y_estim_nh, label='Linear Regression Model', color='red') 
 ax1.set_xlabel('Carbon Dioxide [Gt]', fontsize=12)
 ax1.set_ylabel('Ice Surface North [Million km²]', fontsize=12)
 ax1.set_title('Global CO2 emissions vs Sea Ice Extent (Northern Hemisphere)')
@@ -99,7 +104,7 @@ plt.savefig(output_folder + '2_NH_Linear_Regression_plot.png')
 
 fig2, (ax3, ax4) = plt.subplots(1, 2, figsize=(20, 6))
 
-# Plot linear regression: yS vs CO2                                            //////////////////////// is it also yS??? //////////////////////
+# Plot linear regression: yS vs CO2                                           
 ax3.scatter(co2, observations_sh, label='Observations SH', color='blue') 
 ax3.plot(co2, y_estim_sh, label='Linear Regression Model', color='red')  
 ax3.set_xlabel('Carbon Dioxide [Gt]', fontsize=12)
@@ -130,7 +135,7 @@ plt.savefig( output_folder + '3_SH_Linear_Regression_plot.png')
 # Multi-linear regression model
 # ------------------------------
 
-# Plot multiple regression: yS vs year                                          //////////////////////// is it also yS??? //////////////////////
+# Plot multiple regression: yS vs year                                   
 plt.figure(figsize=(10, 6))
 plt.scatter(year, observations_sh, label='Observations SH', color='blue')
 plt.plot(year, y_estim_sh_multi, label='Multiple Regression Model', color='red')
@@ -152,7 +157,7 @@ plt.savefig( output_folder + '4_SH_Multiple_Regression_plot.png')
 
 fig4, (ax7, ax8) = plt.subplots(1, 2, figsize=(20, 6))
 
-# Plot quadratic regression: yS vs CO2                                             //////////////////////// is it also yS??? ///////////////////
+# Plot quadratic regression: yS vs CO2  
 ax7.scatter(co2, observations_sh, label='Observations SH', color='blue') 
 ax7.plot(co2, y_estim_sh_poly, label='Quadratic Regression Model', color='red')  
 ax7.set_xlabel('Carbon Dioxide [Gt]', fontsize=12)
@@ -171,5 +176,5 @@ ax8.legend(loc='lower left')
 ax8.grid(True)
 plt.savefig( output_folder + '5_SH_Quadratic_Regression_plot.png')
 
-print('Plots saved.')
+print('Regression plots saved.')
 

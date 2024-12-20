@@ -3,7 +3,7 @@
 //               sea ice temperature, precipitation.
 //========================================================================================================================
 
-// Loading libraries and packages
+// Loading libraries and packages and modules 
 #include <stdio.h>
 #include <math.h>
 #include <string.h>
@@ -18,7 +18,7 @@
 
 // ------------------ Defining various functions ----------------------------------------------------------
 
-// Define "data read" function 
+// Define "data read" function for the two datasets (NH and SH)
 int read_data_nh(const char *filename, double *year, double *sea_ice_extent, double *co2, int max_size){
     FILE *file = fopen(filename, "r");
     if (file == NULL) {
